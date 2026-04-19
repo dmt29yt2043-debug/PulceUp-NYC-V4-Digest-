@@ -76,7 +76,7 @@ export function getEvents(filters: FilterState & { page?: number; page_size?: nu
 } {
   const db = getDb();
   const conditions: string[] = [
-    'status IN (\'published\', \'done\', \'new\')',
+    '(status IN (\'published\', \'done\', \'new\') OR status LIKE \'%.done\')',
     // Exclude rewards/loyalty/club programs — not real events
     'title NOT LIKE \'%Rewards%\'',
     'title NOT LIKE \'%Royalty%\'',
@@ -85,7 +85,7 @@ export function getEvents(filters: FilterState & { page?: number; page_size?: nu
     'title NOT LIKE \'%Join Club%\'',
     '(category_l1 IS NULL OR category_l1 NOT IN (\'networking\'))',
     // Hide past events: keep if it hasn't ended yet (or, if no end time, hasn't started > 1 day ago)
-    "(COALESCE(next_end_at, datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)",
+    "(COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)",
   ];
   const params: Record<string, unknown> = {};
 
@@ -431,7 +431,7 @@ export function getEventById(id: number): Event | null {
 
 export function getCategories(): { value: string; label: string }[] {
   const db = getDb();
-  const rows = db.prepare('SELECT DISTINCT category_l1 FROM events WHERE category_l1 IS NOT NULL AND status IN (\'published\', \'done\', \'new\') ORDER BY category_l1').all() as { category_l1: string }[];
+  const rows = db.prepare('SELECT DISTINCT category_l1 FROM events WHERE category_l1 IS NOT NULL AND (status IN (\'published\', \'done\', \'new\') OR status LIKE \'%.done\') ORDER BY category_l1').all() as { category_l1: string }[];
 
   const labelMap: Record<string, string> = {
     family: 'Parents & Kids',
@@ -475,7 +475,7 @@ export function getCategories(): { value: string; label: string }[] {
 export function getEventsForChat(query?: string): { id: number; title: string; category_l1: string; tagline: string; venue_name: string; next_start_at: string; is_free: boolean; price_summary: string; age_label: string; city: string; address: string }[] {
   const db = getDb();
 
-  const baseWhere = `status IN ('published', 'done', 'new') AND title NOT LIKE '%Rewards%' AND title NOT LIKE '%Royalty%' AND title NOT LIKE '%Loyalty%' AND title NOT LIKE '%Club Baja%' AND title NOT LIKE '%Join Club%' AND (category_l1 IS NULL OR category_l1 NOT IN ('networking')) AND (COALESCE(next_end_at, datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)`;
+  const baseWhere = `(status IN ('published', 'done', 'new') OR status LIKE '%.done') AND title NOT LIKE '%Rewards%' AND title NOT LIKE '%Royalty%' AND title NOT LIKE '%Loyalty%' AND title NOT LIKE '%Club Baja%' AND title NOT LIKE '%Join Club%' AND (category_l1 IS NULL OR category_l1 NOT IN ('networking')) AND (COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)`;
   const fields = `id, title, category_l1, tagline, venue_name, next_start_at, is_free, price_summary, age_label, city, address`;
 
   let searchWhere = '';

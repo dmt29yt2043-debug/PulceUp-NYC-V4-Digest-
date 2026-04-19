@@ -69,6 +69,60 @@ function formatBudget(filters: FilterState): string {
   return 'Any budget';
 }
 
+/**
+ * Check whether a single event matches the FilterState. Used to intersect
+ * a pre-programmed digest list with the user's active filters client-side.
+ * Only covers the filters that actually constrain the visible event set —
+ * chat/search and map bounds are intentionally excluded.
+ */
+function eventMatchesFilters(event: Event, filters: FilterState): boolean {
+  // isFree
+  if (filters.isFree && !event.is_free) return false;
+  // Price range — only apply when the event actually has pricing info (>0)
+  if (filters.priceMin !== undefined && filters.priceMin > 0) {
+    if (event.is_free) return false;
+    if ((event.price_max ?? 0) < filters.priceMin) return false;
+  }
+  if (filters.priceMax !== undefined && !event.is_free) {
+    if ((event.price_min ?? 0) > filters.priceMax) return false;
+  }
+  // Age (ageMax = upper bound kid can attend)
+  if (filters.ageMax !== undefined && filters.ageMax !== null) {
+    const bestFrom = event.age_best_from ?? event.age_min;
+    if (bestFrom !== null && bestFrom !== undefined && bestFrom > filters.ageMax) return false;
+    if (event.age_best_to !== null && event.age_best_to !== undefined && event.age_best_to < filters.ageMax) return false;
+  }
+  // Date range
+  const startStr = event.next_start_at;
+  if (filters.dateFrom && startStr) {
+    if (startStr.slice(0, 10) < filters.dateFrom) return false;
+  }
+  if (filters.dateTo && startStr) {
+    if (startStr.slice(0, 10) > filters.dateTo) return false;
+  }
+  // Categories — match against category_l1, categories JSON, tags JSON
+  if (filters.categories && filters.categories.length > 0) {
+    const cats = (event.categories || []).map((c) => String(c).toLowerCase());
+    const tags = (event.tags || []).map((t) => String(t).toLowerCase());
+    const l1 = (event.category_l1 || '').toLowerCase();
+    const wanted = filters.categories.map((c) => c.toLowerCase());
+    const hit = wanted.some((w) => l1 === w || cats.some((c) => c.includes(w)) || tags.some((t) => t.includes(w)));
+    if (!hit) return false;
+  }
+  // Exclude categories
+  if (filters.excludeCategories && filters.excludeCategories.length > 0) {
+    const l1 = (event.category_l1 || '').toLowerCase();
+    if (filters.excludeCategories.some((c) => c.toLowerCase() === l1)) return false;
+  }
+  // Neighborhoods (simple substring match against city/address)
+  if (filters.neighborhoods && filters.neighborhoods.length > 0 && !filters.neighborhoods.includes('Anywhere in NYC')) {
+    const loc = `${event.city || ''} ${event.address || ''}`.toLowerCase();
+    const hit = filters.neighborhoods.some((n) => loc.includes(n.toLowerCase()));
+    if (!hit) return false;
+  }
+  return true;
+}
+
 export default function Home() {
   return <FavoritesProvider><HomeInner /></FavoritesProvider>;
 }
@@ -109,6 +163,8 @@ function HomeInner() {
   } | null>(null);
   const [digestEvents, setDigestEvents] = useState<Event[]>([]);
   const [digestLoading, setDigestLoading] = useState(false);
+  // Drill-down: click on a category_tag in the banner → show peers in a popover.
+  const [tagPeerPopover, setTagPeerPopover] = useState<null | { tag: string; digests: Array<{ slug: string; title: string; subtitle?: string; curator_name?: string; event_count: number }> }>(null);
 
   // Auto-switch to "For you" tab when arriving from quiz + track page view
   useEffect(() => {
@@ -512,16 +568,22 @@ function HomeInner() {
   }, [priceSliderMin, priceSliderMax]);
 
   // Digest selection handlers (digest = pre-programmed event set acting as filter).
-  const handleDigestSelect = useCallback(async (slug: string) => {
-    // Toggle off if clicking the same digest
-    if (activeDigest?.slug === slug) {
-      setActiveDigest(null);
-      setDigestEvents([]);
-      return;
-    }
+  // Helper: sync ?digest=<slug> in the URL without reloading the page. This
+  // makes digest selections shareable ("here's my weekend plan") and
+  // restorable across refreshes.
+  const syncDigestInUrl = useCallback((slug: string | null) => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (slug) url.searchParams.set('digest', slug);
+    else url.searchParams.delete('digest');
+    window.history.replaceState({}, '', url.toString());
+  }, []);
+
+  const loadDigest = useCallback(async (slug: string): Promise<boolean> => {
     setDigestLoading(true);
     try {
       const res = await fetch(`/api/digests/${slug}`);
+      if (!res.ok) return false;
       const data = await res.json();
       if (data?.digest && Array.isArray(data?.events)) {
         setActiveDigest({
@@ -532,20 +594,71 @@ function HomeInner() {
           category_tag: data.digest.category_tag,
         });
         setDigestEvents(data.events);
-        // Clear conflicting view modes so the digest stands alone.
         if (favoritesOnly) setFavoritesOnly(false);
-        track('digest_selected', { slug, event_count: data.events.length });
+        return true;
       }
+      return false;
     } catch (err) {
       console.error('Failed to load digest', err);
+      return false;
     } finally {
       setDigestLoading(false);
     }
-  }, [activeDigest, favoritesOnly]);
+  }, [favoritesOnly]);
+
+  const handleDigestSelect = useCallback(async (slug: string) => {
+    // Toggle off if clicking the same digest
+    if (activeDigest?.slug === slug) {
+      setActiveDigest(null);
+      setDigestEvents([]);
+      syncDigestInUrl(null);
+      return;
+    }
+    const ok = await loadDigest(slug);
+    if (ok) {
+      syncDigestInUrl(slug);
+      track('digest_selected', { slug });
+    }
+  }, [activeDigest, loadDigest, syncDigestInUrl]);
 
   const handleDigestClear = useCallback(() => {
     setActiveDigest(null);
     setDigestEvents([]);
+    syncDigestInUrl(null);
+  }, [syncDigestInUrl]);
+
+  // Click on category_tag (e.g. SEASONAL) in the active-digest banner
+  // → fetch all digests sharing that tag and show them in a popover.
+  const handleTagClick = useCallback(async (tag: string) => {
+    if (!tag) return;
+    try {
+      const res = await fetch('/api/digests');
+      if (!res.ok) return;
+      const data = await res.json();
+      const all: Array<{ slug: string; title: string; subtitle?: string; curator_name?: string; event_count: number; category_tag?: string }> =
+        (data.categories || []).flatMap((cat: { digests: unknown[] }) => cat.digests);
+      const peers = all
+        .filter((d) => (d.category_tag || '').toUpperCase() === tag.toUpperCase())
+        .filter((d) => d.slug !== activeDigest?.slug);
+      setTagPeerPopover({ tag, digests: peers });
+      track('digest_tag_click', { tag, peer_count: peers.length });
+    } catch (err) {
+      console.error('Failed to fetch tag peers', err);
+    }
+  }, [activeDigest]);
+
+  // On mount — restore digest from ?digest=<slug> URL parameter (shareable links)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('digest');
+    if (slug) {
+      loadDigest(slug).then((ok) => {
+        if (!ok) syncDigestInUrl(null); // clean invalid slug from URL
+      });
+    }
+    // Intentionally empty deps: run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const forYouEvents = boundsFiltered ? filteredEvents : events;
@@ -553,11 +666,17 @@ function HomeInner() {
   // When a digest is active, it overrides all other sources — the feed
   // becomes exactly the curated digest event list (preset filter behavior).
   const baseEvents = activeTab === 'feed' ? allEvents : forYouEvents;
+  // When a digest is active, intersect it with any currently-applied filters
+  // (price, age, date, categories, neighborhoods). Digest = hard constraint,
+  // filters narrow within it. If filters exclude everything, show 0 results.
+  const digestEventsFiltered = activeDigest
+    ? digestEvents.filter((e) => eventMatchesFilters(e, filters))
+    : digestEvents;
   const displayEvents = activeDigest
-    ? digestEvents
+    ? digestEventsFiltered
     : (favoritesOnly ? favoriteEvents : baseEvents);
   const displayTotal = activeDigest
-    ? digestEvents.length
+    ? digestEventsFiltered.length
     : (favoritesOnly ? favoriteIds.size : activeTab === 'feed' ? allTotal : total);
 
   const sliderMinPct = Math.round((priceSliderMin / 200) * 100);
@@ -782,8 +901,22 @@ function HomeInner() {
                 <span className="active-digest-banner__icon">📚</span>
                 <div>
                   <div className="active-digest-banner__title">
+                    {activeDigest.category_tag && (
+                      <button
+                        type="button"
+                        className="active-digest-banner__tag"
+                        onClick={() => handleTagClick(activeDigest.category_tag!)}
+                        title={`See more ${activeDigest.category_tag} digests`}
+                      >
+                        {activeDigest.category_tag}
+                      </button>
+                    )}
                     {activeDigest.title}
-                    <span className="active-digest-banner__count">· {digestEvents.length} events</span>
+                    <span className="active-digest-banner__count">
+                      · {digestEventsFiltered.length === digestEvents.length
+                          ? `${digestEvents.length} events`
+                          : `${digestEventsFiltered.length} of ${digestEvents.length} events (filters applied)`}
+                    </span>
                   </div>
                   {(activeDigest.subtitle || activeDigest.curator_name) && (
                     <div className="active-digest-banner__sub">
@@ -802,6 +935,57 @@ function HomeInner() {
               >
                 ✕ Clear
               </button>
+            </div>
+          )}
+
+          {/* Tag-peers popover: shows all digests sharing the clicked category_tag */}
+          {tagPeerPopover && (
+            <div
+              className="digest-tag-peers-backdrop"
+              onClick={() => setTagPeerPopover(null)}
+            >
+              <div
+                className="digest-tag-peers"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="digest-tag-peers__header">
+                  <h3>
+                    More <span className="digest-tag-peers__tag">{tagPeerPopover.tag}</span> digests
+                  </h3>
+                  <button
+                    className="digest-tag-peers__close"
+                    onClick={() => setTagPeerPopover(null)}
+                    aria-label="Close"
+                  >✕</button>
+                </div>
+                {tagPeerPopover.digests.length === 0 ? (
+                  <div className="digest-tag-peers__empty">
+                    No other {tagPeerPopover.tag} digests right now.
+                  </div>
+                ) : (
+                  <ul className="digest-tag-peers__list">
+                    {tagPeerPopover.digests.map((d) => (
+                      <li
+                        key={d.slug}
+                        className="digest-tag-peers__item"
+                        onClick={() => {
+                          setTagPeerPopover(null);
+                          handleDigestSelect(d.slug);
+                        }}
+                      >
+                        <div className="digest-tag-peers__title">{d.title}</div>
+                        {d.subtitle && (
+                          <div className="digest-tag-peers__sub">{d.subtitle}</div>
+                        )}
+                        <div className="digest-tag-peers__meta">
+                          {d.event_count} events
+                          {d.curator_name && <> · by {d.curator_name}</>}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           )}
 

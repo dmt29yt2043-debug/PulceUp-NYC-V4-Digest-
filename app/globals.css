@@ -2014,6 +2014,121 @@ body {
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.4);
 }
+.active-digest-banner__tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-right: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  vertical-align: middle;
+}
+.active-digest-banner__tag:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Tag-peers popover (click on category_tag → see related digests) */
+.digest-tag-peers-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+}
+.digest-tag-peers {
+  background: #1a1a3e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+.digest-tag-peers__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  background: #1a1a3e;
+  z-index: 1;
+}
+.digest-tag-peers__header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+.digest-tag-peers__tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(233, 30, 99, 0.18);
+  border: 1px solid rgba(233, 30, 99, 0.5);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #fff;
+}
+.digest-tag-peers__close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.digest-tag-peers__close:hover { opacity: 1; }
+.digest-tag-peers__empty {
+  padding: 32px 20px;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 14px;
+}
+.digest-tag-peers__list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+.digest-tag-peers__item {
+  padding: 14px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.digest-tag-peers__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.digest-tag-peers__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.digest-tag-peers__sub {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 4px;
+}
+.digest-tag-peers__meta {
+  font-size: 12px;
+  opacity: 0.6;
+}
 .digest-card-img {
   position: absolute;
   inset: 0;
