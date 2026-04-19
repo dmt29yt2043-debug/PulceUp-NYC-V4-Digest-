@@ -239,7 +239,10 @@ export function getEvents(filters: FilterState & { page?: number; page_size?: nu
 
   if (filters.dateFrom) {
     params.date_from = filters.dateFrom;
-    conditions.push('next_end_at >= @date_from');
+    // next_end_at is often an empty string (not NULL) after import — fall
+    // back to next_start_at + 1 day so ongoing events aren't accidentally
+    // excluded by an empty string comparison.
+    conditions.push("COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+1 day')) >= @date_from");
   }
 
   if (filters.dateTo) {
@@ -443,6 +446,19 @@ export function getCategories(): { value: string; label: string }[] {
     sports: 'Sports & Fitness',
     Art: 'Arts & Culture',
     "Children's Activities": 'Parents & Kids',
+    // Polish: consistent Title Case for remaining single-word categories
+    comedy: 'Comedy',
+    community: 'Community',
+    education: 'Education',
+    fashion: 'Fashion',
+    film: 'Film',
+    food: 'Food',
+    gaming: 'Gaming',
+    music: 'Music',
+    nightlife: 'Nightlife',
+    outdoors: 'Outdoors',
+    science: 'Science',
+    wellness: 'Wellness',
   };
 
   // Preferred canonical value for each label (used when deduplicating)

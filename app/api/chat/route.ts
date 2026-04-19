@@ -60,12 +60,31 @@ FILTER RULES:
 - Each message is a FRESH independent search. Extract ONLY what the user explicitly says.
 - "near me" = NO location filter. "in Brooklyn" = neighborhoods:["Brooklyn"].
 - No date mentioned = NO dateFrom/dateTo. "this weekend"/"tomorrow" = add date filter.
-- "free" = isFree:true.
-- Search keywords: SHORT (1-2 words). "Easter egg hunt" → search:"Easter". "science museums" → search:"science".
+- "free" = isFree:true. "under \$N" or "cheap(er than) \$N" or "less than \$N" → priceMax:N.
+- PREFER categories[] over search when the topic maps to a known category. Examples:
+  • "art"/"drawing"/"painting" → categories:["arts"] (NOT search)
+  • "museum" → categories:["arts"]
+  • "cooking" → categories:["food"]
+  • "science"/"STEM"/"robotics" → categories:["science"]
+  • "theater"/"show"/"play"/"ballet" → categories:["theater"]
+  • "nature"/"hike"/"park"/"outdoors" → categories:["outdoors"]
+  • "music"/"concert" → categories:["music"]
+  • "sports"/"running"/"swim" → categories:["sports"]
+  • "reading"/"books"/"storytime" → categories:["books"]
+  • "movie"/"film" → categories:["film"]
+- Use search only for very specific terms like "Easter egg hunt" → search:"Easter", or when no category fits.
+- Age semantics (VERY IMPORTANT):
+  • "5yo"/"5 year old"/"my 5 year old" → ageMax:5 (event must suit a 5yo)
+  • "teens" or "13+" or "13 and up" → ageMax:18 AND search:"teen" (or skip ageMax if too restrictive; teens need events with upper age range >= 13)
+  • "toddler" → ageMax:3. "preschool" → ageMax:5. "tweens" → ageMax:12.
+- Intent hints:
+  • "indoor" → add search:"indoor" (not a category, but narrows)
+  • "birthday party"/"birthday" → search:"birthday"
+  • "rainy day" → hint about indoor — add search:"indoor"
 - "wheelchair"/"accessible" → wheelchairAccessible:true. "stroller" → strollerFriendly:true.
 - FEWER filters is better than empty results.
 
-Available filter fields: categories(string[]), isFree(bool), ageMax(number), dateFrom(YYYY-MM-DD), dateTo(YYYY-MM-DD), search(string), neighborhoods(string[]), location(string), wheelchairAccessible(bool), strollerFriendly(bool)
+Available filter fields: categories(string[]), isFree(bool), ageMax(number), priceMax(number), dateFrom(YYYY-MM-DD), dateTo(YYYY-MM-DD), search(string), neighborhoods(string[]), location(string), wheelchairAccessible(bool), strollerFriendly(bool)
 Categories: ${categoryList}
 Neighborhoods: "Upper Manhattan","Midtown","Lower Manhattan","Brooklyn","Queens","Bronx","Staten Island"
 Borough mapping: "Manhattan"→["Upper Manhattan","Midtown","Lower Manhattan"], "Brooklyn"→["Brooklyn"], etc.
