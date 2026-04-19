@@ -97,6 +97,19 @@ function HomeInner() {
   const [flaggedIds, setFlaggedIds] = useState<Set<number>>(new Set());
   const [activeSession, setActiveSession] = useState<{ id: number; flagsCount: number } | null>(null);
 
+  // Active digest — when set, the feed is replaced by a pre-programmed list
+  // of events that belong to this digest. Acts like a preset filter.
+  // Clicking the already-active digest card toggles it off.
+  const [activeDigest, setActiveDigest] = useState<{
+    slug: string;
+    title: string;
+    subtitle?: string;
+    curator_name?: string;
+    category_tag?: string;
+  } | null>(null);
+  const [digestEvents, setDigestEvents] = useState<Event[]>([]);
+  const [digestLoading, setDigestLoading] = useState(false);
+
   // Auto-switch to "For you" tab when arriving from quiz + track page view
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -498,11 +511,54 @@ function HomeInner() {
     setActiveTab('foryou');
   }, [priceSliderMin, priceSliderMax]);
 
+  // Digest selection handlers (digest = pre-programmed event set acting as filter).
+  const handleDigestSelect = useCallback(async (slug: string) => {
+    // Toggle off if clicking the same digest
+    if (activeDigest?.slug === slug) {
+      setActiveDigest(null);
+      setDigestEvents([]);
+      return;
+    }
+    setDigestLoading(true);
+    try {
+      const res = await fetch(`/api/digests/${slug}`);
+      const data = await res.json();
+      if (data?.digest && Array.isArray(data?.events)) {
+        setActiveDigest({
+          slug: data.digest.slug,
+          title: data.digest.title,
+          subtitle: data.digest.subtitle,
+          curator_name: data.digest.curator_name,
+          category_tag: data.digest.category_tag,
+        });
+        setDigestEvents(data.events);
+        // Clear conflicting view modes so the digest stands alone.
+        if (favoritesOnly) setFavoritesOnly(false);
+        track('digest_selected', { slug, event_count: data.events.length });
+      }
+    } catch (err) {
+      console.error('Failed to load digest', err);
+    } finally {
+      setDigestLoading(false);
+    }
+  }, [activeDigest, favoritesOnly]);
+
+  const handleDigestClear = useCallback(() => {
+    setActiveDigest(null);
+    setDigestEvents([]);
+  }, []);
+
   const forYouEvents = boundsFiltered ? filteredEvents : events;
   // Feed always shows ALL events; For You shows filtered results.
+  // When a digest is active, it overrides all other sources — the feed
+  // becomes exactly the curated digest event list (preset filter behavior).
   const baseEvents = activeTab === 'feed' ? allEvents : forYouEvents;
-  const displayEvents = favoritesOnly ? favoriteEvents : baseEvents;
-  const displayTotal  = favoritesOnly ? favoriteIds.size : activeTab === 'feed' ? allTotal : total;
+  const displayEvents = activeDigest
+    ? digestEvents
+    : (favoritesOnly ? favoriteEvents : baseEvents);
+  const displayTotal = activeDigest
+    ? digestEvents.length
+    : (favoritesOnly ? favoriteIds.size : activeTab === 'feed' ? allTotal : total);
 
   const sliderMinPct = Math.round((priceSliderMin / 200) * 100);
   const sliderMaxPct = Math.round((priceSliderMax / 200) * 100);
@@ -712,10 +768,44 @@ function HomeInner() {
 
         {/* CENTER: results grid */}
         <div className="results-column" ref={resultsRef}>
-          {/* Digest shelf — always visible above event grid */}
-          <DigestShelf onEventClick={handleCardClick} />
+          {/* Digest shelf — always visible above event grid.
+              Clicking a digest replaces the feed with its pre-programmed events. */}
+          <DigestShelf
+            onDigestSelect={handleDigestSelect}
+            activeDigestSlug={activeDigest?.slug ?? null}
+          />
 
-          {loading ? (
+          {/* Active-digest banner: shows which preset is applied + clear button */}
+          {activeDigest && (
+            <div className="active-digest-banner">
+              <div className="active-digest-banner__info">
+                <span className="active-digest-banner__icon">📚</span>
+                <div>
+                  <div className="active-digest-banner__title">
+                    {activeDigest.title}
+                    <span className="active-digest-banner__count">· {digestEvents.length} events</span>
+                  </div>
+                  {(activeDigest.subtitle || activeDigest.curator_name) && (
+                    <div className="active-digest-banner__sub">
+                      {activeDigest.subtitle}
+                      {activeDigest.curator_name && (
+                        <span className="active-digest-banner__curator"> by {activeDigest.curator_name}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button
+                className="active-digest-banner__clear"
+                onClick={handleDigestClear}
+                aria-label="Clear digest"
+              >
+                ✕ Clear
+              </button>
+            </div>
+          )}
+
+          {loading || digestLoading ? (
             <div className="results-loading">
               {Array.from({ length: 9 }).map((_, i) => (
                 <div key={i} className="result-skeleton">

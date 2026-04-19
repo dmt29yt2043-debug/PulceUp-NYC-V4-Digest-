@@ -15,6 +15,7 @@ interface Digest {
 interface DigestCardProps {
   digest: Digest;
   onClick: (slug: string) => void;
+  isActive?: boolean;
 }
 
 const TAG_COLORS: Record<string, string> = {
@@ -25,11 +26,14 @@ const TAG_COLORS: Record<string, string> = {
   WEEKEND:     '#38bdf8',
 };
 
-export default function DigestCard({ digest, onClick }: DigestCardProps) {
+export default function DigestCard({ digest, onClick, isActive = false }: DigestCardProps) {
   const tagColor = TAG_COLORS[digest.category_tag] || '#94a3b8';
 
   return (
-    <div className="digest-card" onClick={() => onClick(digest.slug)}>
+    <div
+      className={`digest-card${isActive ? ' digest-card--active' : ''}`}
+      onClick={() => onClick(digest.slug)}
+    >
       {/* Cover image */}
       <div className="digest-card-img">
         {digest.cover_image && (

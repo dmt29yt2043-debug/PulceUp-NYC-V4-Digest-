@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import DigestCard from './DigestCard';
-import DigestPanel from './DigestPanel';
-import DigestViewAll from './DigestViewAll';
 
 interface Digest {
   id: number;
@@ -31,14 +29,19 @@ const QUICK_TAGS = [
 ];
 
 interface DigestShelfProps {
-  onEventClick: (event: unknown) => void;
+  /**
+   * Called when user picks a digest. The host page should fetch the digest's
+   * events and replace the feed with them (digest-as-filter behavior).
+   * Clicking the currently active digest toggles it off.
+   */
+  onDigestSelect: (slug: string) => void;
+  /** Slug of the currently selected digest (for highlight). `null` = none. */
+  activeDigestSlug: string | null;
 }
 
-export default function DigestShelf({ onEventClick }: DigestShelfProps) {
+export default function DigestShelf({ onDigestSelect, activeDigestSlug }: DigestShelfProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetch('/api/digests')
@@ -60,65 +63,45 @@ export default function DigestShelf({ onEventClick }: DigestShelfProps) {
   if (categories.length === 0) return null;
 
   return (
-    <>
-      <div className="digest-shelf">
-        {/* Header with inline tag pills */}
-        <div className="digest-shelf-header">
-          <div className="digest-shelf-title-row">
-            <div>
-              <h2 className="digest-shelf-title">Mom&apos;s Digest</h2>
-              <p className="digest-shelf-sub">Curated collections for your lifestyle.</p>
-            </div>
-            <div className="digest-shelf-tags">
-              <button
-                className={`digest-tag-pill digest-tag-pill--all ${activeTag === null ? 'active' : ''}`}
-                onClick={() => setActiveTag(null)}
-              >
-                All Digest
-              </button>
-              {QUICK_TAGS.map(qt => (
-                <button
-                  key={qt.tag}
-                  className={`digest-tag-pill ${activeTag === qt.tag ? 'active' : ''}`}
-                  onClick={() => setActiveTag(activeTag === qt.tag ? null : qt.tag)}
-                >
-                  {qt.label}
-                </button>
-              ))}
-            </div>
+    <div className="digest-shelf">
+      {/* Header with inline tag pills */}
+      <div className="digest-shelf-header">
+        <div className="digest-shelf-title-row">
+          <div>
+            <h2 className="digest-shelf-title">Mom&apos;s Digest</h2>
+            <p className="digest-shelf-sub">Curated collections for your lifestyle.</p>
           </div>
-        </div>
-
-        {/* Single horizontal scroll row */}
-        <div className="digest-shelf-row">
-          {allDigests.map(d => (
-            <DigestCard
-              key={d.slug}
-              digest={d}
-              onClick={setOpenSlug}
-            />
-          ))}
+          <div className="digest-shelf-tags">
+            <button
+              className={`digest-tag-pill digest-tag-pill--all ${activeTag === null ? 'active' : ''}`}
+              onClick={() => setActiveTag(null)}
+            >
+              All Digest
+            </button>
+            {QUICK_TAGS.map(qt => (
+              <button
+                key={qt.tag}
+                className={`digest-tag-pill ${activeTag === qt.tag ? 'active' : ''}`}
+                onClick={() => setActiveTag(activeTag === qt.tag ? null : qt.tag)}
+              >
+                {qt.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {openSlug && (
-        <DigestPanel
-          slug={openSlug}
-          onClose={() => setOpenSlug(null)}
-          onEventClick={(ev) => {
-            setOpenSlug(null);
-            onEventClick(ev);
-          }}
-        />
-      )}
-
-      {showAll && (
-        <DigestViewAll
-          categories={categories}
-          onClose={() => setShowAll(false)}
-          onDigestClick={(slug) => { setShowAll(false); setOpenSlug(slug); }}
-        />
-      )}
-    </>
+      {/* Single horizontal scroll row */}
+      <div className="digest-shelf-row">
+        {allDigests.map(d => (
+          <DigestCard
+            key={d.slug}
+            digest={d}
+            onClick={onDigestSelect}
+            isActive={activeDigestSlug === d.slug}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
