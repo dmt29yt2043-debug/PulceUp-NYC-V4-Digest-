@@ -228,9 +228,14 @@ Return ONLY the JSON object.`,
     // Get events with extracted filters
     let eventsResult = getEvents({ ...extractedFilters, page: 1, page_size: 10 });
 
-    // Auto-broaden: if 0 or very few results (< 3), progressively remove restrictive filters
-    // This covers sparse queries like "sports for 8yo" that return only 1 hit after strict filtering.
-    if (eventsResult.total < 3) {
+    // Auto-broaden: progressively remove restrictive filters when too few results.
+    // Intent filters (strollerFriendly, wheelchairAccessible, isFree) express the user's
+    // explicit needs — only broaden when those intent filters themselves return 0 results.
+    // For pure category/age/location queries, broaden earlier (< 3 results).
+    const hasIntentFilters = !!(extractedFilters.strollerFriendly || extractedFilters.wheelchairAccessible);
+    const broadenAt = hasIntentFilters ? 0 : 2;  // intent queries: only if truly empty; others: < 3
+
+    if (eventsResult.total <= broadenAt) {
       const broadeningSteps: { label: string; modify: (f: FilterState) => FilterState }[] = [
         {
           label: 'location',
@@ -250,6 +255,10 @@ Return ONLY the JSON object.`,
             const nf: FilterState = {};
             if (f.search) nf.search = f.search;
             if (f.ageMax !== undefined) nf.ageMax = f.ageMax;
+            // Always preserve intent filters — the user explicitly asked for these.
+            if (f.strollerFriendly) nf.strollerFriendly = f.strollerFriendly;
+            if (f.wheelchairAccessible) nf.wheelchairAccessible = f.wheelchairAccessible;
+            if (f.isFree !== undefined) nf.isFree = f.isFree;
             return nf;
           },
         },
@@ -262,6 +271,9 @@ Return ONLY the JSON object.`,
               nf.search = words.length > 0 ? words[0] : f.search.split(/\s+/)[0];
             }
             if (f.ageMax !== undefined) nf.ageMax = f.ageMax;
+            if (f.strollerFriendly) nf.strollerFriendly = f.strollerFriendly;
+            if (f.wheelchairAccessible) nf.wheelchairAccessible = f.wheelchairAccessible;
+            if (f.isFree !== undefined) nf.isFree = f.isFree;
             return nf;
           },
         },
