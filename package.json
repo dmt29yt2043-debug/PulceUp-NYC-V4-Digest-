@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "reimport": "npx tsx scripts/import-csv.ts && npx tsx scripts/seed-digests.ts && node qa/scripts/data_tests.js",
+    "qa": "node qa/scripts/data_tests.js && node qa/scripts/e2e_tests.js && node qa/scripts/security_tests.js"
   },
   "dependencies": {
     "better-sqlite3": "^12.8.0",
