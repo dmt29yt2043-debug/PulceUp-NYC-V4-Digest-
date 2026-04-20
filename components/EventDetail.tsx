@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import type { Event } from '@/lib/types';
 import { useFavorites } from '@/lib/FavoritesContext';
-import { track } from '@/lib/analytics';
+import { track, trackBuyTicketsClicked } from '@/lib/analytics';
 
 interface EventDetailProps {
   event: Event | null;
@@ -496,9 +496,14 @@ export default function EventDetail({ event, open, onClose, isFlagged = false, o
               rel="noopener noreferrer"
               className="ed-cta"
               onClick={() => {
-                track('buy_clicked', { event_id: event.id, event_title: event.title, button_type: 'buy_tickets', destination_url: event.source_url });
-                track('ticket_link_clicked', { event_id: event.id, destination_url: event.source_url });
-                track('external_link_clicked', { destination_url: event.source_url, source: 'event_detail' });
+                // ⭐ North Star: user leaves to buy a ticket.
+                // price_min drives the price_bucket dimension in analytics.
+                trackBuyTicketsClicked({
+                  event_id: event.id,
+                  event_title: event.title,
+                  destination_url: event.source_url,
+                  price_min: event.price_min ?? 0,
+                });
               }}
             >
               Buy ticket

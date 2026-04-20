@@ -4,11 +4,23 @@ import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { ChatMessage, FilterState, Event, UserProfile, ChildProfile } from '@/lib/types';
 import ChatMessages from './ChatMessages';
 import type { MultiSelectState } from './ChatMessages';
-import { track } from '@/lib/analytics';
+import {
+  trackChatMessageSent,
+  trackChatResponseReceived,
+  trackError,
+  track,
+} from '@/lib/analytics';
 
+/**
+ * source argument on onFiltersChange is critical for analytics:
+ *   'chat'  — filters came from the AI chat response (natural language query)
+ *   'ui'    — filters came from onboarding chip clicks (manual setup)
+ *   'reset' — profile reset: clear everything
+ * page.tsx forwards this to trackFilterApplied() with the correct source.
+ */
 interface ChatSidebarProps {
   filters: FilterState;
-  onFiltersChange: (filters: FilterState) => void;
+  onFiltersChange: (filters: FilterState, source: 'chat' | 'ui' | 'reset') => void;
   onEventClick: (event: Event) => void;
 }
 
@@ -130,7 +142,8 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
       else if (p.budget === 'Under $100') newFilters.priceMax = 100;
     }
 
-    onFiltersChange(newFilters);
+    // Onboarding chips are manual user clicks → tag as 'ui'
+    onFiltersChange(newFilters, 'ui');
   }, [onFiltersChange]);
 
   // On mount — check for quiz params first, then fallback to stored profile
@@ -176,7 +189,8 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         storeProfile(quizProfile);
         setOnboardingDone(true);
         setOnboardingStep('done');
-        onFiltersChange(newFilters);
+        // Quiz onboarding → 'ui' (user clicked through chips / quiz URL)
+        onFiltersChange(newFilters, 'ui');
 
         // Chat message
         const boroughLabel = borough.charAt(0).toUpperCase() + borough.slice(1);
@@ -269,7 +283,8 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
     setCurrentChildIndex(0);
     setSelectedItems(new Set());
     partialProfileRef.current = {};
-    onFiltersChange({});
+    // Profile reset wipes filters too
+    onFiltersChange({}, 'reset');
     setMessages([{ role: 'assistant', content: "Hi! I'm your event assistant. Tell me about your children \u2014 their ages and how many. For example: \"daughter 6 and son 3\"" }]);
   }, [onFiltersChange]);
 
@@ -414,11 +429,10 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
     setMessages(newMessages);
     setInput('');
     setLoading(true);
-    if (messages.length === 0) {
-      track('chat_started', { entry_point: 'chat_sidebar' });
-    }
-    track('message_sent', { message_length: msgText.length, has_voice: false, has_text: true });
-    track('recommendations_requested', { query_type: 'chat', has_filters: !!(filters && Object.keys(filters).length) });
+    trackChatMessageSent({
+      message_length: msgText.length,
+      has_active_filters: !!(filters && Object.keys(filters).length),
+    });
     const __recsStart = Date.now();
 
     try {
@@ -442,17 +456,18 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         filters: data.filters,
       }]);
 
-      track('recommendations_shown', {
+      trackChatResponseReceived({
         query: msgText,
-        results_count: (data.events?.length ?? data.total) || 0,
+        events_count: (data.events?.length ?? data.total) || 0,
         latency_ms: Date.now() - __recsStart,
-        filters: data.filters,
       });
 
       if (data.filters && Object.keys(data.filters).length > 0) {
-        onFiltersChange(data.filters);
+        // AI-generated filters → tag as 'chat'
+        onFiltersChange(data.filters, 'chat');
       }
-    } catch {
+    } catch (err) {
+      trackError({ type: 'chat_request_failed', message: err instanceof Error ? err.message : String(err) });
       setMessages((prev) => [...prev, { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }]);
     } finally {
       setLoading(false);
@@ -502,7 +517,10 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
 
   const chatContent = (
     <div className="chat-sidebar-inner">
-      <div className="chat-sidebar-messages">
+      {/* data-ph-no-capture: PostHog Session Replay will mask this area.
+          It contains children's names/ages typed by the user and echoed
+          in the AI chat, which counts as PII we never want recorded. */}
+      <div className="chat-sidebar-messages" data-ph-no-capture>
         <ChatMessages
           messages={messages}
           isLoading={loading || parsingChildren}
@@ -524,6 +542,7 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               rows={1}
+              data-ph-no-capture
               className="flex-1 resize-none px-3 py-2 border border-[rgba(255,255,255,0.1)] rounded-xl text-sm focus:outline-none focus:border-[#e91e63] max-h-24 bg-[#16143a] text-white placeholder-gray-500"
               style={{ minHeight: 38 }}
             />

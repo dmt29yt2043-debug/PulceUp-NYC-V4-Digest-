@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import PostHogProvider from "./PostHogProvider";
 
 export const metadata: Metadata = {
   title: "Pulse \u2014 events",
@@ -28,7 +29,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col" style={{ background: '#0f0d2e', color: '#ffffff' }}>
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
       </body>
     </html>
   );

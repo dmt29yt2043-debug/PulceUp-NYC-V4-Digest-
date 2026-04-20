@@ -3,7 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import type { Event, FilterState } from '@/lib/types';
-import { initAnalytics, trackEvent as track } from '@/lib/analytics';
+import {
+  initAnalytics,
+  trackFilterApplied,
+  trackCardExpanded,
+  trackMapOpened,
+  trackEvent as track,
+} from '@/lib/analytics';
 import EventDetail from '@/components/EventDetail';
 import ChatSidebar from '@/components/ChatSidebar';
 import WhatFilter from '@/components/FilterDialogs/WhatFilter';
@@ -386,7 +392,9 @@ function HomeInner() {
 
   // Handlers
   const handleEventClick = useCallback((event: Event) => {
-    track('card_opened', { event_id: event.id, event_title: event.title });
+    // Card expansion event — source defaults to 'feed' since this handler
+    // fires from the main event grid. Chat/digest variants use handleCardClick below.
+    trackCardExpanded({ event_id: event.id, event_title: event.title, source: 'feed' });
     setSelectedEvent(event);
     setDetailOpen(true);
     setSelectedItemId(event.id);
@@ -398,7 +406,7 @@ function HomeInner() {
   }, []);
 
   const handleFilterReset = useCallback(() => {
-    track('filter_applied', { filter_name: 'reset', filter_value: 'all' });
+    trackFilterApplied({ action: 'reset' }, 'reset');
     // Preserve age/children — user clears them only via "Clear" in Who dialog
     setFilters((prev) => {
       const kept: FilterState = {};
@@ -413,16 +421,28 @@ function HomeInner() {
     setChatResetKey((k) => k + 1);
   }, []);
 
-  const handleFiltersFromChat = useCallback((newFilters: FilterState) => {
-    setFilters(newFilters);
-    setPage(1);
-    setActiveTab('foryou');
-  }, []);
+  /**
+   * Called by ChatSidebar when filters change from any path inside it:
+   *   'chat'  — AI chat response
+   *   'ui'    — onboarding chip clicks, quiz URL
+   *   'reset' — profile reset clears filters
+   * The source flows through to trackFilterApplied so we can answer
+   * "is the AI chat working?" vs "do parents manage with UI alone?".
+   */
+  const handleFiltersFromChat = useCallback(
+    (newFilters: FilterState, source: 'chat' | 'ui' | 'reset') => {
+      trackFilterApplied(newFilters as Record<string, unknown>, source);
+      setFilters(newFilters);
+      setPage(1);
+      setActiveTab('foryou');
+    },
+    [],
+  );
 
-  // Discovery handlers
+  // Discovery handlers — alternative card-click path used by the discovery section.
   const handleCardClick = useCallback((event: unknown) => {
     const ev = event as { id: number; title: string };
-    track('card_clicked', { event_id: ev.id, event_title: ev.title, list_type: 'feed' });
+    trackCardExpanded({ event_id: ev.id, event_title: ev.title, source: 'feed' });
     setSelectedItemId(ev.id);
     setSelectedEvent(event as Parameters<typeof setSelectedEvent>[0]);
     setDetailOpen(true);
@@ -467,7 +487,10 @@ function HomeInner() {
   // Filter dialog handlers
   const handleWhatApply = useCallback(
     (included: string[], excluded: string[], search: string, highRating: boolean) => {
-      track('filter_applied', { filter_name: 'what', filter_value: { categories: included, search, highRating } });
+      trackFilterApplied(
+        { filter: 'what', categories: included, excludeCategories: excluded, search, highRating },
+        'ui',
+      );
       setFilters((prev) => ({
         ...prev,
         categories: included.length > 0 ? included : undefined,
@@ -483,7 +506,7 @@ function HomeInner() {
   );
 
   const handleWhenApply = useCallback((dateFrom: string, dateTo: string) => {
-    track('filter_applied', { filter_name: 'when', filter_value: { dateFrom, dateTo } });
+    trackFilterApplied({ filter: 'when', dateFrom, dateTo }, 'ui');
     setFilters((prev) => ({
       ...prev,
       dateFrom: dateFrom || undefined,
@@ -495,7 +518,7 @@ function HomeInner() {
   }, []);
 
   const handleDateBarSelect = useCallback((date: string | undefined) => {
-    track('filter_applied', { filter_name: 'datebar', filter_value: date });
+    trackFilterApplied({ filter: 'datebar', date }, 'ui');
     setFilters((prev) => ({
       ...prev,
       dateFrom: date || undefined,
@@ -507,6 +530,7 @@ function HomeInner() {
 
   const handleBudgetApply = useCallback(
     (priceMin?: number, priceMax?: number, isFree?: boolean) => {
+      trackFilterApplied({ filter: 'budget', priceMin, priceMax, isFree }, 'ui');
       setFilters((prev) => ({
         ...prev,
         priceMin,
@@ -521,7 +545,7 @@ function HomeInner() {
   );
 
   const handleWhoApply = useCallback((ageMax?: number, filterChildren?: import('@/lib/types').FilterChild[]) => {
-    track('filter_applied', { filter_name: 'who', filter_value: { ageMax } });
+    trackFilterApplied({ filter: 'who', ageMax, filter_children_count: filterChildren?.length ?? 0 }, 'ui');
     setFilters((prev) => ({
       ...prev,
       ageMax,
@@ -533,7 +557,7 @@ function HomeInner() {
   }, []);
 
   const handleWhereApply = useCallback((neighborhoods: string[]) => {
-    track('filter_applied', { filter_name: 'where', filter_value: { neighborhoods } });
+    trackFilterApplied({ filter: 'where', neighborhoods }, 'ui');
     const hasNeighborhoods = neighborhoods.length > 0 && !neighborhoods.includes('Anywhere in NYC');
     setFilters((prev) => ({
       ...prev,
@@ -558,6 +582,14 @@ function HomeInner() {
   const handlePriceSliderCommit = useCallback(() => {
     const hasMin = priceSliderMin > 0;
     const hasMax = priceSliderMax < 200;
+    trackFilterApplied(
+      {
+        filter: 'price_slider',
+        priceMin: hasMin ? priceSliderMin : undefined,
+        priceMax: hasMax ? priceSliderMax : undefined,
+      },
+      'ui',
+    );
     setFilters((prev) => ({
       ...prev,
       priceMin: hasMin ? priceSliderMin : undefined,
@@ -609,6 +641,7 @@ function HomeInner() {
   const handleDigestSelect = useCallback(async (slug: string) => {
     // Toggle off if clicking the same digest
     if (activeDigest?.slug === slug) {
+      trackFilterApplied({ action: 'digest_cleared', digest_slug: slug }, 'digest');
       setActiveDigest(null);
       setDigestEvents([]);
       syncDigestInUrl(null);
@@ -617,11 +650,15 @@ function HomeInner() {
     const ok = await loadDigest(slug);
     if (ok) {
       syncDigestInUrl(slug);
+      // Digest acts as a filter: intersect with current filter state.
+      // Tag the filter-change as 'digest' so we can measure digest-path conversion.
+      trackFilterApplied({ action: 'digest_selected', digest_slug: slug }, 'digest');
       track('digest_selected', { slug });
     }
   }, [activeDigest, loadDigest, syncDigestInUrl]);
 
   const handleDigestClear = useCallback(() => {
+    trackFilterApplied({ action: 'digest_cleared' }, 'digest');
     setActiveDigest(null);
     setDigestEvents([]);
     syncDigestInUrl(null);
@@ -655,6 +692,7 @@ function HomeInner() {
     if (slug) {
       loadDigest(slug).then((ok) => {
         if (!ok) syncDigestInUrl(null); // clean invalid slug from URL
+        else trackFilterApplied({ action: 'digest_from_url', digest_slug: slug }, 'digest');
       });
     }
     // Intentionally empty deps: run once on mount
@@ -1042,7 +1080,21 @@ function HomeInner() {
         <div className={mapExpanded ? 'map-column map-column--expanded' : 'map-column'}>
           <button
             className="map-expand-btn"
-            onClick={() => setMapExpanded(v => !v)}
+            onClick={() => {
+              setMapExpanded(v => {
+                const next = !v;
+                // Track map engagement when user EXPANDS — not on collapse.
+                // events_visible tells us what the user saw when they leaned in.
+                if (next) {
+                  trackMapOpened({
+                    events_visible: displayEvents.length,
+                    active_digest: activeDigest?.slug || null,
+                    has_filters: Object.keys(filters).length > 0,
+                  });
+                }
+                return next;
+              });
+            }}
             title={mapExpanded ? 'Collapse map' : 'Expand map'}
           >
             {mapExpanded ? '›' : '‹'}
