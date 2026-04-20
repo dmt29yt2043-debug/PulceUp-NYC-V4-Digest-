@@ -506,7 +506,7 @@ export function getEventsForChat(query?: string): { id: number; title: string; c
   // Otherwise we walk the whole table in stable pages and only cap at the
   // very end (token-budget guard for the LLM prompt).
   const PAGE = 500;
-  const HARD_CAP = 250; // upper bound for prompt tokens (~7.5k tokens)
+  const HARD_CAP = 80; // upper bound for prompt tokens (~2.5k tokens). Was 250 before QA — caused OpenAI TPM exhaustion under load.
   const all: Record<string, unknown>[] = [];
   let offset = 0;
   let processed = 0;

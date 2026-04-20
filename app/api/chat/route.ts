@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { getEvents, getEventsForChat, getCategories } from '@/lib/db';
 import type { FilterState, ChatMessage, UserProfile } from '@/lib/types';
+import { rateLimit, getClientKey } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -104,6 +105,31 @@ RESPONSE FORMAT (JSON only):
 
 export async function POST(request: Request) {
   try {
+    // ===== Rate limiting =====
+    // Protects /api/chat from bursting and exhausting OpenAI TPM quota.
+    // Load-test evidence: without this, 25+ concurrent requests collapse
+    // to near-zero success rate because the 200K TPM limit is shared.
+    // 20 req/min per IP is generous for a real user (1 every 3s), but
+    // cuts off scripted abuse and same-IP bursts.
+    const ipKey = getClientKey(request);
+    // Per-IP: 20 req/min — generous for a real user (1 every 3s)
+    const rl = rateLimit(`chat:${ipKey}`, 20, 60_000);
+    if (!rl.allowed) {
+      return Response.json(
+        { error: 'Too many requests. Please slow down.', retry_after_sec: rl.retryAfterSec },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } }
+      );
+    }
+    // Global TPM guard — even across many IPs we cap at ~40 calls/min
+    // (each ~2.5k tokens = 100k TPM, under OpenAI's 200k/min limit with headroom).
+    const globalRl = rateLimit('chat:global', 40, 60_000);
+    if (!globalRl.allowed) {
+      return Response.json(
+        { error: 'Service is busy. Please try again in a moment.', retry_after_sec: globalRl.retryAfterSec },
+        { status: 503, headers: { 'Retry-After': String(globalRl.retryAfterSec) } }
+      );
+    }
+
     const body = await request.json();
 
     // Mode: parse_children
