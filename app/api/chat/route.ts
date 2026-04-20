@@ -74,16 +74,18 @@ FILTER RULES:
   • "reading"/"books"/"storytime" → categories:["books"]
   • "movie"/"film" → categories:["film"]
 - Use search only for very specific terms like "Easter egg hunt" → search:"Easter", or when no category fits.
+- Language/bilingual queries: "Spanish" or "bilingual" → search:"Spanish" (single keyword, never multi-word search phrases).
 - Age semantics (VERY IMPORTANT):
   • "5yo"/"5 year old"/"my 5 year old" → ageMax:5 (event must suit a 5yo)
   • "teens" or "13+" or "13 and up" → ageMax:18 AND search:"teen" (or skip ageMax if too restrictive; teens need events with upper age range >= 13)
   • "toddler" → ageMax:3. "preschool" → ageMax:5. "tweens" → ageMax:12.
+  • "under 2"/"under 1"/"infant"/"baby" → ageMax:2 only (do NOT combine with ageMax:0)
 - Intent hints:
   • "indoor" → add search:"indoor" (not a category, but narrows)
   • "birthday party"/"birthday" → search:"birthday"
   • "rainy day" → hint about indoor — add search:"indoor"
 - "wheelchair"/"accessible" → wheelchairAccessible:true. "stroller" → strollerFriendly:true.
-- FEWER filters is better than empty results.
+- FEWER filters is better than empty results. If a combination would yield 0 results, drop the most restrictive filter.
 
 Available filter fields: categories(string[]), isFree(bool), ageMax(number), priceMax(number), dateFrom(YYYY-MM-DD), dateTo(YYYY-MM-DD), search(string), neighborhoods(string[]), location(string), wheelchairAccessible(bool), strollerFriendly(bool)
 Categories: ${categoryList}
@@ -226,8 +228,9 @@ Return ONLY the JSON object.`,
     // Get events with extracted filters
     let eventsResult = getEvents({ ...extractedFilters, page: 1, page_size: 10 });
 
-    // Auto-broaden: if 0 results, progressively remove restrictive filters
-    if (eventsResult.total === 0) {
+    // Auto-broaden: if 0 or very few results (< 3), progressively remove restrictive filters
+    // This covers sparse queries like "sports for 8yo" that return only 1 hit after strict filtering.
+    if (eventsResult.total < 3) {
       const broadeningSteps: { label: string; modify: (f: FilterState) => FilterState }[] = [
         {
           label: 'location',
@@ -268,7 +271,7 @@ Return ONLY the JSON object.`,
       for (const step of broadeningSteps) {
         currentFilters = step.modify(currentFilters);
         const tryResult = getEvents({ ...currentFilters, page: 1, page_size: 10 });
-        if (tryResult.total > 0) {
+        if (tryResult.total >= 3) {
           eventsResult = tryResult;
           extractedFilters = currentFilters;
           break;
