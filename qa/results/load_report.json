@@ -1,0 +1,354 @@
+{
+  "generated_at": "2026-04-20T06:18:38.045Z",
+  "base_url": "http://localhost:3004",
+  "scenarios": [
+    {
+      "scenario": "GET /api/events (no filter)",
+      "concurrency": 10,
+      "total": 40,
+      "duration_ms": 255,
+      "rps": 156.9,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 54,
+        "p50": 54,
+        "p95": 68,
+        "p99": 68,
+        "max": 68
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "GET /api/events (free+age)",
+      "concurrency": 10,
+      "total": 40,
+      "duration_ms": 212,
+      "rps": 188.7,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 48,
+        "p50": 50,
+        "p95": 72,
+        "p99": 73,
+        "max": 73
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "GET /api/digests",
+      "concurrency": 10,
+      "total": 40,
+      "duration_ms": 169,
+      "rps": 236.7,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 30,
+        "p50": 29,
+        "p95": 79,
+        "p99": 86,
+        "max": 86
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "GET /api/digests/spring-in-nyc",
+      "concurrency": 10,
+      "total": 40,
+      "duration_ms": 419,
+      "rps": 95.5,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 101,
+        "p50": 91,
+        "p95": 177,
+        "p99": 182,
+        "max": 182
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "POST /api/chat (LLM)",
+      "concurrency": 10,
+      "total": 20,
+      "duration_ms": 4563,
+      "rps": 4.4,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 2004,
+        "p50": 2008,
+        "p95": 2323,
+        "p99": 2323,
+        "max": 2323
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "GET /",
+      "concurrency": 10,
+      "total": 40,
+      "duration_ms": 752,
+      "rps": 53.2,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 176,
+        "p50": 182,
+        "p95": 266,
+        "p99": 267,
+        "max": 267
+      },
+      "sample_failures": [],
+      "user_count": 10
+    },
+    {
+      "scenario": "GET /api/events (no filter)",
+      "concurrency": 25,
+      "total": 100,
+      "duration_ms": 445,
+      "rps": 224.7,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 99,
+        "p50": 91,
+        "p95": 210,
+        "p99": 232,
+        "max": 232
+      },
+      "sample_failures": [],
+      "user_count": 25
+    },
+    {
+      "scenario": "GET /api/events (free+age)",
+      "concurrency": 25,
+      "total": 100,
+      "duration_ms": 366,
+      "rps": 273.2,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 80,
+        "p50": 90,
+        "p95": 136,
+        "p99": 218,
+        "max": 218
+      },
+      "sample_failures": [],
+      "user_count": 25
+    },
+    {
+      "scenario": "GET /api/digests",
+      "concurrency": 25,
+      "total": 100,
+      "duration_ms": 186,
+      "rps": 537.6,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 43,
+        "p50": 36,
+        "p95": 136,
+        "p99": 183,
+        "max": 183
+      },
+      "sample_failures": [],
+      "user_count": 25
+    },
+    {
+      "scenario": "GET /api/digests/spring-in-nyc",
+      "concurrency": 25,
+      "total": 100,
+      "duration_ms": 335,
+      "rps": 298.5,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 78,
+        "p50": 81,
+        "p95": 109,
+        "p99": 111,
+        "max": 111
+      },
+      "sample_failures": [],
+      "user_count": 25
+    },
+    {
+      "scenario": "POST /api/chat (LLM)",
+      "concurrency": 25,
+      "total": 50,
+      "duration_ms": 16007,
+      "rps": 3.1,
+      "failures": 50,
+      "latency_ms": {
+        "avg": 7806,
+        "p50": 7782,
+        "p95": 8462,
+        "p99": 8540,
+        "max": 8540
+      },
+      "sample_failures": [
+        {
+          "idx": 25,
+          "status": 500
+        },
+        {
+          "idx": 26,
+          "status": 500
+        },
+        {
+          "idx": 27,
+          "status": 500
+        },
+        {
+          "idx": 28,
+          "status": 500
+        },
+        {
+          "idx": 29,
+          "status": 500
+        }
+      ],
+      "user_count": 25
+    },
+    {
+      "scenario": "GET /",
+      "concurrency": 25,
+      "total": 100,
+      "duration_ms": 1519,
+      "rps": 65.8,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 333,
+        "p50": 294,
+        "p95": 700,
+        "p99": 705,
+        "max": 705
+      },
+      "sample_failures": [],
+      "user_count": 25
+    },
+    {
+      "scenario": "GET /api/events (no filter)",
+      "concurrency": 50,
+      "total": 200,
+      "duration_ms": 1002,
+      "rps": 199.6,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 221,
+        "p50": 253,
+        "p95": 298,
+        "p99": 300,
+        "max": 433
+      },
+      "sample_failures": [],
+      "user_count": 50
+    },
+    {
+      "scenario": "GET /api/events (free+age)",
+      "concurrency": 50,
+      "total": 200,
+      "duration_ms": 638,
+      "rps": 313.5,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 139,
+        "p50": 163,
+        "p95": 286,
+        "p99": 298,
+        "max": 341
+      },
+      "sample_failures": [],
+      "user_count": 50
+    },
+    {
+      "scenario": "GET /api/digests",
+      "concurrency": 50,
+      "total": 200,
+      "duration_ms": 416,
+      "rps": 480.8,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 95,
+        "p50": 34,
+        "p95": 401,
+        "p99": 415,
+        "max": 416
+      },
+      "sample_failures": [],
+      "user_count": 50
+    },
+    {
+      "scenario": "GET /api/digests/spring-in-nyc",
+      "concurrency": 50,
+      "total": 200,
+      "duration_ms": 423,
+      "rps": 472.8,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 98,
+        "p50": 94,
+        "p95": 136,
+        "p99": 141,
+        "max": 141
+      },
+      "sample_failures": [],
+      "user_count": 50
+    },
+    {
+      "scenario": "POST /api/chat (LLM)",
+      "concurrency": 50,
+      "total": 100,
+      "duration_ms": 27350,
+      "rps": 3.7,
+      "failures": 90,
+      "latency_ms": {
+        "avg": 7194,
+        "p50": 7536,
+        "p95": 8831,
+        "p99": 27350,
+        "max": 27350
+      },
+      "sample_failures": [
+        {
+          "idx": 50,
+          "status": 500
+        },
+        {
+          "idx": 53,
+          "status": 500
+        },
+        {
+          "idx": 54,
+          "status": 500
+        },
+        {
+          "idx": 55,
+          "status": 500
+        },
+        {
+          "idx": 56,
+          "status": 500
+        }
+      ],
+      "user_count": 50
+    },
+    {
+      "scenario": "GET /",
+      "concurrency": 50,
+      "total": 200,
+      "duration_ms": 2757,
+      "rps": 72.5,
+      "failures": 0,
+      "latency_ms": {
+        "avg": 605,
+        "p50": 511,
+        "p95": 1396,
+        "p99": 1433,
+        "max": 1434
+      },
+      "sample_failures": [],
+      "user_count": 50
+    }
+  ]
+}

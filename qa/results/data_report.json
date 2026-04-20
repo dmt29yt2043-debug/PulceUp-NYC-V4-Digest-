@@ -1,0 +1,217 @@
+{
+  "generated_at": "2026-04-20T06:14:06.175Z",
+  "summary": {
+    "total_events_in_db": 1356,
+    "visible_to_users": 206,
+    "hidden_by_filters": 1150
+  },
+  "field_completeness_percent_of_visible": {
+    "title": 100,
+    "category_l1": 59.2,
+    "age_min": 53.9,
+    "age_best_from": 100,
+    "age_best_to": 100,
+    "age_label": 100,
+    "price_min": 100,
+    "price_summary": 100,
+    "is_free": 100,
+    "next_start_at": 100,
+    "next_end_at": 0,
+    "image_url": 100,
+    "venue_name": 100,
+    "address": 100,
+    "lat_lon": 87.9,
+    "description": 99.5,
+    "tagline": 100
+  },
+  "missing_percent": {
+    "missing_category_percent": 40.8,
+    "missing_age_percent": 0,
+    "missing_price_percent": 0,
+    "missing_date_percent": 0,
+    "missing_end_date_percent": 100,
+    "missing_image_percent": 0,
+    "missing_geo_percent": 12.1,
+    "missing_description_percent": 0.5
+  },
+  "anomalies": {
+    "duplicate_titles": 2,
+    "duplicate_title_plus_venue": 0,
+    "broken_digest_links": 0,
+    "weird_ages": 7,
+    "weird_prices": 0,
+    "past_events_shown": 0,
+    "is_free_but_price_set": 2,
+    "no_category_but_has_tags": 84
+  },
+  "samples": {
+    "top_duplicate_titles": [
+      {
+        "title": "Wings over Wave Hill",
+        "c": 2
+      },
+      {
+        "title": "Classical4Kids",
+        "c": 2
+      }
+    ],
+    "duplicate_title_plus_venue": []
+  },
+  "distributions": {
+    "by_category": [
+      {
+        "cat": "_empty_",
+        "c": 84
+      },
+      {
+        "cat": "family",
+        "c": 66
+      },
+      {
+        "cat": "arts",
+        "c": 13
+      },
+      {
+        "cat": "music",
+        "c": 11
+      },
+      {
+        "cat": "theater",
+        "c": 7
+      },
+      {
+        "cat": "sports",
+        "c": 5
+      },
+      {
+        "cat": "comedy",
+        "c": 3
+      },
+      {
+        "cat": "attractions",
+        "c": 3
+      },
+      {
+        "cat": "outdoors",
+        "c": 2
+      },
+      {
+        "cat": "community",
+        "c": 2
+      },
+      {
+        "cat": "wellness",
+        "c": 1
+      },
+      {
+        "cat": "science",
+        "c": 1
+      },
+      {
+        "cat": "nightlife",
+        "c": 1
+      },
+      {
+        "cat": "holiday",
+        "c": 1
+      },
+      {
+        "cat": "gaming",
+        "c": 1
+      },
+      {
+        "cat": "food",
+        "c": 1
+      },
+      {
+        "cat": "film",
+        "c": 1
+      },
+      {
+        "cat": "fashion",
+        "c": 1
+      },
+      {
+        "cat": "education",
+        "c": 1
+      },
+      {
+        "cat": "books",
+        "c": 1
+      }
+    ],
+    "age_coverage": {
+      "fits_3": 87,
+      "fits_5": 150,
+      "fits_8": 159,
+      "fits_12": 135,
+      "fits_15": 55
+    },
+    "status_breakdown": [
+      {
+        "status": "synth.expired",
+        "c": 627
+      },
+      {
+        "status": "verify.expired",
+        "c": 393
+      },
+      {
+        "status": "synth.done",
+        "c": 111
+      },
+      {
+        "status": "verify.done",
+        "c": 92
+      },
+      {
+        "status": "verify.synth",
+        "c": 30
+      },
+      {
+        "status": "verify.intake",
+        "c": 25
+      },
+      {
+        "status": "verify.geo",
+        "c": 24
+      },
+      {
+        "status": "verify.fields",
+        "c": 20
+      },
+      {
+        "status": "verify.delete",
+        "c": 9
+      },
+      {
+        "status": "discovery.expired",
+        "c": 8
+      },
+      {
+        "status": "verify.not_ny",
+        "c": 6
+      },
+      {
+        "status": "verify.discovery",
+        "c": 3
+      },
+      {
+        "status": "discovery.done",
+        "c": 3
+      },
+      {
+        "status": "verify.review",
+        "c": 2
+      },
+      {
+        "status": "verify.dupe",
+        "c": 2
+      },
+      {
+        "status": "published",
+        "c": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "generated_at": "2026-04-20",
+  "target": "http://localhost:3004 (dev) + https://pulseup-v4.srv1362562.hstgr.cloud/ (prod)",
+  "total_bugs": 14,
+  "by_severity": { "critical": 1, "high": 2, "medium": 5, "low": 6 },
+  "bugs": [
+    {
+      "bug_id": "BUG_001",
+      "title": "/api/chat collapses at 25+ concurrent users (50-90% failure rate)",
+      "severity": "critical",
+      "component": "chat_api / openai_integration",
+      "evidence_from": "qa/results/load_report.json",
+      "steps_to_reproduce": "Run: node qa/scripts/load_test.js — 25 concurrent POSTs to /api/chat → 50/50 failures. 50 concurrent → 90/100 failures.",
+      "expected": "Chat should handle at least 25 concurrent users with <10% failure rate (OpenAI rate limits, timeouts handled gracefully, fallback)",
+      "actual": "25 concurrent = 100% failures, 50 concurrent = 90% failures. Errors surface as HTTP 500 / timeouts.",
+      "impact": "Even a small beta (100 signups trying at once) will have chat broken for most users. This is the single-most-important product interaction.",
+      "fix_suggestions": [
+        "Add queue + rate limiting at /api/chat",
+        "Implement OpenAI streaming with partial fallback on timeout",
+        "Use gpt-4o-mini (cheaper + faster) explicitly, or fall back to non-LLM filter-extraction heuristic when LLM times out",
+        "Prod deploy (standalone + PM2) may handle it better than dev server — retest after prod deploy"
+      ]
+    },
+    {
+      "bug_id": "BUG_002",
+      "title": "Chat response latency too high (avg 3.2s, p95 8s, max 11.7s)",
+      "severity": "high",
+      "component": "chat_api",
+      "evidence_from": "qa/results/recommendation_results.json",
+      "steps_to_reproduce": "Run: node qa/scripts/recommendation_tests.js — measure latency across 50 test cases.",
+      "expected": "Target: avg <2s, p95 <4s, max <8s for a search UX",
+      "actual": "avg 3.2s, p50 2.3s, p95 8.1s, p99 11.1s, max 11.7s",
+      "impact": "User waits multiple seconds per query — drops conversion, especially on mobile.",
+      "fix_suggestions": [
+        "Switch chat model to gpt-4o-mini if still on gpt-4o",
+        "Reduce the events summary block sent to LLM (currently 50 events)",
+        "Stream response to show partial result faster",
+        "Cache common queries"
+      ]
+    },
+    {
+      "bug_id": "BUG_003",
+      "title": "40.8% of visible events have NULL category_l1",
+      "severity": "high",
+      "component": "data_pipeline",
+      "evidence_from": "qa/results/data_report.json",
+      "steps_to_reproduce": "SELECT COUNT(*) WHERE category_l1 IS NULL OR ='' on visible events → 84 of 206 (40.8%).",
+      "expected": "All events should be categorized (category_l1 set) for the category filter to work",
+      "actual": "84 events have no primary category. Category filter misses them unless they match via tags/categories JSON.",
+      "impact": "Category filter (the main UX control) under-delivers — ~40% of the catalog invisible to category searches. Already partially mitigated by expanded filter searching tags+categories JSON.",
+      "fix_suggestions": [
+        "Run a categorization pass on the event_ingest pipeline",
+        "Fallback: extract category from tags/categories JSON at indexing time and populate category_l1"
+      ]
+    },
+    {
+      "bug_id": "BUG_004",
+      "title": "100% of events have empty next_end_at (not NULL)",
+      "severity": "medium",
+      "component": "data_pipeline",
+      "evidence_from": "qa/results/data_report.json",
+      "steps_to_reproduce": "Check: SELECT CASE WHEN next_end_at='' THEN 'empty' ELSE 'has' END, COUNT(*) FROM events → 1356 all empty.",
+      "expected": "Events should have end times so duration/scheduling is accurate",
+      "actual": "Empty string for all 1356 events. Already worked-around via NULLIF in SQL, but semantically wrong.",
+      "impact": "Ongoing events use 'start + 1 day' as end — incorrect for long-running exhibitions (months) or short events (<1 hour).",
+      "fix_suggestions": [
+        "Fix CSV export to populate next_end_at",
+        "Or during import, compute from event duration where available"
+      ]
+    },
+    {
+      "bug_id": "BUG_005",
+      "title": "7 events with out-of-range ages (age_min < 0 or > 18, or age_best_to > 100)",
+      "severity": "medium",
+      "component": "data_pipeline",
+      "evidence_from": "qa/results/data_report.json",
+      "steps_to_reproduce": "SELECT COUNT(*) WHERE age_min<0 OR age_min>18 OR age_best_to>100 → 7.",
+      "expected": "All ages in [0, 18]",
+      "actual": "7 events have ages like 0-100, 0-150 — catch-all that defeats age filtering.",
+      "impact": "These events are 'age-agnostic' and show up for ANY child age, including inappropriate content for young kids.",
+      "fix_suggestions": ["Cap age_best_to at 18 during import; manually review the 7 records."]
+    },
+    {
+      "bug_id": "BUG_006",
+      "title": "2 events marked is_free=1 but have price_min > 0",
+      "severity": "low",
+      "component": "data_pipeline",
+      "evidence_from": "qa/results/data_report.json",
+      "steps_to_reproduce": "SELECT COUNT(*) WHERE is_free=1 AND price_min>0 → 2.",
+      "expected": "If is_free, price_min must be 0",
+      "actual": "Inconsistency — UI may show 'FREE' badge with a price underneath.",
+      "impact": "Minor UX inconsistency; 2 events will confuse users.",
+      "fix_suggestions": ["Data cleanup script: UPDATE events SET is_free=0 WHERE price_min > 0 AND is_free = 1"]
+    },
+    {
+      "bug_id": "BUG_007",
+      "title": "12.1% of visible events lack lat/lon — not shown on map",
+      "severity": "low",
+      "component": "data_pipeline",
+      "evidence_from": "qa/results/data_report.json",
+      "steps_to_reproduce": "SELECT COUNT(*) WHERE lat IS NULL → 25 of 206 (12.1%).",
+      "expected": "Geographic events on map",
+      "actual": "25 events exist in grid but are invisible on map. If user zooms map, these disappear from displayEvents in bounds mode.",
+      "impact": "Users using map-based discovery may miss events. Nasty surprise if they're looking for venues without coordinates.",
+      "fix_suggestions": [
+        "Geocode remaining events with Google Maps / Mapbox API",
+        "Or show a badge 'location TBD' and exclude from map-only mode"
+      ]
+    },
+    {
+      "bug_id": "BUG_008",
+      "title": "TC_016 'birthday party for 6 year olds' returns only 1 irrelevant event",
+      "severity": "medium",
+      "component": "recommendation_engine / chat_prompt",
+      "evidence_from": "qa/results/recommendation_results.json",
+      "steps_to_reproduce": "POST /api/chat {\"message\":\"birthday party ideas for 6 year olds\"} → filters:{search:'birthday'}, 1 result",
+      "expected": "Broader fallback — return kid-friendly events suitable for party planning",
+      "actual": "Only 'Utopia Saturdays' (age 21-21) — completely irrelevant",
+      "impact": "Common parent query fails to deliver. Bad first impression for anyone searching 'birthday'.",
+      "fix_suggestions": [
+        "Don't set search='birthday' if it yields <3 results — fall back to categories based on age",
+        "Tag existing events with birthday-suitable metadata in ingest"
+      ]
+    },
+    {
+      "bug_id": "BUG_009",
+      "title": "TC_033 empty query returns HTTP 400",
+      "severity": "low",
+      "component": "chat_api",
+      "evidence_from": "qa/results/recommendation_results.json",
+      "steps_to_reproduce": "POST /api/chat {\"message\":\"\"} → 400 'Message is required'",
+      "expected": "Either accept empty as 'show everything' OR return 400 with client-friendly error payload",
+      "actual": "Raw 400 response — frontend never sends empty queries, so low impact, but robust APIs should handle.",
+      "impact": "Low — UX already prevents this, but API is brittle to scripted misuse.",
+      "fix_suggestions": ["Accept empty and return unfiltered results; or validate before POST on client"]
+    },
+    {
+      "bug_id": "BUG_010",
+      "title": "/admin/analytics publicly accessible (no auth)",
+      "severity": "medium",
+      "component": "security",
+      "evidence_from": "qa/results/security_report.json",
+      "steps_to_reproduce": "GET /admin/analytics → 200 without auth",
+      "expected": "Admin routes require authentication",
+      "actual": "Anyone can view analytics dashboard. Inherited from upstream.",
+      "impact": "Exposes business metrics (event counts, user activity) to competitors.",
+      "fix_suggestions": [
+        "Add basic HTTP auth middleware, or check an admin session cookie",
+        "For beta: move /admin behind an IP allowlist or shared-password gate"
+      ]
+    },
+    {
+      "bug_id": "BUG_011",
+      "title": "/api/debug/session publicly accessible",
+      "severity": "medium",
+      "component": "security",
+      "evidence_from": "qa/results/security_report.json",
+      "steps_to_reproduce": "GET /api/debug/session → 200",
+      "expected": "Debug routes should be dev-only or require auth",
+      "actual": "Returns {session:null, flagged_ids:[]}. Not super sensitive but unnecessary exposure.",
+      "impact": "Low now (returns empty data), but if populated with real session info, becomes a leak.",
+      "fix_suggestions": [
+        "Gate behind NODE_ENV !== 'production', or behind auth",
+        "Disable /api/debug/* on prod build"
+      ]
+    },
+    {
+      "bug_id": "BUG_012",
+      "title": "No rate limiting anywhere",
+      "severity": "medium",
+      "component": "security",
+      "evidence_from": "qa/results/security_report.json",
+      "steps_to_reproduce": "100 parallel GET /api/events → all 200 in 322ms",
+      "expected": "Rate limit per IP on all public endpoints (especially /api/chat to prevent OpenAI cost abuse)",
+      "actual": "No 429 responses even under burst. A malicious client can exhaust OpenAI quota.",
+      "impact": "Cost risk (unauthenticated /api/chat calls a paid LLM), scraping risk.",
+      "fix_suggestions": [
+        "Add middleware rate limit (e.g. 30 req/min per IP for /api/chat, 300 for /api/events)",
+        "Can use @upstash/ratelimit or simple in-memory for single-instance"
+      ]
+    },
+    {
+      "bug_id": "BUG_013",
+      "title": "Missing security headers (CSP, X-Content-Type-Options, X-Frame-Options)",
+      "severity": "low",
+      "component": "security / headers",
+      "evidence_from": "qa/results/security_report.json",
+      "steps_to_reproduce": "curl -I http://localhost:3004/ — no CSP, XCTO, XFO.",
+      "expected": "Set reasonable security headers for defense-in-depth",
+      "actual": "None set. HSTS is set automatically by Caddy on prod (HTTPS).",
+      "impact": "Low — modern Next.js + Caddy handles most, but no CSP means any inline script could run.",
+      "fix_suggestions": ["Add headers in next.config.ts `headers` or via Caddy reverse_proxy response_headers"]
+    },
+    {
+      "bug_id": "BUG_014",
+      "title": "Category label inconsistency: lowercase 'comedy'/'food'/etc vs Title Case 'Arts & Culture' (partially fixed, needs redeploy)",
+      "severity": "low",
+      "component": "ui_polish / getCategories()",
+      "evidence_from": "manual inspection of /api/categories",
+      "steps_to_reproduce": "GET /api/categories → many labels lowercase",
+      "expected": "All Title Case for consistent UI",
+      "actual": "Fixed in commit 351b3ec (added labelMap entries). Confirmed working on local 3004. Prod v4 was also deployed. Needs re-verification after any new CSV import.",
+      "impact": "Minor UX polish",
+      "fix_suggestions": ["Verified fix. Keep regression test in recommendation_tests."]
+    }
+  ]
+}

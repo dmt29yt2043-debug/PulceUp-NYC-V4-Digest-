@@ -1,0 +1,165 @@
+{
+  "generated_at": "2026-04-20T06:22:00.060Z",
+  "base_url": "http://localhost:3004",
+  "analytics_endpoint_test": {
+    "status": 204,
+    "ok": true
+  },
+  "events_fired_in_code": [
+    "buy_clicked",
+    "card_clicked",
+    "card_opened",
+    "chat_started",
+    "digest_selected",
+    "digest_tag_click",
+    "external_link_clicked",
+    "favorite_toggled",
+    "filter_applied",
+    "message_sent",
+    "onboarding_completed",
+    "personalized_results_shown",
+    "quiz_landing_loaded",
+    "quiz_params_parsed",
+    "recommendations_requested",
+    "recommendations_shown",
+    "result_clicked",
+    "share_clicked",
+    "tab_switched",
+    "ticket_link_clicked"
+  ],
+  "total_call_sites": 26,
+  "expected_for_beta": [
+    "page_view",
+    "chat_started",
+    "chat_sent",
+    "message_sent",
+    "onboarding_completed",
+    "onboarding_started",
+    "recommendations_shown",
+    "results_shown",
+    "card_clicked",
+    "event_clicked",
+    "card_click",
+    "buy_clicked",
+    "purchase_click",
+    "buy_click",
+    "filter_applied",
+    "digest_selected"
+  ],
+  "coverage": {
+    "page_view": false,
+    "chat_started": true,
+    "onboarding_completed": true,
+    "recommendations_shown": true,
+    "card_clicked": true,
+    "buy_clicked": true,
+    "filter_applied": true,
+    "digest_selected": true
+  },
+  "call_sites": [
+    {
+      "event": "card_opened",
+      "line": "./app/page.tsx:389: track('card_opened', { event_id: event.id, event_title: event.title });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:401: track('filter_applied', { filter_name: 'reset', filter_value: 'all' });"
+    },
+    {
+      "event": "card_clicked",
+      "line": "./app/page.tsx:425: track('card_clicked', { event_id: ev.id, event_title: ev.title, list_type: 'feed' });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:470: track('filter_applied', { filter_name: 'what', filter_value: { categories: included, search, highRating } });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:486: track('filter_applied', { filter_name: 'when', filter_value: { dateFrom, dateTo } });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:498: track('filter_applied', { filter_name: 'datebar', filter_value: date });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:524: track('filter_applied', { filter_name: 'who', filter_value: { ageMax } });"
+    },
+    {
+      "event": "filter_applied",
+      "line": "./app/page.tsx:536: track('filter_applied', { filter_name: 'where', filter_value: { neighborhoods } });"
+    },
+    {
+      "event": "digest_selected",
+      "line": "./app/page.tsx:620: track('digest_selected', { slug });"
+    },
+    {
+      "event": "digest_tag_click",
+      "line": "./app/page.tsx:644: track('digest_tag_click', { tag, peer_count: peers.length });"
+    },
+    {
+      "event": "tab_switched",
+      "line": "./app/page.tsx:702: onClick={() => { track('tab_switched', { tab: 'feed' }); setActiveTab('feed'); }}"
+    },
+    {
+      "event": "tab_switched",
+      "line": "./app/page.tsx:708: onClick={() => { track('tab_switched', { tab: 'foryou' }); setActiveTab('foryou'); }}"
+    },
+    {
+      "event": "quiz_landing_loaded",
+      "line": "./app/results/page.tsx:59: track('quiz_landing_loaded', { source, child_age: childAge, borough, interests, pain });"
+    },
+    {
+      "event": "quiz_params_parsed",
+      "line": "./app/results/page.tsx:72: track('quiz_params_parsed', { child_age: childAge, borough, interests, pain });"
+    },
+    {
+      "event": "personalized_results_shown",
+      "line": "./app/results/page.tsx:73: track('personalized_results_shown', { count: data.events?.length || 0 });"
+    },
+    {
+      "event": "result_clicked",
+      "line": "./app/results/page.tsx:82: track('result_clicked', {"
+    },
+    {
+      "event": "onboarding_completed",
+      "line": "./components/ChatSidebar.tsx:353: track('onboarding_completed', { children_count: finalProfile.children.length, neighborhoods_count: finalProfile.neighborhoods.length });"
+    },
+    {
+      "event": "chat_started",
+      "line": "./components/ChatSidebar.tsx:418: track('chat_started', { entry_point: 'chat_sidebar' });"
+    },
+    {
+      "event": "message_sent",
+      "line": "./components/ChatSidebar.tsx:420: track('message_sent', { message_length: msgText.length, has_voice: false, has_text: true });"
+    },
+    {
+      "event": "recommendations_requested",
+      "line": "./components/ChatSidebar.tsx:421: track('recommendations_requested', { query_type: 'chat', has_filters: !!(filters && Object.keys(filters).length) });"
+    },
+    {
+      "event": "recommendations_shown",
+      "line": "./components/ChatSidebar.tsx:445: track('recommendations_shown', {"
+    },
+    {
+      "event": "share_clicked",
+      "line": "./components/EventDetail.tsx:360: <button className=\"ed-topbar-btn\" aria-label=\"Share\" onClick={() => { track('share_clicked', { event_id: event.id, event_title: event.title }); navigator.share?.({ ti"
+    },
+    {
+      "event": "buy_clicked",
+      "line": "./components/EventDetail.tsx:499: track('buy_clicked', { event_id: event.id, event_title: event.title, button_type: 'buy_tickets', destination_url: event.source_url });"
+    },
+    {
+      "event": "ticket_link_clicked",
+      "line": "./components/EventDetail.tsx:500: track('ticket_link_clicked', { event_id: event.id, destination_url: event.source_url });"
+    },
+    {
+      "event": "external_link_clicked",
+      "line": "./components/EventDetail.tsx:501: track('external_link_clicked', { destination_url: event.source_url, source: 'event_detail' });"
+    },
+    {
+      "event": "favorite_toggled",
+      "line": "./lib/FavoritesContext.tsx:36: track('favorite_toggled', { event_id: event.id, event_title: event.title, action: exists ? 'remove' : 'add' });"
+    }
+  ]
+}

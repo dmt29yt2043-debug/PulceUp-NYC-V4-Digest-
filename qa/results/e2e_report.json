@@ -1,0 +1,201 @@
+{
+  "generated_at": "2026-04-20T06:18:01.721Z",
+  "base_url": "http://localhost:3004",
+  "total_checks": 36,
+  "passed": 36,
+  "failed": 0,
+  "pass_rate_percent": 100,
+  "failures": [],
+  "all": [
+    {
+      "flow": "flow1:chat",
+      "step": "chat returns 200",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "has filters",
+      "ok": true,
+      "detail": "{\"categories\":[\"outdoors\"],\"ageMax\":5}"
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "has message",
+      "ok": true,
+      "detail": "len=188"
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "has events array",
+      "ok": true,
+      "detail": "n=10"
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "events > 0",
+      "ok": true
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "event has required fields",
+      "ok": true
+    },
+    {
+      "flow": "flow1:chat",
+      "step": "message has no HTML",
+      "ok": true
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "digests list 200",
+      "ok": true
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "has categories",
+      "ok": true
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "has digests",
+      "ok": true
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "digest[spring-outdoor-girls] 200",
+      "ok": true
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "digest has events",
+      "ok": true,
+      "detail": "n=5"
+    },
+    {
+      "flow": "flow2:digest",
+      "step": "events have required fields",
+      "ok": true
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "unfiltered OK",
+      "ok": true,
+      "detail": "total=242"
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "isFree filter OK",
+      "ok": true,
+      "detail": "total=143"
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "isFree total <= unfiltered",
+      "ok": true
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "isFree all events actually free",
+      "ok": true
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "category filter OK",
+      "ok": true,
+      "detail": "total=59"
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "age filter OK",
+      "ok": true,
+      "detail": "total=178"
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "date_from filter OK",
+      "ok": true,
+      "detail": "total=67"
+    },
+    {
+      "flow": "flow3:filters",
+      "step": "date_from reduces results",
+      "ok": true
+    },
+    {
+      "flow": "flow4:empty",
+      "step": "HTTP 200 on empty",
+      "ok": true
+    },
+    {
+      "flow": "flow4:empty",
+      "step": "total is 0",
+      "ok": true
+    },
+    {
+      "flow": "flow4:empty",
+      "step": "events is empty array",
+      "ok": true
+    },
+    {
+      "flow": "flow4:empty",
+      "step": "extreme filter returns 200",
+      "ok": true
+    },
+    {
+      "flow": "flow4:empty",
+      "step": "extreme filter returns 0",
+      "ok": true
+    },
+    {
+      "flow": "flow5:detail",
+      "step": "event[828] 200",
+      "ok": true
+    },
+    {
+      "flow": "flow5:detail",
+      "step": "has title",
+      "ok": true
+    },
+    {
+      "flow": "flow5:detail",
+      "step": "has description",
+      "ok": true
+    },
+    {
+      "flow": "flow5:detail",
+      "step": "999999 returns 404",
+      "ok": true
+    },
+    {
+      "flow": "flow5:detail",
+      "step": "invalid id returns 400",
+      "ok": true
+    },
+    {
+      "flow": "flow6:ssr",
+      "step": "homepage 200",
+      "ok": true
+    },
+    {
+      "flow": "flow6:ssr",
+      "step": "has <title>",
+      "ok": true
+    },
+    {
+      "flow": "flow6:ssr",
+      "step": "has Next.js markers",
+      "ok": true
+    },
+    {
+      "flow": "flow6:ssr",
+      "step": "no visible error text",
+      "ok": true
+    },
+    {
+      "flow": "flow6:ssr",
+      "step": "digest URL 200",
+      "ok": true
+    }
+  ]
+}
