@@ -19,11 +19,17 @@ interface DigestCardProps {
 }
 
 const TAG_COLORS: Record<string, string> = {
+  // legacy — kept in case older digest data is cached somewhere
   SEASONAL:    '#4ade80',
   'VIBE CHECK':'#a78bfa',
   CULTURE:     '#fb923c',
   HOLIDAY:     '#f472b6',
-  WEEKEND:     '#38bdf8',
+  // current 5 programmatic digests
+  WEEKEND:     '#38bdf8',  // light blue
+  INDOOR:      '#fbbf24',  // warm amber — cosy / rainy-day
+  EASY:        '#86efac',  // mint
+  BUDGET:      '#4ade80',  // green
+  POPULAR:     '#f472b6',  // pink
 };
 
 export default function DigestCard({ digest, onClick, isActive = false }: DigestCardProps) {
