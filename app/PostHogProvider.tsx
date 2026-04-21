@@ -32,13 +32,13 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
       person_profiles: 'always',
 
       // Session Replays — controlled by env var.
-      // PII masking: any element (or its children) with data-ph-no-capture
-      // will have both its rendered text AND input values hidden (***).
+      // PII masking: elements with data-ph-no-capture are fully blocked
+      // (shown as black box) — hides both rendered text AND input values.
       // Applied to: chat messages area + chat textarea in ChatSidebar.
       session_recording: {
         maskAllInputs: false,
-        maskTextSelector:  '[data-ph-no-capture]', // masks rendered text nodes
-        maskInputSelector: '[data-ph-no-capture]', // masks <input>/<textarea> values
+        maskTextSelector: '[data-ph-no-capture]', // masks rendered text nodes
+        blockSelector:    '[data-ph-no-capture]', // fully blocks input values too
       },
       disable_session_recording: !recordEnabled,
 
