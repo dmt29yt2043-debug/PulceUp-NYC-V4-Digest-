@@ -6,10 +6,17 @@ import path from 'path';
 const csvPath = path.join(__dirname, '..', 'data', 'event_us.csv');
 const dbPath = path.join(__dirname, '..', 'data', 'events.db');
 
-// Remove existing db
-if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
-
+// BUG_009: previously we `unlinkSync(dbPath)` — which also wiped the `digests`
+// and `digest_events` tables seeded separately. Now we only drop/recreate
+// the `events` table (and its indexes), preserving everything else.
 const db = new Database(dbPath);
+db.exec(`
+  DROP INDEX IF EXISTS idx_events_category;
+  DROP INDEX IF EXISTS idx_events_free;
+  DROP INDEX IF EXISTS idx_events_lat_lon;
+  DROP INDEX IF EXISTS idx_events_start;
+  DROP TABLE IF EXISTS events;
+`);
 
 db.exec(`
   CREATE TABLE events (
