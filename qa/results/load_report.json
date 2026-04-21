@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-04-20T06:18:38.045Z",
-  "base_url": "http://localhost:3004",
+  "generated_at": "2026-04-20T06:57:31.935Z",
+  "base_url": "https://pulseup-v4.srv1362562.hstgr.cloud",
   "scenarios": [
     {
       "scenario": "GET /api/events (no filter)",
       "concurrency": 10,
       "total": 40,
-      "duration_ms": 255,
-      "rps": 156.9,
+      "duration_ms": 2521,
+      "rps": 15.9,
       "failures": 0,
       "latency_ms": {
-        "avg": 54,
-        "p50": 54,
-        "p95": 68,
-        "p99": 68,
-        "max": 68
+        "avg": 605,
+        "p50": 589,
+        "p95": 714,
+        "p99": 723,
+        "max": 723
       },
       "sample_failures": [],
       "user_count": 10
@@ -23,15 +23,15 @@
       "scenario": "GET /api/events (free+age)",
       "concurrency": 10,
       "total": 40,
-      "duration_ms": 212,
-      "rps": 188.7,
+      "duration_ms": 2498,
+      "rps": 16,
       "failures": 0,
       "latency_ms": {
-        "avg": 48,
-        "p50": 50,
-        "p95": 72,
-        "p99": 73,
-        "max": 73
+        "avg": 599,
+        "p50": 596,
+        "p95": 652,
+        "p99": 711,
+        "max": 711
       },
       "sample_failures": [],
       "user_count": 10
@@ -40,15 +40,15 @@
       "scenario": "GET /api/digests",
       "concurrency": 10,
       "total": 40,
-      "duration_ms": 169,
-      "rps": 236.7,
+      "duration_ms": 2617,
+      "rps": 15.3,
       "failures": 0,
       "latency_ms": {
-        "avg": 30,
-        "p50": 29,
-        "p95": 79,
-        "p99": 86,
-        "max": 86
+        "avg": 627,
+        "p50": 597,
+        "p95": 814,
+        "p99": 816,
+        "max": 816
       },
       "sample_failures": [],
       "user_count": 10
@@ -57,15 +57,15 @@
       "scenario": "GET /api/digests/spring-in-nyc",
       "concurrency": 10,
       "total": 40,
-      "duration_ms": 419,
-      "rps": 95.5,
+      "duration_ms": 2388,
+      "rps": 16.8,
       "failures": 0,
       "latency_ms": {
-        "avg": 101,
-        "p50": 91,
-        "p95": 177,
-        "p99": 182,
-        "max": 182
+        "avg": 590,
+        "p50": 588,
+        "p95": 617,
+        "p99": 618,
+        "max": 618
       },
       "sample_failures": [],
       "user_count": 10
@@ -74,15 +74,15 @@
       "scenario": "POST /api/chat (LLM)",
       "concurrency": 10,
       "total": 20,
-      "duration_ms": 4563,
-      "rps": 4.4,
+      "duration_ms": 6106,
+      "rps": 3.3,
       "failures": 0,
       "latency_ms": {
-        "avg": 2004,
-        "p50": 2008,
-        "p95": 2323,
-        "p99": 2323,
-        "max": 2323
+        "avg": 2228,
+        "p50": 2065,
+        "p95": 4016,
+        "p99": 4016,
+        "max": 4016
       },
       "sample_failures": [],
       "user_count": 10
@@ -91,15 +91,15 @@
       "scenario": "GET /",
       "concurrency": 10,
       "total": 40,
-      "duration_ms": 752,
-      "rps": 53.2,
+      "duration_ms": 2389,
+      "rps": 16.7,
       "failures": 0,
       "latency_ms": {
-        "avg": 176,
-        "p50": 182,
-        "p95": 266,
-        "p99": 267,
-        "max": 267
+        "avg": 591,
+        "p50": 592,
+        "p95": 614,
+        "p99": 616,
+        "max": 616
       },
       "sample_failures": [],
       "user_count": 10
@@ -108,15 +108,15 @@
       "scenario": "GET /api/events (no filter)",
       "concurrency": 25,
       "total": 100,
-      "duration_ms": 445,
-      "rps": 224.7,
+      "duration_ms": 3231,
+      "rps": 31,
       "failures": 0,
       "latency_ms": {
-        "avg": 99,
-        "p50": 91,
-        "p95": 210,
-        "p99": 232,
-        "max": 232
+        "avg": 677,
+        "p50": 616,
+        "p95": 872,
+        "p99": 889,
+        "max": 889
       },
       "sample_failures": [],
       "user_count": 25
@@ -125,15 +125,15 @@
       "scenario": "GET /api/events (free+age)",
       "concurrency": 25,
       "total": 100,
-      "duration_ms": 366,
-      "rps": 273.2,
+      "duration_ms": 2116,
+      "rps": 47.3,
       "failures": 0,
       "latency_ms": {
-        "avg": 80,
-        "p50": 90,
-        "p95": 136,
-        "p99": 218,
-        "max": 218
+        "avg": 484,
+        "p50": 585,
+        "p95": 922,
+        "p99": 1088,
+        "max": 1088
       },
       "sample_failures": [],
       "user_count": 25
@@ -142,15 +142,15 @@
       "scenario": "GET /api/digests",
       "concurrency": 25,
       "total": 100,
-      "duration_ms": 186,
-      "rps": 537.6,
+      "duration_ms": 905,
+      "rps": 110.5,
       "failures": 0,
       "latency_ms": {
-        "avg": 43,
-        "p50": 36,
-        "p95": 136,
-        "p99": 183,
-        "max": 183
+        "avg": 207,
+        "p50": 176,
+        "p95": 573,
+        "p99": 602,
+        "max": 602
       },
       "sample_failures": [],
       "user_count": 25
@@ -159,15 +159,15 @@
       "scenario": "GET /api/digests/spring-in-nyc",
       "concurrency": 25,
       "total": 100,
-      "duration_ms": 335,
-      "rps": 298.5,
+      "duration_ms": 871,
+      "rps": 114.8,
       "failures": 0,
       "latency_ms": {
-        "avg": 78,
-        "p50": 81,
-        "p95": 109,
-        "p99": 111,
-        "max": 111
+        "avg": 193,
+        "p50": 182,
+        "p95": 280,
+        "p99": 304,
+        "max": 304
       },
       "sample_failures": [],
       "user_count": 25
@@ -176,36 +176,36 @@
       "scenario": "POST /api/chat (LLM)",
       "concurrency": 25,
       "total": 50,
-      "duration_ms": 16007,
-      "rps": 3.1,
-      "failures": 50,
+      "duration_ms": 7622,
+      "rps": 6.6,
+      "failures": 31,
       "latency_ms": {
-        "avg": 7806,
-        "p50": 7782,
-        "p95": 8462,
-        "p99": 8540,
-        "max": 8540
+        "avg": 939,
+        "p50": 393,
+        "p95": 2194,
+        "p99": 7622,
+        "max": 7622
       },
       "sample_failures": [
         {
           "idx": 25,
-          "status": 500
+          "status": 429
         },
         {
           "idx": 26,
-          "status": 500
+          "status": 429
         },
         {
           "idx": 27,
-          "status": 500
+          "status": 429
         },
         {
           "idx": 28,
-          "status": 500
+          "status": 429
         },
         {
           "idx": 29,
-          "status": 500
+          "status": 429
         }
       ],
       "user_count": 25
@@ -214,15 +214,15 @@
       "scenario": "GET /",
       "concurrency": 25,
       "total": 100,
-      "duration_ms": 1519,
-      "rps": 65.8,
+      "duration_ms": 2640,
+      "rps": 37.9,
       "failures": 0,
       "latency_ms": {
-        "avg": 333,
-        "p50": 294,
-        "p95": 700,
-        "p99": 705,
-        "max": 705
+        "avg": 620,
+        "p50": 599,
+        "p95": 807,
+        "p99": 811,
+        "max": 811
       },
       "sample_failures": [],
       "user_count": 25
@@ -231,15 +231,15 @@
       "scenario": "GET /api/events (no filter)",
       "concurrency": 50,
       "total": 200,
-      "duration_ms": 1002,
-      "rps": 199.6,
+      "duration_ms": 8333,
+      "rps": 24,
       "failures": 0,
       "latency_ms": {
-        "avg": 221,
-        "p50": 253,
-        "p95": 298,
-        "p99": 300,
-        "max": 433
+        "avg": 1433,
+        "p50": 983,
+        "p95": 3971,
+        "p99": 5806,
+        "max": 5812
       },
       "sample_failures": [],
       "user_count": 50
@@ -248,32 +248,53 @@
       "scenario": "GET /api/events (free+age)",
       "concurrency": 50,
       "total": 200,
-      "duration_ms": 638,
-      "rps": 313.5,
-      "failures": 0,
+      "duration_ms": 5895,
+      "rps": 33.9,
+      "failures": 73,
       "latency_ms": {
-        "avg": 139,
-        "p50": 163,
-        "p95": 286,
-        "p99": 298,
-        "max": 341
+        "avg": 700,
+        "p50": 641,
+        "p95": 1983,
+        "p99": 5877,
+        "max": 5886
       },
-      "sample_failures": [],
+      "sample_failures": [
+        {
+          "idx": 128,
+          "error": "TypeError: fetch failed"
+        },
+        {
+          "idx": 131,
+          "error": "TypeError: fetch failed"
+        },
+        {
+          "idx": 132,
+          "error": "TypeError: fetch failed"
+        },
+        {
+          "idx": 133,
+          "error": "TypeError: fetch failed"
+        },
+        {
+          "idx": 134,
+          "error": "TypeError: fetch failed"
+        }
+      ],
       "user_count": 50
     },
     {
       "scenario": "GET /api/digests",
       "concurrency": 50,
       "total": 200,
-      "duration_ms": 416,
-      "rps": 480.8,
+      "duration_ms": 4973,
+      "rps": 40.2,
       "failures": 0,
       "latency_ms": {
-        "avg": 95,
-        "p50": 34,
-        "p95": 401,
-        "p99": 415,
-        "max": 416
+        "avg": 1109,
+        "p50": 796,
+        "p95": 2959,
+        "p99": 4004,
+        "max": 4012
       },
       "sample_failures": [],
       "user_count": 50
@@ -282,15 +303,15 @@
       "scenario": "GET /api/digests/spring-in-nyc",
       "concurrency": 50,
       "total": 200,
-      "duration_ms": 423,
-      "rps": 472.8,
+      "duration_ms": 3347,
+      "rps": 59.8,
       "failures": 0,
       "latency_ms": {
-        "avg": 98,
-        "p50": 94,
-        "p95": 136,
-        "p99": 141,
-        "max": 141
+        "avg": 767,
+        "p50": 579,
+        "p95": 2976,
+        "p99": 3057,
+        "max": 3060
       },
       "sample_failures": [],
       "user_count": 50
@@ -299,36 +320,36 @@
       "scenario": "POST /api/chat (LLM)",
       "concurrency": 50,
       "total": 100,
-      "duration_ms": 27350,
-      "rps": 3.7,
-      "failures": 90,
+      "duration_ms": 1596,
+      "rps": 62.7,
+      "failures": 99,
       "latency_ms": {
-        "avg": 7194,
-        "p50": 7536,
-        "p95": 8831,
-        "p99": 27350,
-        "max": 27350
+        "avg": 277,
+        "p50": 195,
+        "p95": 618,
+        "p99": 1596,
+        "max": 1596
       },
       "sample_failures": [
         {
           "idx": 50,
-          "status": 500
+          "status": 429
+        },
+        {
+          "idx": 51,
+          "status": 429
+        },
+        {
+          "idx": 52,
+          "status": 429
         },
         {
           "idx": 53,
-          "status": 500
+          "status": 429
         },
         {
           "idx": 54,
-          "status": 500
-        },
-        {
-          "idx": 55,
-          "status": 500
-        },
-        {
-          "idx": 56,
-          "status": 500
+          "status": 429
         }
       ],
       "user_count": 50
@@ -337,15 +358,15 @@
       "scenario": "GET /",
       "concurrency": 50,
       "total": 200,
-      "duration_ms": 2757,
-      "rps": 72.5,
+      "duration_ms": 962,
+      "rps": 207.9,
       "failures": 0,
       "latency_ms": {
-        "avg": 605,
-        "p50": 511,
-        "p95": 1396,
-        "p99": 1433,
-        "max": 1434
+        "avg": 215,
+        "p50": 184,
+        "p95": 576,
+        "p99": 585,
+        "max": 591
       },
       "sample_failures": [],
       "user_count": 50

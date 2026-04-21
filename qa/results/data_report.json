@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-20T06:14:06.175Z",
+  "generated_at": "2026-04-20T08:36:19.761Z",
   "summary": {
     "total_events_in_db": 1356,
     "visible_to_users": 206,
@@ -7,7 +7,7 @@
   },
   "field_completeness_percent_of_visible": {
     "title": 100,
-    "category_l1": 59.2,
+    "category_l1": 82,
     "age_min": 53.9,
     "age_best_from": 100,
     "age_best_to": 100,
@@ -25,7 +25,7 @@
     "tagline": 100
   },
   "missing_percent": {
-    "missing_category_percent": 40.8,
+    "missing_category_percent": 18,
     "missing_age_percent": 0,
     "missing_price_percent": 0,
     "missing_date_percent": 0,
@@ -38,11 +38,11 @@
     "duplicate_titles": 2,
     "duplicate_title_plus_venue": 0,
     "broken_digest_links": 0,
-    "weird_ages": 7,
+    "weird_ages": 0,
     "weird_prices": 0,
     "past_events_shown": 0,
-    "is_free_but_price_set": 2,
-    "no_category_but_has_tags": 84
+    "is_free_but_price_set": 0,
+    "no_category_but_has_tags": 37
   },
   "samples": {
     "top_duplicate_titles": [
@@ -60,28 +60,48 @@
   "distributions": {
     "by_category": [
       {
-        "cat": "_empty_",
+        "cat": "family",
         "c": 84
       },
       {
-        "cat": "family",
-        "c": 66
-      },
-      {
-        "cat": "arts",
-        "c": 13
+        "cat": "_empty_",
+        "c": 37
       },
       {
         "cat": "music",
-        "c": 11
+        "c": 21
+      },
+      {
+        "cat": "arts",
+        "c": 14
       },
       {
         "cat": "theater",
-        "c": 7
+        "c": 10
       },
       {
         "cat": "sports",
+        "c": 6
+      },
+      {
+        "cat": "education",
+        "c": 6
+      },
+      {
+        "cat": "community",
         "c": 5
+      },
+      {
+        "cat": "outdoors",
+        "c": 4
+      },
+      {
+        "cat": "wellness",
+        "c": 3
+      },
+      {
+        "cat": "science",
+        "c": 3
       },
       {
         "cat": "comedy",
@@ -90,22 +110,6 @@
       {
         "cat": "attractions",
         "c": 3
-      },
-      {
-        "cat": "outdoors",
-        "c": 2
-      },
-      {
-        "cat": "community",
-        "c": 2
-      },
-      {
-        "cat": "wellness",
-        "c": 1
-      },
-      {
-        "cat": "science",
-        "c": 1
       },
       {
         "cat": "nightlife",
@@ -129,10 +133,6 @@
       },
       {
         "cat": "fashion",
-        "c": 1
-      },
-      {
-        "cat": "education",
         "c": 1
       },
       {

@@ -60,23 +60,26 @@ else
 fi
 
 # ── Step 2: sync standalone output ───────────────────────────────────────────
-info "Syncing .next/standalone/ → VPS (excluding public/, better-sqlite3, data/)..."
-rsync -az --delete \
+# IMPORTANT: .next/static/ is NOT in standalone output, so --delete would wipe
+# it on the server. Exclude it here; it's synced separately in Step 3.
+info "Syncing .next/standalone/ → VPS (excluding public/, better-sqlite3, data/, .next/static/)..."
+rsync -az -e "ssh -i ~/.ssh/vps_hostinger" --delete \
   --exclude 'public/'                        \
   --exclude 'node_modules/better-sqlite3/'   \
   --exclude 'data/'                          \
+  --exclude '.next/static/'                  \
   .next/standalone/ "${SSH}:${VPS_DIR}/"
 
 # ── Step 3: sync static assets ───────────────────────────────────────────────
 info "Syncing .next/static/ → VPS..."
-rsync -az .next/static/ "${SSH}:${VPS_DIR}/.next/static/"
+rsync -az -e "ssh -i ~/.ssh/vps_hostinger" --delete .next/static/ "${SSH}:${VPS_DIR}/.next/static/"
 
 info "Syncing public/ → VPS..."
-rsync -az public/ "${SSH}:${VPS_DIR}/public/"
+rsync -az -e "ssh -i ~/.ssh/vps_hostinger" public/ "${SSH}:${VPS_DIR}/public/"
 
 # ── Step 4: verify .env.local is present on VPS (never overwrite) ─────────────
 info "Checking .env.local on VPS..."
-if ssh "${SSH}" "[[ ! -f '${VPS_DIR}/.env.local' ]]"; then
+if ssh -i ~/.ssh/vps_hostinger "${SSH}" "[[ ! -f '${VPS_DIR}/.env.local' ]]"; then
   warn ".env.local NOT found on VPS!"
   warn "You need to upload it manually:"
   warn "  scp .env.local ${SSH}:${VPS_DIR}/.env.local"
@@ -86,11 +89,11 @@ fi
 
 # ── Step 5: reinstall better-sqlite3 for Linux ────────────────────────────────
 info "Reinstalling better-sqlite3 for Linux on VPS..."
-ssh "${SSH}" "cd ${VPS_DIR} && npm install better-sqlite3 --no-save 2>&1 | tail -5"
+ssh -i ~/.ssh/vps_hostinger "${SSH}" "cd ${VPS_DIR} && npm install better-sqlite3 --no-save 2>&1 | tail -5"
 
 # ── Step 6: restart pm2 ───────────────────────────────────────────────────────
 info "Restarting pm2 process '${PM2_APP}'..."
-ssh "${SSH}" "pm2 restart ${PM2_APP} && pm2 save"
+ssh -i ~/.ssh/vps_hostinger "${SSH}" "pm2 restart ${PM2_APP} && pm2 save"
 
 # ── Step 7: smoke test ────────────────────────────────────────────────────────
 info "Waiting for app to come up..."
