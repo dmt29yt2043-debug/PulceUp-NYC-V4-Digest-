@@ -51,19 +51,22 @@ const INTEREST_TO_CATEGORIES: Record<string, string[]> = {
   'Social': ['family'],
 };
 
-// Quiz interests → API categories
+// Quiz interests → API categories. Must cover all 9 values from
+// docs/quiz-url-contract.md + any legacy fallbacks.
 const QUIZ_INTEREST_TO_CATEGORIES: Record<string, string[]> = {
-  outdoor: ['attractions'],
-  museums: ['arts', 'Art'],
-  playgrounds: ['family', "Children's Activities"],
-  classes: ['arts', 'Art'],
-  indoor_play: ['family', "Children's Activities"],
-  science: ['books', "Children's Activities"],
+  outdoor:     ['attractions', 'outdoors'],
+  playgrounds: ['family', "Children's Activities", 'attractions'],
+  museums:     ['arts', 'Art'],
+  classes:     ['arts', 'Art', "Children's Activities"],
   arts_crafts: ['arts', 'Art'],
-  sports: ['sports'],
+  sports:      ['sports'],
+  science:     ['science', "Children's Activities"],
+  animals:     ['family', 'attractions'],
+  indoor_play: ['family', "Children's Activities", 'attractions'],
+  // Legacy / alternate labels
   theater: ['theater'],
-  music: ['arts'],
-  play: ['family', "Children's Activities"],
+  music:   ['arts'],
+  play:    ['family', "Children's Activities"],
 };
 
 const BOROUGH_TO_NEIGHBORHOODS: Record<string, string[]> = {
@@ -72,6 +75,8 @@ const BOROUGH_TO_NEIGHBORHOODS: Record<string, string[]> = {
   queens: ['Queens'],
   bronx: ['Bronx'],
   'staten island': ['Staten Island'],
+  staten_island:   ['Staten Island'],   // quiz sends with underscore
+  other:           [],                   // free-text area — no borough filter
 };
 
 function genderEmoji(gender: string): string {
@@ -153,14 +158,40 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
       const source = params.get('source');
 
       if (source === 'quiz') {
-        const childAge = params.get('child_age') || '6-8';
-        const borough = (params.get('borough') || '').toLowerCase();
-        const interests = (params.get('interests') || '').split(',').map(s => s.trim()).filter(Boolean);
-        const pain = params.get('pain') || '';
+        // --- Parse per docs/quiz-url-contract.md -----------------------------
+        const childAge    = params.get('child_age') || '6-8';
+        const genderLegacy = params.get('gender');               // back-compat
+        const childrenRaw = params.get('children');              // new multi-child
+        const borough     = (params.get('borough') || '').toLowerCase();
+        const customArea  = params.get('custom_area') || '';
+        const interests   = (params.get('interests') || '').split(',').map(s => s.trim()).filter(Boolean);
+        const pain        = params.get('pain') || '';
 
-        // Parse age range → ageMax
-        const ageParts = childAge.replace('+', '-18').split('-').map(Number);
-        const ageMax = ageParts[ageParts.length - 1] || 8;
+        // Parse `children` (format: "boy:3-5,girl:9-12"). Falls back to
+        // single-child `gender`+`child_age` when `children` is absent.
+        const labelToAgeMax = (label: string): number => {
+          if (label.includes('+')) return 18;
+          const parts = label.split('-').map(Number);
+          return parts[parts.length - 1] || 8;
+        };
+        const quizChildren: ChildProfile[] = (() => {
+          const interestLabels = interests.map(i => i.replace(/_/g,' ')).map(i => i.charAt(0).toUpperCase() + i.slice(1));
+          if (childrenRaw) {
+            const parsed = childrenRaw.split(',').map(s => s.trim()).filter(Boolean).map((piece) => {
+              const [g, ageLabel] = piece.split(':');
+              if (!ageLabel) return null;
+              const gender = (g === 'boy' || g === 'girl' ? g : 'unknown') as ChildProfile['gender'];
+              return { age: labelToAgeMax(ageLabel), gender, interests: interestLabels };
+            }).filter((x): x is ChildProfile => x !== null);
+            if (parsed.length > 0) return parsed;
+          }
+          const g = (genderLegacy === 'boy' || genderLegacy === 'girl' ? genderLegacy : 'unknown') as ChildProfile['gender'];
+          return [{ age: labelToAgeMax(childAge), gender: g, interests: interestLabels }];
+        })();
+
+        // ageMax = widest upper bound across all children (so feed includes
+        // activities for any of them).
+        const ageMax = Math.max(...quizChildren.map(c => c.age));
 
         // Map quiz interests → API categories
         const cats = new Set<string>();
@@ -168,7 +199,7 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
           (QUIZ_INTEREST_TO_CATEGORIES[i.toLowerCase()] || []).forEach(c => cats.add(c));
         });
 
-        // Map borough → neighborhoods
+        // Map borough → neighborhoods (empty for 'other' — no geo filter).
         const neighborhoods = BOROUGH_TO_NEIGHBORHOODS[borough] || [];
 
         // Build filters
@@ -178,25 +209,31 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         if (pain === 'too_expensive') newFilters.isFree = true;
 
         // Build profile & store
-        const interestLabels = interests.map(i => i.charAt(0).toUpperCase() + i.slice(1));
-        const child: ChildProfile = { age: ageMax, gender: 'unknown', interests: interestLabels };
         const quizProfile: UserProfile = {
-          children: [child],
+          children: quizChildren,
           neighborhoods,
           budget: pain === 'too_expensive' ? 'Free only' : 'Any budget',
+          specialNeeds: borough === 'other' && customArea ? `Area: ${customArea}` : undefined,
         };
         setProfile(quizProfile);
         storeProfile(quizProfile);
         setOnboardingDone(true);
         setOnboardingStep('done');
-        // Quiz onboarding → 'ui' (user clicked through chips / quiz URL)
+        // Quiz onboarding → 'ui' (came via quiz URL, effectively manual setup)
         onFiltersChange(newFilters, 'ui');
 
-        // Chat message
-        const boroughLabel = borough.charAt(0).toUpperCase() + borough.slice(1);
+        // Chat welcome message — summarise what we applied.
+        const boroughLabel = borough === 'other' && customArea
+          ? customArea
+          : borough.charAt(0).toUpperCase() + borough.slice(1);
+        const childSummary = quizChildren.map(c => {
+          const emoji = c.gender === 'girl' ? '\uD83D\uDC67' : c.gender === 'boy' ? '\uD83D\uDC66' : '\uD83E\uDDD2';
+          return `${emoji} ${c.age}yo`;
+        }).join(' · ');
+        const interestLabels = interests.map(i => i.replace(/_/g,' ')).map(i => i.charAt(0).toUpperCase() + i.slice(1));
         setMessages([{
           role: 'assistant',
-          content: `Great picks for your family! Here's what I found:\n\n\uD83D\uDC76 Kids age ${childAge}\n\uD83D\uDCCD ${boroughLabel}\n\u2B50 ${interestLabels.join(', ')}\n\nI've filtered the best events for you. Feel free to ask me anything to refine!`,
+          content: `Great picks for your family! Here's what I found:\n\n${childSummary}\n\uD83D\uDCCD ${boroughLabel}\n\u2B50 ${interestLabels.join(', ')}\n\nI've filtered the best events for you. Feel free to ask me anything to refine!`,
         }]);
 
         // Clean URL without reload

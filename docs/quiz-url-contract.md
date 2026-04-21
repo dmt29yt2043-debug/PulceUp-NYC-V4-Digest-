@@ -39,9 +39,11 @@ https://pulseup.me/results?source=quiz&<params>
 
 ## Where this contract is implemented
 
-- **Parse:** `app/results/page.tsx` (`ResultsInner`), `parseChildrenParam()`
-- **Score:** `app/api/events/personalized/route.ts` (`parseChildren`, `INTEREST_TO_CATEGORIES`, `BOROUGH_BOUNDS`)
-- **Persist:** `app/results/page.tsx` useEffect → `localStorage.pulseup_profile`
+- **Redirect:** `app/results/page.tsx` — client-side `router.replace('/?...')` preserving all params. No separate results UI is rendered.
+- **Parse + apply filters + persist profile:** `components/ChatSidebar.tsx` useEffect on mount. Reads URL params, builds `FilterState`, calls `onFiltersChange(filters, 'ui')`, saves to `localStorage.pulseup_profile`, then cleans URL via `history.replaceState`.
+- **Interest → category map:** `QUIZ_INTEREST_TO_CATEGORIES` in `components/ChatSidebar.tsx`.
+- **Borough → neighborhoods map:** `BOROUGH_TO_NEIGHBORHOODS` in `components/ChatSidebar.tsx`.
+- **Optional scoring API** (not used by main flow): `app/api/events/personalized/route.ts` — kept functional for direct integrations, but the user-facing flow goes through the regular feed.
 
 ## Example
 
