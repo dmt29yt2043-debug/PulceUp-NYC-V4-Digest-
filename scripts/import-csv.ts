@@ -9,30 +9,46 @@ const dbPath = path.join(__dirname, '..', 'data', 'events.db');
 // BUG_009: previously we `unlinkSync(dbPath)` — which also wiped the `digests`
 // and `digest_events` tables seeded separately. Now we only drop/recreate
 // the `events` table (and its indexes), preserving everything else.
+//
+// NOTE: the legacy manually-seeded `digests` / `digest_events` tables are
+// intentionally dropped here — digest generation is now fully programmatic
+// via `lib/digests/` (5 curated digests computed at query time, no DB rows).
 const db = new Database(dbPath);
 db.exec(`
   DROP INDEX IF EXISTS idx_events_category;
   DROP INDEX IF EXISTS idx_events_free;
   DROP INDEX IF EXISTS idx_events_lat_lon;
   DROP INDEX IF EXISTS idx_events_start;
+  DROP TABLE IF EXISTS digest_events;
+  DROP TABLE IF EXISTS digests;
   DROP TABLE IF EXISTS events;
 `);
 
 db.exec(`
   CREATE TABLE events (
     id INTEGER PRIMARY KEY,
+    external_id TEXT,
     title TEXT NOT NULL,
     short_title TEXT,
     tagline TEXT,
     description TEXT,
+    description_source TEXT,
     source_url TEXT,
     image_url TEXT,
     venue_name TEXT,
     subway TEXT,
     address TEXT,
     city TEXT,
+    city_district TEXT,
+    city_locality TEXT,
+    country_county TEXT,
     lat REAL,
     lon REAL,
+    timezone TEXT,
+    schedule TEXT DEFAULT '{}',
+    occurrences TEXT DEFAULT '[]',
+    schedule_confidence INTEGER,
+    schedule_source TEXT,
     next_start_at TEXT,
     next_end_at TEXT,
     age_min INTEGER,
@@ -44,14 +60,23 @@ db.exec(`
     price_min REAL DEFAULT 0,
     price_max REAL DEFAULT 0,
     category_l1 TEXT,
+    category_l2 TEXT,
+    category_l3 TEXT,
     categories TEXT DEFAULT '[]',
     tags TEXT DEFAULT '[]',
+    format TEXT,
+    motivation TEXT,
+    class_meta TEXT DEFAULT '{}',
     reviews TEXT DEFAULT '[]',
     derisk TEXT DEFAULT '{}',
     rating_avg REAL DEFAULT 0,
     rating_count INTEGER DEFAULT 0,
+    favorites_count INTEGER DEFAULT 0,
+    comments_count INTEGER DEFAULT 0,
     data TEXT DEFAULT '{}',
     status TEXT DEFAULT 'published',
+    disabled INTEGER DEFAULT 0,
+    archived INTEGER DEFAULT 0,
     created_at TEXT,
     updated_at TEXT
   );
@@ -59,6 +84,8 @@ db.exec(`
   CREATE INDEX idx_events_free ON events(is_free);
   CREATE INDEX idx_events_lat_lon ON events(lat, lon);
   CREATE INDEX idx_events_start ON events(next_start_at);
+  CREATE INDEX idx_events_status ON events(status);
+  CREATE INDEX idx_events_county ON events(country_county);
 `);
 
 const csvContent = fs.readFileSync(csvPath, 'utf-8');
@@ -210,12 +237,34 @@ function countMissingGeo(lat: number | null, lon: number | null): number {
 }
 
 const insert = db.prepare(`
-  INSERT INTO events (id, title, short_title, tagline, description, source_url, image_url,
-    venue_name, subway, address, city, lat, lon, next_start_at, next_end_at,
-    age_min, age_label, age_best_from, age_best_to, is_free, price_summary, price_min, price_max,
-    category_l1, categories, tags, reviews, derisk, rating_avg, rating_count, data,
-    status, created_at, updated_at)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  INSERT INTO events (
+    id, external_id, title, short_title, tagline, description, description_source,
+    source_url, image_url,
+    venue_name, subway, address, city, city_district, city_locality, country_county,
+    lat, lon, timezone,
+    schedule, occurrences, schedule_confidence, schedule_source,
+    next_start_at, next_end_at,
+    age_min, age_label, age_best_from, age_best_to,
+    is_free, price_summary, price_min, price_max,
+    category_l1, category_l2, category_l3, categories, tags,
+    format, motivation, class_meta,
+    reviews, derisk,
+    rating_avg, rating_count, favorites_count, comments_count,
+    data, status, disabled, archived, created_at, updated_at)
+  VALUES (
+    ?, ?, ?, ?, ?, ?, ?,
+    ?, ?,
+    ?, ?, ?, ?, ?, ?, ?,
+    ?, ?, ?,
+    ?, ?, ?, ?,
+    ?, ?,
+    ?, ?, ?, ?,
+    ?, ?, ?, ?,
+    ?, ?, ?, ?, ?,
+    ?, ?, ?,
+    ?, ?,
+    ?, ?, ?, ?,
+    ?, ?, ?, ?, ?, ?)
 `);
 
 let imported = 0;
@@ -297,20 +346,53 @@ const insertMany = db.transaction((rows: Record<string, string>[]) => {
       const categoryL1 = deriveCategory(rawCategory, categoriesJson, tagsJson);
       if (!rawCategory && categoryL1) norm.category_derived++;
 
+      // Normalize Python-style booleans / None to proper JS values
+      const toFlag = (v: string | undefined) => v === 'True' ? 1 : 0;
+      const normText = (v: string | undefined) => {
+        if (v === undefined || v === null) return '';
+        const s = String(v).trim();
+        if (s === '' || s === 'None' || s === 'null' || s === 'nan' || s === 'NaN') return '';
+        return s;
+      };
+      const normInt = (v: string | undefined): number | null => {
+        const s = normText(v);
+        if (s === '') return null;
+        const n = parseInt(s, 10);
+        return Number.isFinite(n) ? n : null;
+      };
+
+      // Schedule / occurrences are Python-dict strings → normalize to proper JSON
+      const scheduleJson = row.schedule ? JSON.stringify(parsePythonDict(row.schedule)) : '{}';
+      const occurrencesJson = row.occurrences ? JSON.stringify(parsePythonList(row.occurrences).length
+        ? parsePythonList(row.occurrences)
+        : parsePythonDict(row.occurrences)) : '[]';
+      // class_meta can be dict or string
+      const classMetaJson = row.class_meta ? JSON.stringify(parsePythonDict(row.class_meta)) : '{}';
+
       insert.run(
         parseInt(row.id),
+        normText(row.external_id),
         row.title || '',
         row.short_title || '',
         row.tagline || '',
         row.description || '',
+        normText(row.description_source),
         getSourceUrl(row),
         getImageUrl(row),
         row.venue_name || '',
         row.subway || '',
         row.address || '',
         row.city || '',
+        normText(row.city_district),
+        normText(row.city_locality),
+        normText(row.country_county),
         lat,
         lon,
+        normText(row.timezone),
+        scheduleJson,
+        occurrencesJson,
+        normInt(row.schedule_confidence),
+        normText(row.schedule_source),
         row.next_start_at || '',
         nextEndAt,
         ageMin,
@@ -322,14 +404,23 @@ const insertMany = db.transaction((rows: Record<string, string>[]) => {
         priceMin,
         priceMax,
         categoryL1,
+        normText(row.category_l2),
+        normText(row.category_l3),
         categoriesJson,
         tagsJson,
+        normText(row.format),
+        normText(row.motivation),
+        classMetaJson,
         JSON.stringify(parseReviews(row.reviews || '')),
         JSON.stringify(parsePythonDict(row.derisk || '')),
         row.rating_avg ? parseFloat(row.rating_avg) : 0,
         row.rating_count ? parseInt(row.rating_count) : 0,
+        row.favorites_count ? parseInt(row.favorites_count) : 0,
+        row.comments_count ? parseInt(row.comments_count) : 0,
         JSON.stringify(parsePythonDict(row.data || '')),
         row.status || 'published',
+        toFlag(row.disabled),
+        toFlag(row.archived),
         row.created_at || '',
         row.updated_at || ''
       );
