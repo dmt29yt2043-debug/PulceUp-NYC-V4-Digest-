@@ -220,13 +220,37 @@ const norm = {
   end_date_nullified: 0,
   category_derived: 0,
   missing_geo: 0,
+  past_events_skipped: 0,
 };
+
+// BUG_008: skip events whose next_start_at is explicitly in the past.
+// Events with no date (null / empty) are kept — they may be recurring or
+// have unknown schedules. Only cut rows where the date is set AND < now.
+const NOW_MS = Date.now();
+function isPastEvent(nextStartAt: string | undefined | null): boolean {
+  if (!nextStartAt || nextStartAt.trim() === '' || nextStartAt === 'None' || nextStartAt === 'null') {
+    return false; // no date → keep
+  }
+  try {
+    const ms = new Date(nextStartAt).getTime();
+    return Number.isFinite(ms) && ms < NOW_MS;
+  } catch {
+    return false; // unparseable → keep (safe default)
+  }
+}
 
 const insertMany = db.transaction((rows: Record<string, string>[]) => {
   for (const row of rows) {
     try {
       if (row.status === 'disabled' || row.disabled === 'True' || row.archived === 'True') {
         skipped++;
+        continue;
+      }
+
+      // BUG_008 — skip past events (saves tokens on every user request)
+      if (isPastEvent(row.next_start_at)) {
+        skipped++;
+        norm.past_events_skipped++;
         continue;
       }
 
@@ -331,5 +355,6 @@ console.log(`  BUG_006 free/price reconciled:         ${norm.free_price_reconcil
 console.log(`  BUG_004 empty next_end_at -> NULL:     ${norm.end_date_nullified} rows`);
 console.log(`  BUG_003 category_l1 derived:           ${norm.category_derived} rows`);
 console.log(`  BUG_007 missing lat/lon (monitoring):  ${norm.missing_geo} rows`);
+console.log(`  BUG_008 past events skipped:           ${norm.past_events_skipped} rows`);
 
 db.close();
