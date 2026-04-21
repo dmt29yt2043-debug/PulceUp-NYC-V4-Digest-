@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import type { Event } from '@/lib/types';
 import EventCardV2 from '@/components/EventCardV2';
 import EventDetail from '@/components/EventDetail';
+import { track } from '@/lib/analytics';
 
 // Extended event with personalization metadata
 interface PersonalizedEvent extends Event {
@@ -27,14 +28,6 @@ const BOROUGH_LABELS: Record<string, string> = {
   bronx: 'The Bronx',
   'staten island': 'Staten Island',
 };
-
-function track(eventName: string, data: Record<string, unknown>) {
-  // Analytics — log to console in dev, extend with real analytics later
-  if (typeof window !== 'undefined') {
-    console.log(`[analytics] ${eventName}`, data);
-    // Future: gtag, fbq, posthog, etc.
-  }
-}
 
 function ResultsInner() {
   const searchParams = useSearchParams();

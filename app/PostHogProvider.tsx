@@ -31,10 +31,14 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
       // Anonymous profiles only until login is added
       person_profiles: 'always',
 
-      // Session Replays — controlled by env var
+      // Session Replays — controlled by env var.
+      // PII masking: any element (or its children) with data-ph-no-capture
+      // will have both its rendered text AND input values hidden (***).
+      // Applied to: chat messages area + chat textarea in ChatSidebar.
       session_recording: {
-        maskAllInputs: false,          // we'll selectively mask profile fields in Phase 5
-        maskTextSelector: '[data-ph-no-capture]', // explicit PII masking class
+        maskAllInputs: false,
+        maskTextSelector:  '[data-ph-no-capture]', // masks rendered text nodes
+        maskInputSelector: '[data-ph-no-capture]', // masks <input>/<textarea> values
       },
       disable_session_recording: !recordEnabled,
 
