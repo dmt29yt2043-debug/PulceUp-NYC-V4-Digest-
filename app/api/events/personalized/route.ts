@@ -100,11 +100,14 @@ export async function GET(req: NextRequest) {
   // Build SQL
   const db = new Database(DB_PATH, { readonly: true });
 
+  // Status filter must match lib/db.ts getEvents() — events flow through a
+  // multi-stage pipeline (synth.done, verify.done, discovery.done, published).
+  // Using just `status = 'published'` misses ~99% of the catalog.
   const rows = db.prepare(`
     SELECT * FROM events
-    WHERE status = 'published'
+    WHERE (status IN ('published', 'done', 'new') OR status LIKE '%.done')
       AND (age_min IS NULL OR age_min <= ?)
-      AND (COALESCE(next_end_at, datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)
+      AND (COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)
     ORDER BY next_start_at ASC
     LIMIT 300
   `).all(ageRange.max) as Record<string, unknown>[];
