@@ -2,9 +2,30 @@ import type { Metadata } from "next";
 import "./globals.css";
 import PostHogProvider from "./PostHogProvider";
 
+// metadataBase is required so relative og:image URLs resolve to absolute URLs
+// that social-media scrapers can fetch.
+//
+// The OG image itself is generated dynamically by `app/opengraph-image.tsx`
+// via Next.js's file convention — no manual `openGraph.images` entry needed.
 export const metadata: Metadata = {
-  title: "Pulse \u2014 events",
-  description: "Discover the best events and activities near you",
+  metadataBase: new URL("https://pulseup.me"),
+  title: "PulseUp",
+  description: "Better Moments with your Kids. Less Planning",
+  openGraph: {
+    type: "website",
+    url: "https://pulseup.me",
+    siteName: "PulseUp",
+    title: "PulseUp",
+    description: "Better Moments with your Kids. Less Planning",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PulseUp",
+    description: "Better Moments with your Kids. Less Planning",
+  },
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
