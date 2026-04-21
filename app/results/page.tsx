@@ -27,17 +27,47 @@ const BOROUGH_LABELS: Record<string, string> = {
   queens: 'Queens',
   bronx: 'The Bronx',
   'staten island': 'Staten Island',
+  staten_island: 'Staten Island',   // quiz sends with underscore
+  other: 'NYC',
 };
+
+// Parse quiz `children` param (format: `boy:3-5,girl:9-12`).
+// Falls back to legacy single-child `child_age`+`gender` params.
+type QuizChild = { gender: 'boy' | 'girl' | 'unknown'; ageLabel: string };
+function parseChildrenParam(childrenParam: string | null, fallbackAge: string, fallbackGender: string | null): QuizChild[] {
+  if (childrenParam) {
+    const parsed = childrenParam.split(',').map((s) => s.trim()).filter(Boolean).map((piece) => {
+      const [g, age] = piece.split(':');
+      if (!age) return null;
+      const gender = (g === 'boy' || g === 'girl' ? g : 'unknown') as QuizChild['gender'];
+      return { gender, ageLabel: age };
+    }).filter((x): x is QuizChild => x !== null);
+    if (parsed.length > 0) return parsed;
+  }
+  const g = (fallbackGender === 'boy' || fallbackGender === 'girl' ? fallbackGender : 'unknown') as QuizChild['gender'];
+  return [{ gender: g, ageLabel: fallbackAge }];
+}
+
+// Convert age label ("3-5", "16+") → numeric upper bound (for filters).
+function ageLabelToMax(label: string): number {
+  if (label.includes('+')) return 18;
+  const parts = label.split('-').map((s) => parseInt(s, 10));
+  return parts.length === 2 && !isNaN(parts[1]) ? parts[1] : 10;
+}
 
 function ResultsInner() {
   const searchParams = useSearchParams();
 
-  // --- Step 1: Parse URL params ---
-  const childAge  = searchParams.get('child_age') || '6-8';
-  const borough   = (searchParams.get('borough') || 'manhattan').toLowerCase();
-  const interests = (searchParams.get('interests') || 'outdoor').split(',').map((s) => s.trim().toLowerCase());
-  const pain      = searchParams.get('pain') || 'hard_to_choose';
-  const source    = searchParams.get('source') || '';
+  // --- Step 1: Parse URL params (per docs/quiz-url-contract.md) ---
+  const source     = searchParams.get('source') || '';
+  const childAge   = searchParams.get('child_age') || '6-8';
+  const gender     = searchParams.get('gender');
+  const childrenRaw = searchParams.get('children');
+  const quizChildren = parseChildrenParam(childrenRaw, childAge, gender);
+  const borough    = (searchParams.get('borough') || 'manhattan').toLowerCase();
+  const customArea = searchParams.get('custom_area') || '';
+  const interests  = (searchParams.get('interests') || 'outdoor').split(',').map((s) => s.trim().toLowerCase());
+  const pain       = searchParams.get('pain') || 'hard_to_choose';
 
   // --- State ---
   const [events, setEvents] = useState<PersonalizedEvent[]>([]);
@@ -47,27 +77,55 @@ function ResultsInner() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [showRefine, setShowRefine] = useState(false);
 
-  // --- Step 4: Auto-trigger personalized search ---
+  // --- Step 4: Auto-trigger personalized search + persist profile ---
   useEffect(() => {
-    track('quiz_landing_loaded', { source, child_age: childAge, borough, interests, pain });
+    track('quiz_landing_loaded', {
+      source, child_age: childAge, gender, children: childrenRaw,
+      borough, custom_area: customArea, interests, pain,
+    });
 
+    // Save profile to localStorage so the main app (/) inherits preferences
+    // on subsequent visits. Matches the shape ChatSidebar expects.
+    if (source === 'quiz' && typeof window !== 'undefined') {
+      try {
+        const profile = {
+          children: quizChildren.map((c) => ({
+            age: ageLabelToMax(c.ageLabel),
+            gender: c.gender,
+            interests: interests.map((i) => i.charAt(0).toUpperCase() + i.slice(1)),
+          })),
+          neighborhoods: borough === 'other' ? [] : [BOROUGH_LABELS[borough] || borough],
+          budget: pain === 'too_expensive' ? 'Free only' : 'Any budget',
+        };
+        localStorage.setItem('pulseup_profile', JSON.stringify(profile));
+      } catch { /* ignore storage errors */ }
+    }
+
+    // Forward ALL quiz params to the API — it supports `children`, `gender`,
+    // `custom_area` on top of the legacy fields.
     const params = new URLSearchParams({
       child_age: childAge,
       borough,
       interests: interests.join(','),
       pain,
     });
+    if (childrenRaw) params.set('children', childrenRaw);
+    if (gender)      params.set('gender', gender);
+    if (customArea)  params.set('custom_area', customArea);
 
     fetch(`/api/events/personalized?${params}`)
       .then((r) => r.json())
       .then((data) => {
         setEvents(data.events || []);
-        track('quiz_params_parsed', { child_age: childAge, borough, interests, pain });
+        track('quiz_params_parsed', {
+          child_age: childAge, children: childrenRaw, borough, interests, pain,
+        });
         track('personalized_results_shown', { count: data.events?.length || 0 });
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [childAge, borough, interests.join(','), pain, source]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [childAge, childrenRaw, gender, borough, customArea, interests.join(','), pain, source]);
 
   const handleCardClick = useCallback((event: Event) => {
     setSelectedEvent(event);
@@ -87,8 +145,12 @@ function ResultsInner() {
   const heroEvent = events[0] || null;
   const restEvents = events.slice(1);
   const painLabel = PAIN_LABELS[pain] || pain;
-  const boroughLabel = BOROUGH_LABELS[borough] || borough;
-  const interestLabels = interests.map((i) => i.charAt(0).toUpperCase() + i.slice(1));
+  const boroughLabel = borough === 'other' && customArea
+    ? customArea
+    : BOROUGH_LABELS[borough] || borough;
+  const interestLabels = interests
+    .map((i) => i.replace(/_/g, ' '))                     // indoor_play → indoor play
+    .map((i) => i.charAt(0).toUpperCase() + i.slice(1));  // → Indoor play
 
   return (
     <div style={{ minHeight: '100vh', background: '#0f0d2e', color: 'white' }}>
@@ -116,9 +178,15 @@ function ResultsInner() {
             Hand-picked events for your family
           </p>
 
-          {/* Profile chips */}
+          {/* Profile chips — one per child (with gender icon), then borough, interests, pain */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <ProfileChip icon="&#128118;" label={`Ages ${childAge}`} />
+            {quizChildren.map((c, idx) => (
+              <ProfileChip
+                key={`child-${idx}`}
+                icon={c.gender === 'girl' ? '&#128103;' : c.gender === 'boy' ? '&#128102;' : '&#129490;'}
+                label={`Ages ${c.ageLabel}`}
+              />
+            ))}
             <ProfileChip icon="&#128205;" label={boroughLabel} />
             {interestLabels.map((il) => (
               <ProfileChip key={il} icon="&#11088;" label={il} />

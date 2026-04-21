@@ -7,20 +7,30 @@ export const dynamic = 'force-dynamic';
 const DB_PATH = path.join(process.cwd(), 'data', 'events.db');
 
 const BOROUGH_BOUNDS: Record<string, { latMin: number; latMax: number; lonMin: number; lonMax: number }> = {
-  manhattan:      { latMin: 40.70, latMax: 40.88, lonMin: -74.02, lonMax: -73.91 },
-  brooklyn:       { latMin: 40.57, latMax: 40.74, lonMin: -74.04, lonMax: -73.83 },
-  queens:         { latMin: 40.54, latMax: 40.80, lonMin: -73.96, lonMax: -73.70 },
-  bronx:          { latMin: 40.80, latMax: 40.92, lonMin: -73.93, lonMax: -73.75 },
+  manhattan:       { latMin: 40.70, latMax: 40.88, lonMin: -74.02, lonMax: -73.91 },
+  brooklyn:        { latMin: 40.57, latMax: 40.74, lonMin: -74.04, lonMax: -73.83 },
+  queens:          { latMin: 40.54, latMax: 40.80, lonMin: -73.96, lonMax: -73.70 },
+  bronx:           { latMin: 40.80, latMax: 40.92, lonMin: -73.93, lonMax: -73.75 },
   'staten island': { latMin: 40.49, latMax: 40.65, lonMin: -74.26, lonMax: -74.05 },
+  staten_island:   { latMin: 40.49, latMax: 40.65, lonMin: -74.26, lonMax: -74.05 }, // quiz uses underscore
 };
 
+// Maps quiz interest slugs → event category values in the DB.
+// Must stay in sync with the quiz spec (interests list in docs/quiz-url-contract.md).
 const INTEREST_TO_CATEGORIES: Record<string, string[]> = {
-  outdoor:     ['outdoors', 'Outdoor'],
+  // Core quiz interests (per quiz contract)
+  outdoor:     ['outdoors', 'Outdoor', 'attractions'],
+  playgrounds: ['family', "Children's Activities", 'attractions'],
   museums:     ['Art', 'arts', 'science'],
+  classes:     ['arts', 'Art', "Children's Activities"],
+  arts_crafts: ['arts', 'Art'],
   sports:      ['sports', 'Sports & Fitness'],
+  science:     ['science'],
+  animals:     ['family', 'attractions'],
+  indoor_play: ['family', "Children's Activities", 'attractions'],
+  // Additional (from ChatSidebar quiz flow / legacy)
   theater:     ['theater', 'Theater & Performing Arts'],
   music:       ['music'],
-  science:     ['science'],
   film:        ['film'],
   gaming:      ['gaming'],
   art:         ['Art', 'arts'],
@@ -41,15 +51,51 @@ function parseAgeRange(ageStr: string): { min: number; max: number } {
   return { min: 4, max: 10 }; // safe default
 }
 
+/**
+ * Parse `children` quiz param (format: `boy:3-5,girl:9-12`) → array of
+ * {gender, age: {min,max}}. Falls back to back-compat `child_age` + `gender`
+ * when `children` is absent or unparseable.
+ */
+function parseChildren(
+  childrenParam: string | null,
+  fallbackAge: string,
+  fallbackGender: string | null,
+): Array<{ gender: string; ageRange: { min: number; max: number } }> {
+  if (childrenParam) {
+    const parsed = childrenParam
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((piece) => {
+        const [gender, age] = piece.split(':');
+        if (!age) return null;
+        return { gender: (gender || 'unknown').toLowerCase(), ageRange: parseAgeRange(age) };
+      })
+      .filter((x): x is { gender: string; ageRange: { min: number; max: number } } => x !== null);
+    if (parsed.length > 0) return parsed;
+  }
+  // Back-compat: single-child from child_age + gender
+  return [{ gender: (fallbackGender || 'unknown').toLowerCase(), ageRange: parseAgeRange(fallbackAge) }];
+}
+
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
 
-  const childAge  = sp.get('child_age') || '6-8';
-  const borough   = (sp.get('borough') || 'manhattan').toLowerCase();
-  const interests = (sp.get('interests') || 'outdoor').split(',').map((s) => s.trim().toLowerCase());
-  const pain      = sp.get('pain') || 'hard_to_choose';
+  // --- Quiz params (see docs/quiz-url-contract.md) ---
+  const childAge   = sp.get('child_age') || '6-8';
+  const gender     = sp.get('gender');                    // back-compat, first child
+  const children   = parseChildren(sp.get('children'), childAge, gender);
+  const borough    = (sp.get('borough') || 'manhattan').toLowerCase();
+  const customArea = sp.get('custom_area') || null;       // free-text when borough=other
+  const interests  = (sp.get('interests') || 'outdoor').split(',').map((s) => s.trim().toLowerCase());
+  const pain       = sp.get('pain') || 'hard_to_choose';
 
-  const ageRange = parseAgeRange(childAge);
+  // Combined age range = union of all children's ranges (widest span).
+  // Scoring boosts events that fit at least one child.
+  const ageRange = {
+    min: Math.min(...children.map((c) => c.ageRange.min)),
+    max: Math.max(...children.map((c) => c.ageRange.max)),
+  };
 
   // Build SQL
   const db = new Database(DB_PATH, { readonly: true });
@@ -199,6 +245,13 @@ export async function GET(req: NextRequest) {
   return Response.json({
     events,
     total: events.length,
-    profile: { child_age: childAge, borough, interests, pain },
+    profile: {
+      child_age: childAge,          // back-compat (first child shorthand)
+      children,                     // [{ gender, ageRange: {min,max} }]
+      borough,
+      custom_area: customArea,
+      interests,
+      pain,
+    },
   });
 }
