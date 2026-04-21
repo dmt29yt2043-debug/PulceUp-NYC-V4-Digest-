@@ -108,13 +108,60 @@ function auditSignals(): void {
   console.log(`  Affordable (≥0.5):                       ${affordableOverlap}`);
 }
 
+// ─── Digest runners ──────────────────────────────────────────────────────────
+
+import { getWeekendDigest } from '../lib/digests/weekend';
+import { getIndoorDigest } from '../lib/digests/indoor';
+import { getEasyDigest } from '../lib/digests/easy';
+import { getAffordableDigest } from '../lib/digests/affordable';
+import { getWorthItDigest } from '../lib/digests/worth-it';
+import type { DigestResult } from '../lib/digests/types';
+
+function printDigest(result: DigestResult, limit = 10): void {
+  const m = result.meta;
+  console.log('\n' + '═'.repeat(80));
+  console.log(`  ${m.title}`);
+  console.log(`  ${m.subtitle}`);
+  console.log('═'.repeat(80));
+  console.log(`  events=${m.event_count}  strong=${result.coverage.strong_candidates}  weak=${result.coverage.weak_candidates}  skipped=${result.coverage.skipped_low_quality}`);
+  if (result.coverage.notes.length) {
+    for (const n of result.coverage.notes) console.log(`  NOTE: ${n}`);
+  }
+  console.log('');
+  result.scored.slice(0, limit).forEach((s, i) => {
+    const pad = String(i + 1).padStart(2);
+    const score = String(s.score).padStart(3);
+    const title = (s.event.title || '').slice(0, 48).padEnd(50);
+    const city = (s.event.city || '?').slice(0, 12).padEnd(12);
+    // Prefer digest-specific reasons (everything after the 3 base reasons) for display
+    const digestReasons = s.reasons.slice(3);
+    const shown = digestReasons.length > 0 ? digestReasons : s.reasons;
+    console.log(`  ${pad}. [${score}] ${title} ${city} ${shown.slice(0, 3).join(' · ')}`);
+  });
+}
+
+function auditAllDigests(): void {
+  const rows = loadLiveEvents();
+  console.log(`Live events: ${rows.length}`);
+  const enriched = rows.map(enrich);
+  const now = Date.now();
+
+  printDigest(getWeekendDigest(enriched, now));
+  printDigest(getIndoorDigest(enriched));
+  printDigest(getEasyDigest(enriched));
+  printDigest(getAffordableDigest(enriched), 15);
+  printDigest(getWorthItDigest(enriched));
+}
+
 // ─── Entry point ─────────────────────────────────────────────────────────────
 
 const cmd = process.argv[2] || 'signals';
 if (cmd === 'signals') {
   auditSignals();
+} else if (cmd === 'digests' || cmd === 'all') {
+  auditAllDigests();
 } else {
   console.log(`Unknown command: ${cmd}`);
-  console.log('Usage: npx tsx scripts/digests-audit.ts [signals]');
+  console.log('Usage: npx tsx scripts/digests-audit.ts [signals|digests]');
   process.exit(1);
 }
