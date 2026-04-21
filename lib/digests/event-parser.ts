@@ -70,12 +70,12 @@ function parseOccurrences(val: string | null | undefined): Occurrence[] {
   if (!Array.isArray(arr)) return [];
   const out: Occurrence[] = [];
   for (const o of arr) {
-    if (o && typeof o === 'object' && 'start_at' in o && typeof (o as { start_at: unknown }).start_at === 'string') {
-      out.push({
-        start_at: (o as { start_at: string }).start_at,
-        end_at:   typeof (o as { end_at?: unknown }).end_at === 'string' ? (o as { end_at: string }).end_at : undefined,
-      });
-    }
+    if (!o || typeof o !== 'object') continue;
+    const obj = o as Record<string, unknown>;
+    if (typeof obj.start_at !== 'string') continue;
+    const occ: Occurrence = { start_at: obj.start_at };
+    if (typeof obj.end_at === 'string') occ.end_at = obj.end_at;
+    out.push(occ);
   }
   return out;
 }
