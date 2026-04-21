@@ -228,14 +228,18 @@ body {
   right: calc(100% - var(--range-max, 100%));
 }
 
+/* The input itself is sized to the visible 4px track and positioned at the
+   container's vertical center. The native thumb auto-centers on this 4px
+   track, so it lands exactly on the pink fill — no margin-top hacks needed. */
 .v2-price-slider {
   -webkit-appearance: none;
   appearance: none;
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 4px;
+  transform: translateY(-50%);
   background: transparent;
   outline: none;
   cursor: pointer;
@@ -271,18 +275,17 @@ body {
   z-index: 2;
 }
 
-/* Native runnable-track fills the full input height (transparent) so the
-   thumb auto-centers on the middle of the 20px input — which is exactly
-   where the visual 4px track (.v2-dual-range-fill, top: 50%) lives. */
+/* Native track matches the input height (4px) — transparent, the visible
+   track is rendered by .v2-dual-range-fill underneath. */
 .v2-price-slider::-webkit-slider-runnable-track {
   background: transparent;
-  height: 100%;
+  height: 4px;
   border-radius: 2px;
 }
 
 .v2-price-slider::-moz-range-track {
   background: transparent;
-  height: 100%;
+  height: 4px;
   border-radius: 2px;
 }
 
