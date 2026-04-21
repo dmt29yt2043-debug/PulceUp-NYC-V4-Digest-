@@ -271,15 +271,18 @@ body {
   z-index: 2;
 }
 
+/* Native runnable-track fills the full input height (transparent) so the
+   thumb auto-centers on the middle of the 20px input — which is exactly
+   where the visual 4px track (.v2-dual-range-fill, top: 50%) lives. */
 .v2-price-slider::-webkit-slider-runnable-track {
   background: transparent;
-  height: 4px;
+  height: 100%;
   border-radius: 2px;
 }
 
 .v2-price-slider::-moz-range-track {
   background: transparent;
-  height: 4px;
+  height: 100%;
   border-radius: 2px;
 }
 
