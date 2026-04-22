@@ -44,13 +44,38 @@ export function runAllDigests(): DigestResult[] {
   const enriched = rows.map(enrich);
   const now = Date.now();
 
-  return [
+  const results = [
     getWeekendDigest(enriched, now),
     getIndoorDigest(enriched),
     getEasyDigest(enriched),
     getAffordableDigest(enriched),
     getWorthItDigest(enriched),
   ];
+
+  // Post-process: ensure each digest uses a DIFFERENT cover image.
+  // Left-to-right across the shelf: if a digest's top event has an image
+  // already used by an earlier digest, pick the next top-scored event
+  // whose image_url is unused. Falls back to the original if no alt found.
+  diversifyCoverImages(results);
+
+  return results;
+}
+
+/**
+ * Walk through digests in order; each one claims a cover image. If the first
+ * pick collides with a previously-claimed image, drop down the scored list
+ * until we find a unique one. Mutates `meta.cover_image` on each digest.
+ */
+function diversifyCoverImages(results: DigestResult[]): void {
+  const claimed = new Set<string>();
+  for (const r of results) {
+    const candidates = r.scored
+      .map((s) => s.event.image_url)
+      .filter((u): u is string => !!u);
+    const pick = candidates.find((u) => !claimed.has(u)) ?? candidates[0] ?? null;
+    r.meta.cover_image = pick;
+    if (pick) claimed.add(pick);
+  }
 }
 
 /**

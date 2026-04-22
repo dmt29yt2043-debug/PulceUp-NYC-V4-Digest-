@@ -2144,11 +2144,23 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Photos from event feeds are often dim / desaturated; a small pop makes
+     the card feel alive without looking fake. */
+  filter: saturate(1.1) brightness(1.05);
 }
+/* Dark overlay only at the bottom (where the text sits) — top half lets the
+   photo breathe so the card doesn't look like a black swatch. */
 .digest-card-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 70%, rgba(0,0,0,0.92) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent       0%,
+    transparent      40%,
+    rgba(0,0,0,0.35) 60%,
+    rgba(0,0,0,0.75) 82%,
+    rgba(0,0,0,0.92) 100%
+  );
 }
 .digest-card-tag {
   position: absolute;
