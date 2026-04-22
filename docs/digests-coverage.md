@@ -1,17 +1,17 @@
 # 5 Curated Digests — Coverage Notes
 
-Audit date: 2026-04-21. Live event pool: **207 events** (status matching
-`published`, `done`, `new`, or `*.done`).
+Audit date: 2026-04-22. Live event pool: **197 events** (after dropping
+12 past + 1 disabled from a 210-row LIVE-only CSV).
 
 ## Summary
 
 | # | Digest                              | Target | Filled | Strong ≥ threshold | Weak (fallback) |
 |---|-------------------------------------|:-----:|:-----:|:-----:|:-----:|
-| 1 | Top 10 Things to Do This Weekend    | 10    | 10    | 96   | 17 |
-| 2 | Top 10 Indoor (Rainy Day)           | 10    | 10    | 93   | 7  |
-| 3 | 10 Easy (No Planning Needed)        | 10    | 10    | 111  | 2  |
-| 4 | Top 15 Free & Affordable            | 15    | 15    | 156  | 18 |
-| 5 | 10 Kids Love, Parents Don't Regret  | 10    | 10    | 133  | 26 |
+| 1 | Top 10 Things to Do This Weekend    | 10    | 10    | 100  | 16 |
+| 2 | Top 10 Indoor (Rainy Day)           | 10    | 10    | 92   | 5  |
+| 3 | 10 Easy (No Planning Needed)        | 10    | 10    | 108  | 2  |
+| 4 | Top 15 Free & Affordable            | 15    | 15    | 152  | 16 |
+| 5 | 10 Kids Love, Parents Don't Regret  | 10    | 10    | 131  | 23 |
 
 All 5 digests hit their target count from strong candidates alone — no
 fallback tier was needed to fill any digest.
