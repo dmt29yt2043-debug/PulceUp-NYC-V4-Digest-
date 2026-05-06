@@ -3,11 +3,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import type { Event, FilterState } from '@/lib/types';
+import posthog from 'posthog-js';
 import {
   initAnalytics,
   trackFilterApplied,
   trackCardExpanded,
+  trackEventImpression,
   trackMapOpened,
+  trackFeedScroll,
   trackEvent as track,
 } from '@/lib/analytics';
 import EventDetail from '@/components/EventDetail';
@@ -20,6 +23,7 @@ import WhereFilter from '@/components/FilterDialogs/WhereFilter';
 import EventCardV2 from '@/components/EventCardV2';
 import DateBar from '@/components/DateBar';
 import DigestShelf from '@/components/DigestShelf';
+import EmptyStateSuggestions from '@/components/EmptyStateSuggestions';
 import FavoritesPanel from '@/components/FavoritesPanel';
 import { FavoritesProvider, useFavorites } from '@/lib/FavoritesContext';
 import type { MapBounds } from '@/components/discovery/discovery-state';
@@ -75,59 +79,10 @@ function formatBudget(filters: FilterState): string {
   return 'Any budget';
 }
 
-/**
- * Check whether a single event matches the FilterState. Used to intersect
- * a pre-programmed digest list with the user's active filters client-side.
- * Only covers the filters that actually constrain the visible event set —
- * chat/search and map bounds are intentionally excluded.
- */
-function eventMatchesFilters(event: Event, filters: FilterState): boolean {
-  // isFree
-  if (filters.isFree && !event.is_free) return false;
-  // Price range — only apply when the event actually has pricing info (>0)
-  if (filters.priceMin !== undefined && filters.priceMin > 0) {
-    if (event.is_free) return false;
-    if ((event.price_max ?? 0) < filters.priceMin) return false;
-  }
-  if (filters.priceMax !== undefined && !event.is_free) {
-    if ((event.price_min ?? 0) > filters.priceMax) return false;
-  }
-  // Age (ageMax = upper bound kid can attend)
-  if (filters.ageMax !== undefined && filters.ageMax !== null) {
-    const bestFrom = event.age_best_from ?? event.age_min;
-    if (bestFrom !== null && bestFrom !== undefined && bestFrom > filters.ageMax) return false;
-    if (event.age_best_to !== null && event.age_best_to !== undefined && event.age_best_to < filters.ageMax) return false;
-  }
-  // Date range
-  const startStr = event.next_start_at;
-  if (filters.dateFrom && startStr) {
-    if (startStr.slice(0, 10) < filters.dateFrom) return false;
-  }
-  if (filters.dateTo && startStr) {
-    if (startStr.slice(0, 10) > filters.dateTo) return false;
-  }
-  // Categories — match against category_l1, categories JSON, tags JSON
-  if (filters.categories && filters.categories.length > 0) {
-    const cats = (event.categories || []).map((c) => String(c).toLowerCase());
-    const tags = (event.tags || []).map((t) => String(t).toLowerCase());
-    const l1 = (event.category_l1 || '').toLowerCase();
-    const wanted = filters.categories.map((c) => c.toLowerCase());
-    const hit = wanted.some((w) => l1 === w || cats.some((c) => c.includes(w)) || tags.some((t) => t.includes(w)));
-    if (!hit) return false;
-  }
-  // Exclude categories
-  if (filters.excludeCategories && filters.excludeCategories.length > 0) {
-    const l1 = (event.category_l1 || '').toLowerCase();
-    if (filters.excludeCategories.some((c) => c.toLowerCase() === l1)) return false;
-  }
-  // Neighborhoods (simple substring match against city/address)
-  if (filters.neighborhoods && filters.neighborhoods.length > 0 && !filters.neighborhoods.includes('Anywhere in NYC')) {
-    const loc = `${event.city || ''} ${event.address || ''}`.toLowerCase();
-    const hit = filters.neighborhoods.some((n) => loc.includes(n.toLowerCase()));
-    if (!hit) return false;
-  }
-  return true;
-}
+// eventMatchesFilters lives in lib/event-filter.ts — shared with DigestShelf
+// so the digest shelf can score its pre-curated lists against the same filters
+// the main feed uses (keeps "what's shown" and "which digests are relevant" in
+// sync without any server round-trip).
 
 export default function Home() {
   return <FavoritesProvider><HomeInner /></FavoritesProvider>;
@@ -172,14 +127,74 @@ function HomeInner() {
   // Drill-down: click on a category_tag in the banner → show peers in a popover.
   const [tagPeerPopover, setTagPeerPopover] = useState<null | { tag: string; digests: Array<{ slug: string; title: string; subtitle?: string; curator_name?: string; event_count: number }> }>(null);
 
+  // Track whether the user EXPLICITLY clicked the "For you" tab. We use this
+  // to avoid the "stuck on empty For you" UX where a narrow filter combo
+  // (e.g. Staten Island + age 5 + niche category) leaves the user staring at
+  // a 0-event grid with no easy escape. If the user picked it themselves, we
+  // respect that. If we auto-jumped them there (quiz, post-filter), we fall
+  // back to "All" once we discover the result set is empty.
+  const userClickedForYouRef = useRef(false);
+
   // Auto-switch to "For you" tab when arriving from quiz + track page view
   useEffect(() => {
     if (typeof window !== 'undefined') {
       initAnalytics();
       const params = new URLSearchParams(window.location.search);
       if (params.get('source') === 'quiz') setActiveTab('foryou');
+
+      // ── Quiz → main identity bridge ────────────────────────────────────
+      // When the user arrives from quiz.pulseup.me, the URL contains
+      // `quiz_phid=<posthog_distinct_id>` (the quiz session's PostHog ID).
+      // Calling posthog.identify() with that value merges the two anonymous
+      // PostHog profiles so quiz events and main-app events appear under a
+      // single person in PostHog — enabling proper cross-domain funnels.
+      const quizPhid = params.get('quiz_phid');
+      if (quizPhid) {
+        try {
+          // Wait for PostHog to initialise before calling identify.
+          // The SDK queues events if not ready, but identify() needs the
+          // instance to be loaded to correctly merge the alias.
+          const attemptIdentify = () => {
+            if (posthog.__loaded) {
+              posthog.identify(quizPhid, { quiz_phid: quizPhid });
+              // Also register as super-property so every future event carries it
+              posthog.register({ quiz_phid: quizPhid });
+              track('quiz_arrival', { quiz_phid: quizPhid, source: 'quiz' });
+            } else {
+              // PostHog not ready yet — retry after a short delay
+              setTimeout(attemptIdentify, 300);
+            }
+          };
+          attemptIdentify();
+
+          // Clean quiz_phid from the URL bar (cosmetic + prevents double-fire on reload)
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete('quiz_phid');
+          window.history.replaceState({}, '', cleanUrl.toString());
+        } catch { /* silently skip if PostHog unavailable */ }
+      }
     }
   }, []);
+
+  // Auto-fallback "For you (0)" → "All". Triggers ONLY when:
+  //   · current tab is 'foryou'
+  //   · the For-you total is 0 (filters yielded nothing)
+  //   · we have events overall (so falling back actually helps)
+  //   · the user did NOT click For you themselves (programmatic switches only)
+  // Without this, users coming through quiz / post-filter actions get stuck
+  // on an empty grid even when there are 200+ events in NYC right now.
+  useEffect(() => {
+    if (
+      activeTab === 'foryou' &&
+      !loading &&
+      total === 0 &&
+      allTotal > 0 &&
+      !userClickedForYouRef.current
+    ) {
+      setActiveTab('feed');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [total, loading, allTotal]);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   // Price range slider (dual handles)
@@ -198,6 +213,13 @@ function HomeInner() {
   const { favoriteIds, favoriteEvents } = useFavorites();
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
+
+  // QA-only: floating debug-session widget is gated to devices with
+  // localStorage.pulseup_debug === '1'. Same flag as EventDetail's flag row.
+  const [debugMode, setDebugMode] = useState(false);
+  useEffect(() => {
+    try { setDebugMode(localStorage.getItem('pulseup_debug') === '1'); } catch {}
+  }, []);
 
   // Fetch categories on mount — API returns {value,label}, component expects {slug,label}
   useEffect(() => {
@@ -221,86 +243,95 @@ function HomeInner() {
       .catch(console.error);
   }, []);
 
-  // Fetch events when filters or page change
-  const fetchEvents = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      params.set('page', '1');
-      params.set('page_size', '500');
-
-      if (filters.categories && filters.categories.length > 0) {
-        params.set('categories', filters.categories.join(','));
-      }
-      if (filters.excludeCategories && filters.excludeCategories.length > 0) {
-        params.set('exclude_categories', filters.excludeCategories.join(','));
-      }
-      if (filters.priceMin !== undefined) {
-        params.set('price_min', String(filters.priceMin));
-      }
-      if (filters.priceMax !== undefined) {
-        params.set('price_max', String(filters.priceMax));
-      }
-      if (filters.isFree) {
-        params.set('is_free', 'true');
-      }
-      // Multi-child mode: send all kids' ages so the API can match
-      // events suitable for at least one of them and tag partial fits.
-      const kidsForFilter = filters.filterChildren && filters.filterChildren.length > 0
-        ? filters.filterChildren
-        : undefined;
-      if (kidsForFilter && kidsForFilter.length >= 2) {
-        params.set('child_ages', kidsForFilter.map((c) => c.age).join(','));
-        // Pass genders so the API can exclude gender-mismatched events
-        const genders = kidsForFilter.map((c) => c.gender).join(',');
-        params.set('child_genders', genders);
-      } else if (filters.ageMax !== undefined) {
-        params.set('age', String(filters.ageMax));
-        // Single-child mode: derive gender from filterChildren if available
-        if (kidsForFilter && kidsForFilter.length === 1) {
-          params.set('child_genders', kidsForFilter[0].gender);
-        }
-      }
-      if (filters.dateFrom) {
-        params.set('date_from', filters.dateFrom);
-      }
-      if (filters.dateTo) {
-        params.set('date_to', filters.dateTo);
-      }
-      if (filters.search) {
-        params.set('search', filters.search);
-      }
-      if (filters.lat && filters.lon && filters.distance) {
-        params.set('lat', String(filters.lat));
-        params.set('lon', String(filters.lon));
-        params.set('distance', String(filters.distance));
-      }
-      if (filters.neighborhoods && filters.neighborhoods.length > 0) {
-        params.set('neighborhoods', filters.neighborhoods.join(','));
-      }
-      if (filters.ratingMin !== undefined) {
-        params.set('rating_min', String(filters.ratingMin));
-      }
-
-      const res = await fetch(`/api/events?${params.toString()}`);
-      const data = await res.json();
-
-      const evts = data.events || [];
-      setEvents(evts);
-      setFilteredEvents(evts);
-      setTotal(data.total || 0);
-      setBoundsFiltered(false);
-      setSearchAreaActive(false);
-    } catch (err) {
-      console.error('Failed to fetch events:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [filters, page]);
-
+  // Fetch events whenever filters or page change.
+  //
+  // CRITICAL: We cancel in-flight requests when filters change — otherwise a
+  // slow "unfiltered" request fired during initial render can arrive AFTER
+  // the filtered request and overwrite the UI with 195 unrelated events.
+  // This was the "age filter silently dropped on quiz landing" bug — the
+  // filter state was correct, the API call was correct, but a stale initial
+  // fetch clobbered the filtered result.
   useEffect(() => {
-    fetchEvents();
-  }, [fetchEvents]);
+    const controller = new AbortController();
+    let canceled = false;
+
+    (async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        params.set('page', '1');
+        params.set('page_size', '500');
+
+        if (filters.categories && filters.categories.length > 0) {
+          params.set('categories', filters.categories.join(','));
+        }
+        if (filters.excludeCategories && filters.excludeCategories.length > 0) {
+          params.set('exclude_categories', filters.excludeCategories.join(','));
+        }
+        if (filters.priceMin !== undefined) {
+          params.set('price_min', String(filters.priceMin));
+        }
+        if (filters.priceMax !== undefined) {
+          params.set('price_max', String(filters.priceMax));
+        }
+        if (filters.isFree) {
+          params.set('is_free', 'true');
+        }
+        // Multi-child mode: send all kids' ages so the API can match
+        // events suitable for at least one of them and tag partial fits.
+        const kidsForFilter = filters.filterChildren && filters.filterChildren.length > 0
+          ? filters.filterChildren
+          : undefined;
+        if (kidsForFilter && kidsForFilter.length >= 2) {
+          params.set('child_ages', kidsForFilter.map((c) => c.age).join(','));
+          const genders = kidsForFilter.map((c) => c.gender).join(',');
+          params.set('child_genders', genders);
+        } else if (filters.ageMax !== undefined) {
+          params.set('age', String(filters.ageMax));
+          if (kidsForFilter && kidsForFilter.length === 1) {
+            params.set('child_genders', kidsForFilter[0].gender);
+          }
+        }
+        if (filters.dateFrom) params.set('date_from', filters.dateFrom);
+        if (filters.dateTo)   params.set('date_to',   filters.dateTo);
+        if (filters.search)   params.set('search',    filters.search);
+        if (filters.lat && filters.lon && filters.distance) {
+          params.set('lat', String(filters.lat));
+          params.set('lon', String(filters.lon));
+          params.set('distance', String(filters.distance));
+        }
+        if (filters.neighborhoods && filters.neighborhoods.length > 0) {
+          params.set('neighborhoods', filters.neighborhoods.join(','));
+        }
+        if (filters.ratingMin !== undefined) {
+          params.set('rating_min', String(filters.ratingMin));
+        }
+
+        const res = await fetch(`/api/events?${params.toString()}`, { signal: controller.signal });
+        if (canceled) return;
+        const data = await res.json();
+        if (canceled) return;
+
+        const evts = data.events || [];
+        setEvents(evts);
+        setFilteredEvents(evts);
+        setTotal(data.total || 0);
+        setBoundsFiltered(false);
+        setSearchAreaActive(false);
+      } catch (err) {
+        // AbortError is expected when filters change while a fetch is in flight.
+        if ((err as Error)?.name === 'AbortError') return;
+        if (!canceled) console.error('Failed to fetch events:', err);
+      } finally {
+        if (!canceled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      canceled = true;
+      controller.abort();
+    };
+  }, [filters, page]);
 
   // Load active debug session on mount so flagged checkboxes stay checked across reloads.
   useEffect(() => {
@@ -390,11 +421,36 @@ function HomeInner() {
     };
   }, [hoveredItemId]);
 
+  // Refs hold the current filter/tab/digest context without forcing a new
+  // handler closure on every state change. Cheap alternative to wiring 6 deps
+  // into useCallback.
+  const cardContextRef = useRef<{
+    tab: 'feed' | 'foryou';
+    digestSlug: string | null;
+    filterSummary: {
+      has_filters: boolean;
+      active_categories: string[];
+      active_neighborhoods: string[];
+    };
+  }>({ tab: 'feed', digestSlug: null, filterSummary: { has_filters: false, active_categories: [], active_neighborhoods: [] } });
+
   // Handlers
-  const handleEventClick = useCallback((event: Event) => {
+  const handleEventClick = useCallback((event: Event, position?: number, listTotal?: number) => {
     // Card expansion event — source defaults to 'feed' since this handler
     // fires from the main event grid. Chat/digest variants use handleCardClick below.
-    trackCardExpanded({ event_id: event.id, event_title: event.title, source: 'feed' });
+    const ctx = cardContextRef.current;
+    trackCardExpanded({
+      event_id: event.id,
+      event_title: event.title,
+      source: ctx.digestSlug ? 'digest' : 'feed',
+      position,
+      list_total: listTotal,
+      came_from_tab: ctx.tab,
+      came_from_digest: ctx.digestSlug,
+      has_filters: ctx.filterSummary.has_filters,
+      active_categories: ctx.filterSummary.active_categories,
+      active_neighborhoods: ctx.filterSummary.active_neighborhoods,
+    });
     setSelectedEvent(event);
     setDetailOpen(true);
     setSelectedItemId(event.id);
@@ -407,13 +463,8 @@ function HomeInner() {
 
   const handleFilterReset = useCallback(() => {
     trackFilterApplied({ action: 'reset' }, 'reset');
-    // Preserve age/children — user clears them only via "Clear" in Who dialog
-    setFilters((prev) => {
-      const kept: FilterState = {};
-      if (prev.ageMax !== undefined) kept.ageMax = prev.ageMax;
-      if (prev.filterChildren) kept.filterChildren = prev.filterChildren;
-      return kept;
-    });
+    // Clear everything including Who (age/children) — full reset.
+    setFilters({});
     setPage(1);
     setPriceSliderMin(0);
     setPriceSliderMax(200);
@@ -440,9 +491,21 @@ function HomeInner() {
   );
 
   // Discovery handlers — alternative card-click path used by the discovery section.
-  const handleCardClick = useCallback((event: unknown) => {
+  const handleCardClick = useCallback((event: unknown, position?: number, listTotal?: number) => {
     const ev = event as { id: number; title: string };
-    trackCardExpanded({ event_id: ev.id, event_title: ev.title, source: 'feed' });
+    const ctx = cardContextRef.current;
+    trackCardExpanded({
+      event_id: ev.id,
+      event_title: ev.title,
+      source: ctx.digestSlug ? 'digest' : 'feed',
+      position,
+      list_total: listTotal,
+      came_from_tab: ctx.tab,
+      came_from_digest: ctx.digestSlug,
+      has_filters: ctx.filterSummary.has_filters,
+      active_categories: ctx.filterSummary.active_categories,
+      active_neighborhoods: ctx.filterSummary.active_neighborhoods,
+    });
     setSelectedItemId(ev.id);
     setSelectedEvent(event as Parameters<typeof setSelectedEvent>[0]);
     setDetailOpen(true);
@@ -700,22 +763,142 @@ function HomeInner() {
   }, []);
 
   const forYouEvents = boundsFiltered ? filteredEvents : events;
-  // Feed always shows ALL events; For You shows filtered results.
-  // When a digest is active, it overrides all other sources — the feed
-  // becomes exactly the curated digest event list (preset filter behavior).
-  const baseEvents = activeTab === 'feed' ? allEvents : forYouEvents;
-  // When a digest is active, intersect it with any currently-applied filters
-  // (price, age, date, categories, neighborhoods). Digest = hard constraint,
-  // filters narrow within it. If filters exclude everything, show 0 results.
-  const digestEventsFiltered = activeDigest
-    ? digestEvents.filter((e) => eventMatchesFilters(e, filters))
-    : digestEvents;
+  // Tabs are now purely a content switch:
+  //   "All"     → unfiltered pool (what's happening in NYC, period)
+  //   "For you" → filtered pool (matches your profile + sidebar filters)
+  // This keeps the visible grid in sync with the tab counts ("All 195" really
+  // means 195 events, not "34 because filters are hidden-applied").
+  // "For you" additionally respects map-bounds filtering when zoomed in.
+  const baseEvents = activeTab === 'feed'
+    ? allEvents
+    : forYouEvents;
+  // When a digest is active, show its curated list as-is. We used to
+  // intersect it with sidebar filters ("digest = hard constraint, filters
+  // narrow within it"), but that was confusing: a parent with "3yo +
+  // Brooklyn" who tapped a digest card would see 0 events because the
+  // digest was curated against the full pool. A digest is itself a
+  // preset — clicking it should just show the curated picks.
   const displayEvents = activeDigest
-    ? digestEventsFiltered
+    ? digestEvents
     : (favoritesOnly ? favoriteEvents : baseEvents);
   const displayTotal = activeDigest
-    ? digestEventsFiltered.length
-    : (favoritesOnly ? favoriteIds.size : activeTab === 'feed' ? allTotal : total);
+    ? digestEvents.length
+    : (favoritesOnly
+        ? favoriteIds.size
+        : activeTab === 'feed'
+          ? allTotal
+          : total);
+
+  // Keep the click-tracking context ref in sync with current state so
+  // card_expanded / buy_tickets_clicked events carry accurate attribution
+  // without forcing those handlers to re-create on every keystroke.
+  cardContextRef.current = {
+    tab: activeTab,
+    digestSlug: activeDigest?.slug ?? null,
+    filterSummary: {
+      has_filters: !!(
+        filters.categories?.length ||
+        filters.neighborhoods?.length ||
+        filters.search ||
+        filters.priceMin ||
+        filters.priceMax ||
+        filters.isFree ||
+        filters.ageMax
+      ),
+      active_categories: filters.categories ?? [],
+      active_neighborhoods: filters.neighborhoods ?? [],
+    },
+  };
+
+  // Scroll-depth tracking (25 / 50 / 75 / 100%). Fires once per depth per
+  // session. Engagement signal — tells us whether users look past page 1.
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const scrolled = (doc.scrollTop + window.innerHeight) / doc.scrollHeight;
+      const pct = Math.round(scrolled * 100);
+      const milestones: (25 | 50 | 75 | 100)[] = [25, 50, 75, 100];
+      for (const m of milestones) {
+        if (pct >= m) {
+          trackFeedScroll({ depth_pct: m, events_visible: displayEvents.length, tab: activeTab });
+        }
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [displayEvents.length, activeTab]);
+
+  // ── Impression tracking via IntersectionObserver ─────────────────────────
+  // Fires trackEventImpression once per (session, event_id, position) when a
+  // card is ≥ 50 % visible for ≥ 500 ms. This gives us the impression
+  // denominator needed to compute CTR@k and NDCG on real traffic.
+  // Each event_id fires at most once per browser session regardless of how
+  // many times the list re-renders.
+  useEffect(() => {
+    const container = resultsRef.current;
+    if (!container || typeof IntersectionObserver === 'undefined') return;
+
+    // Timers keyed by DOM element — cancelled if user scrolls away < 500 ms
+    const pending = new Map<Element, ReturnType<typeof setTimeout>>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const el = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            const timer = setTimeout(() => {
+              pending.delete(el);
+              const eventId  = Number(el.dataset.eventId);
+              const position = Number(el.dataset.position);
+              if (!eventId) return;
+
+              // Per-session dedup — skip if already fired for this card slot
+              const key = `pu_impr_${eventId}_${position}`;
+              try {
+                if (sessionStorage.getItem(key)) return;
+                sessionStorage.setItem(key, '1');
+              } catch { /* ignore */ }
+
+              const ctx = cardContextRef.current;
+              trackEventImpression({
+                event_id:         eventId,
+                position,
+                list_total:       displayEvents.length,
+                source:           ctx.digestSlug ? 'digest' : 'feed',
+                came_from_tab:    ctx.tab,
+                came_from_digest: ctx.digestSlug,
+              });
+              // Each card fires at most once per observer lifetime
+              observer.unobserve(el);
+            }, 500);
+            pending.set(el, timer);
+          } else {
+            // Scrolled past before 500 ms — cancel the pending timer
+            const t = pending.get(el);
+            if (t !== undefined) { clearTimeout(t); pending.delete(el); }
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    // Wait one rAF tick for cards to paint before querying
+    const raf = requestAnimationFrame(() => {
+      container.querySelectorAll<HTMLElement>('[data-event-id][data-position]').forEach((el) => {
+        // Skip cards already recorded this session
+        const key = `pu_impr_${el.dataset.eventId}_${el.dataset.position}`;
+        try { if (sessionStorage.getItem(key)) return; } catch { /* ignore */ }
+        observer.observe(el);
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      pending.forEach(clearTimeout);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayEvents]); // re-observe whenever the visible list changes
 
   const sliderMinPct = Math.round((priceSliderMin / 200) * 100);
   const sliderMaxPct = Math.round((priceSliderMax / 200) * 100);
@@ -732,18 +915,28 @@ function HomeInner() {
         {/* Center: title + tabs */}
         <div className="flex items-center gap-4">
           <div className="v2-header-center">
-            <span className="v2-header-title">Epic kids events in NYC</span>
+            <span className="v2-header-title">Better Moments with your Kids. Less Planning</span>
           </div>
           <div className="v2-header-tabs">
             <button
               className={`v2-header-tab ${activeTab === 'feed' ? 'active' : ''}`}
-              onClick={() => { track('tab_switched', { tab: 'feed' }); setActiveTab('feed'); }}
+              onClick={() => {
+                userClickedForYouRef.current = false;
+                track('tab_switched', { tab: 'feed' });
+                setActiveTab('feed');
+              }}
             >
               All ({allTotal})
             </button>
             <button
               className={`v2-header-tab ${activeTab === 'foryou' ? 'active' : ''}`}
-              onClick={() => { track('tab_switched', { tab: 'foryou' }); setActiveTab('foryou'); }}
+              onClick={() => {
+                // Mark as user-explicit so the auto-fallback effect respects
+                // the choice even if the result set is empty.
+                userClickedForYouRef.current = true;
+                track('tab_switched', { tab: 'foryou' });
+                setActiveTab('foryou');
+              }}
             >
               For you ({total})
             </button>
@@ -908,7 +1101,7 @@ function HomeInner() {
                 </svg>
               </div>
               <div className="v2-chat-header-text">
-                <span className="v2-chat-header-title">Pulse Assistant</span>
+                <span className="v2-chat-header-title">Pulse AI assistant</span>
                 <span className="v2-chat-header-subtitle">Exploring New York City</span>
               </div>
             </div>
@@ -930,6 +1123,7 @@ function HomeInner() {
           <DigestShelf
             onDigestSelect={handleDigestSelect}
             activeDigestSlug={activeDigest?.slug ?? null}
+            filters={filters}
           />
 
           {/* Active-digest banner: shows which preset is applied + clear button */}
@@ -951,9 +1145,7 @@ function HomeInner() {
                     )}
                     {activeDigest.title}
                     <span className="active-digest-banner__count">
-                      · {digestEventsFiltered.length === digestEvents.length
-                          ? `${digestEvents.length} events`
-                          : `${digestEventsFiltered.length} of ${digestEvents.length} events (filters applied)`}
+                      · {digestEvents.length} events
                     </span>
                   </div>
                   {(activeDigest.subtitle || activeDigest.curator_name) && (
@@ -1027,26 +1219,10 @@ function HomeInner() {
             </div>
           )}
 
-          {loading || digestLoading ? (
-            <div className="results-loading">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="result-skeleton">
-                  <div className="result-skeleton-img" />
-                  <div className="result-skeleton-text">
-                    <div className="result-skeleton-line w-3/4" />
-                    <div className="result-skeleton-line w-1/2" />
-                    <div className="result-skeleton-line w-1/3" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : displayEvents.length === 0 ? (
-            <div className="results-empty">
-              <p className="text-base">No events found</p>
-              <p className="text-sm mt-1">Try adjusting your filters</p>
-            </div>
-          ) : (
-            <>
+          <>
+            {/* DateBar is always visible (even when no events found) so the user
+                can tap a different date instead of being stuck with a dead screen. */}
+            {!loading && !digestLoading && (
               <div className="results-sticky-top">
                 <div className="all-events-heading">
                   <span>All Events</span>
@@ -1057,23 +1233,73 @@ function HomeInner() {
                   onSelect={handleDateBarSelect}
                 />
               </div>
+            )}
+            {loading || digestLoading ? (
+              <div className="results-loading">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <div key={i} className="result-skeleton">
+                    <div className="result-skeleton-img" />
+                    <div className="result-skeleton-text">
+                      <div className="result-skeleton-line w-3/4" />
+                      <div className="result-skeleton-line w-1/2" />
+                      <div className="result-skeleton-line w-1/3" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : displayEvents.length === 0 ? (
+              <div className="results-empty">
+                <p className="text-base">No events found</p>
+                <p className="text-sm mt-1">Try adjusting your filters</p>
+                <EmptyStateSuggestions
+                  filters={filters}
+                  onApply={(next) => {
+                    trackFilterApplied({ action: 'empty_state_suggestion' }, 'ui');
+                    setFilters(next);
+                    setPage(1);
+                  }}
+                />
+              </div>
+            ) : (
               <div className={mapExpanded ? 'results-list results-list--2col' : 'results-list'}>
-                {displayEvents.map((event) => (
+                {/* Thin-results hint: when filters narrowed the feed to <3
+                    events, surface relax-suggestions inline so the user isn't
+                    staring at one card and assuming that's all NYC has. */}
+                {displayEvents.length < 3 && !activeDigest && (
+                  <div className="results-thin-banner" style={{
+                    gridColumn: '1 / -1', padding: '12px 14px', marginBottom: 8,
+                    background: 'rgba(255,255,255,0.05)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.08)'
+                  }}>
+                    <p className="text-sm" style={{ marginBottom: 8 }}>
+                      Only {displayEvents.length} {displayEvents.length === 1 ? 'event matches' : 'events match'} your filters — try relaxing one:
+                    </p>
+                    <EmptyStateSuggestions
+                      filters={filters}
+                      onApply={(next) => {
+                        trackFilterApplied({ action: 'thin_results_suggestion' }, 'ui');
+                        setFilters(next);
+                        setPage(1);
+                      }}
+                    />
+                  </div>
+                )}
+                {displayEvents.map((event, idx) => (
                   <EventCardV2
                     key={event.id}
                     event={event}
+                    position={idx + 1}
                     isHovered={hoveredItemId === event.id}
                     isSelected={selectedItemId === event.id}
                     onMouseEnter={() => setHoveredItemId(event.id)}
                     onMouseLeave={() => setHoveredItemId(null)}
-                    onClick={() => handleCardClick(event)}
+                    onClick={() => handleCardClick(event, idx + 1, displayEvents.length)}
                     isFlagged={flaggedIds.has(event.id)}
                     onToggleFlag={toggleFlag}
                   />
                 ))}
               </div>
-            </>
-          )}
+            )}
+          </>
         </div>
 
         {/* RIGHT: map */}
@@ -1121,10 +1347,18 @@ function HomeInner() {
         onClose={handleCloseDetail}
         isFlagged={selectedEvent ? flaggedIds.has(selectedEvent.id) : false}
         onToggleFlag={toggleFlag}
+        attribution={{
+          source: activeDigest?.slug ? 'digest' : 'feed',
+          came_from_tab: activeTab,
+          came_from_digest: activeDigest?.slug ?? null,
+          has_filters: cardContextRef.current.filterSummary.has_filters,
+          active_categories: cardContextRef.current.filterSummary.active_categories,
+          active_neighborhoods: cardContextRef.current.filterSummary.active_neighborhoods,
+        }}
       />
 
-      {/* Floating debug session widget — visible whenever there is at least 1 flag */}
-      {(activeSession && (activeSession.flagsCount > 0 || flaggedIds.size > 0)) && (
+      {/* Floating debug session widget — QA-only (pulseup_debug flag). */}
+      {debugMode && (activeSession && (activeSession.flagsCount > 0 || flaggedIds.size > 0)) && (
         <div className="debug-session-widget">
           <div className="debug-session-info">
             <span className="debug-session-title">Debug Session #{activeSession.id}</span>
@@ -1202,6 +1436,7 @@ function HomeInner() {
           setDetailOpen(true);
         }}
       />
+
     </div>
   );
 }
