@@ -277,6 +277,7 @@ const norm = {
   category_derived: 0,
   missing_geo: 0,
   past_events_skipped: 0,
+  outside_nyc_skipped: 0,
 };
 
 // BUG_008: skip events whose next_start_at is explicitly in the past.
@@ -295,8 +296,94 @@ function isPastEvent(nextStartAt: string | undefined | null): boolean {
   }
 }
 
+// BUG_010: the raw CSV feed includes Long Island events (Stony Brook, East Hampton,
+// Cold Spring Harbor, etc.) that aren't in NYC at all.  They bloat the DB, get
+// assigned no borough, and inflate the "orphan" count.  Block them at import time.
+//
+// We match on city AND on country_county (Suffolk County / Nassau County cover
+// virtually all of Long Island). The blocklist is intentionally conservative —
+// only cities that are definitively outside the five boroughs.
+const LONG_ISLAND_CITIES = new Set([
+  'stony brook', 'east hampton', 'cold spring harbor', 'huntington station',
+  'huntington', 'melville', 'amityville', 'babylon', 'bay shore', 'bellmore',
+  'bethpage', 'brentwood', 'commack', 'copiague', 'dix hills', 'east meadow',
+  'east northport', 'elmont', 'farmingdale', 'floral park', 'freeport',
+  'garden city', 'glen cove', 'great neck', 'greenvale', 'hempstead',
+  'hicksville', 'holbrook', 'islip', 'jericho', 'lake grove', 'levittown',
+  'lindenhurst', 'long beach', 'lynbrook', 'massapequa', 'mineola',
+  'mount sinai', 'new hyde park', 'north babylon', 'north bellmore',
+  'oceanside', 'old brookville', 'oyster bay', 'plainview', 'port jefferson',
+  'port washington', 'riverhead', 'rockville centre', 'roslyn', 'sayville',
+  'seaford', 'smithtown', 'syosset', 'uniondale', 'valley stream',
+  'west hempstead', 'westbury', 'woodbury',
+  // Westchester (also often leaks into "NYC area" feeds)
+  'white plains', 'yonkers', 'mount vernon', 'new rochelle', 'scarsdale',
+  'tarrytown', 'ardsley', 'dobbs ferry', 'elmsford', 'greenburgh',
+  'harrison', 'larchmont', 'mamaroneck', 'ossining', 'pelham', 'port chester',
+  'rye', 'tuckahoe',
+  // New Jersey cities occasionally in the feed
+  'hoboken', 'jersey city', 'newark', 'fort lee', 'englewood', 'weehawken',
+]);
+const LONG_ISLAND_COUNTIES = new Set([
+  'suffolk county', 'nassau county',
+  'westchester county',
+  // NJ counties
+  'hudson county', 'bergen county',
+]);
+
+function isOutsideNYC(row: Record<string, string>): boolean {
+  const city = (row.city || '').trim().toLowerCase();
+  const county = (row.country_county || '').trim().toLowerCase();
+  if (LONG_ISLAND_CITIES.has(city)) return true;
+  if (LONG_ISLAND_COUNTIES.has(county)) return true;
+  return false;
+}
+
+// Normalise the May-11 CSV's "2026-05-13 07:30:00+00" date format so both
+// SQLite and the browser's `new Date()` can parse it.
+//   · drop the "+HH" / "+HH:MM" timezone suffix (SQLite datetime() returns
+//     NULL for those, breaking the live filter)
+//   · use "T" between date and time + append "Z" (UTC) so JS Date treats
+//     it as ISO and the frontend stops rendering "Invalid Date" on cards
+// SQLite's datetime() accepts "YYYY-MM-DDTHH:MM:SSZ" fine.
+function normalizeDateTz(s: string | null | undefined): string {
+  if (!s) return '';
+  const m = s.match(/^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}:\d{2})/);
+  return m ? `${m[1]}T${m[2]}Z` : s;
+}
+
+// ─── CSV column normalization ──────────────────────────────────────────────
+// The CSV format evolved over time:
+//   · old format: lat / lon / address / city / age_best_from / age_best_to / tags
+//   · new format: geo_lat / geo_lon / geo_address / geo_city / best_from / best_to / tag
+// The downstream code is keyed on the OLD names, so we mirror the new keys
+// onto the old ones before processing. Old keys win when both are present
+// (no-op for old-format CSVs).
+function normalizeRowKeys(row: Record<string, string>): Record<string, string> {
+  const aliases: Array<[string, string]> = [
+    ['geo_lat', 'lat'],
+    ['geo_lon', 'lon'],
+    ['geo_address', 'address'],
+    ['geo_city', 'city'],
+    ['geo_subway', 'subway'],
+    ['geo_county', 'country_county'],
+    ['geo_district', 'city_district'],
+    ['geo_locality', 'city_locality'],
+    ['geo_timezone', 'timezone'],
+    ['best_from', 'age_best_from'],
+    ['best_to', 'age_best_to'],
+    ['tag', 'tags'],
+    ['image', 'picture_url'],
+  ];
+  for (const [from, to] of aliases) {
+    if (!row[to] && row[from]) row[to] = row[from];
+  }
+  return row;
+}
+
 const insertMany = db.transaction((rows: Record<string, string>[]) => {
-  for (const row of rows) {
+  for (const rawRow of rows) {
+    const row = normalizeRowKeys(rawRow);
     try {
       if (row.status === 'disabled' || row.disabled === 'True' || row.archived === 'True') {
         skipped++;
@@ -307,6 +394,13 @@ const insertMany = db.transaction((rows: Record<string, string>[]) => {
       if (isPastEvent(row.next_start_at)) {
         skipped++;
         norm.past_events_skipped++;
+        continue;
+      }
+
+      // BUG_010 — skip non-NYC events (Long Island, Westchester, NJ)
+      if (isOutsideNYC(row)) {
+        skipped++;
+        norm.outside_nyc_skipped++;
         continue;
       }
 
@@ -393,8 +487,13 @@ const insertMany = db.transaction((rows: Record<string, string>[]) => {
         occurrencesJson,
         normInt(row.schedule_confidence),
         normText(row.schedule_source),
-        row.next_start_at || '',
-        nextEndAt,
+        // The May-11 CSV ships next_start_at with a "+00" timezone suffix
+        // ("2026-05-13 07:30:00+00"). SQLite's datetime() returns NULL for
+        // that format, which made `datetime(next_start_at, '+3 hours')`
+        // null and silently filtered out 100% of events as "in the past".
+        // Strip the suffix on import so all downstream SQL works.
+        normalizeDateTz(row.next_start_at),
+        normalizeDateTz(nextEndAt),
         ageMin,
         row.age_label || '',
         ageBestFrom,
@@ -454,5 +553,6 @@ console.log(`  BUG_004 empty next_end_at -> NULL:     ${norm.end_date_nullified}
 console.log(`  BUG_003 category_l1 derived:           ${norm.category_derived} rows`);
 console.log(`  BUG_007 missing lat/lon (monitoring):  ${norm.missing_geo} rows`);
 console.log(`  BUG_008 past events skipped:           ${norm.past_events_skipped} rows`);
+console.log(`  BUG_010 non-NYC events skipped:        ${norm.outside_nyc_skipped} rows`);
 
 db.close();

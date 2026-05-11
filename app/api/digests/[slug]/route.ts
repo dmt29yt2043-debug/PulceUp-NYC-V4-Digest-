@@ -24,7 +24,20 @@ export async function GET(
     // EventRow objects — `curator_note` / `sort_order` used to come from the
     // digest_events table; those are dropped. Clients display `reasons` via
     // the audit script; the UI doesn't currently render them.
-    return Response.json({ digest: result.digest, events: result.events });
+    //
+    // Mirror /api/digests/route.ts: swap raw JSON-string tags/categories for
+    // their parsed arrays so the frontend can call .map() on them safely.
+    type WithParsed = { tagsParsed?: unknown; categoriesParsed?: unknown; reviewsParsed?: unknown };
+    const events = result.events.map((e) => {
+      const ex = e as unknown as WithParsed;
+      return {
+        ...e,
+        tags:       Array.isArray(ex.tagsParsed)       ? ex.tagsParsed       : [],
+        categories: Array.isArray(ex.categoriesParsed) ? ex.categoriesParsed : [],
+        reviews:    Array.isArray(ex.reviewsParsed)    ? ex.reviewsParsed    : [],
+      };
+    });
+    return Response.json({ digest: result.digest, events });
   } catch (err) {
     console.error('Digest detail API error:', err);
     return Response.json({ error: 'Failed to fetch digest' }, { status: 500 });

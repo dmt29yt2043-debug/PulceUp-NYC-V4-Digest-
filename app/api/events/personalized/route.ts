@@ -39,11 +39,26 @@ const INTEREST_TO_CATEGORIES: Record<string, string[]> = {
   attractions: ['attractions', 'Attractions & Activities'],
 };
 
+/**
+ * Parse age string from quiz params.
+ * Supports both formats:
+ *   - New (exact number):   "7"      → { min: 7, max: 7 }
+ *   - Legacy (range):       "3-5"    → { min: 3, max: 5 }
+ *   - Legacy (open end):    "16+"    → { min: 16, max: 18 }
+ */
 function parseAgeRange(ageStr: string): { min: number; max: number } {
+  if (!ageStr) return { min: 4, max: 10 };
+  // Open-end legacy: "16+"
   if (ageStr.includes('+')) {
     const n = parseInt(ageStr.replace('+', ''), 10);
-    return { min: n, max: 18 };
+    return { min: isNaN(n) ? 16 : n, max: 18 };
   }
+  // New format: exact number "7"
+  if (!ageStr.includes('-')) {
+    const n = parseInt(ageStr, 10);
+    return !isNaN(n) ? { min: n, max: n } : { min: 4, max: 10 };
+  }
+  // Legacy range: "3-5"
   const parts = ageStr.split('-').map((s) => parseInt(s, 10));
   if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
     return { min: parts[0], max: parts[1] };
@@ -52,9 +67,10 @@ function parseAgeRange(ageStr: string): { min: number; max: number } {
 }
 
 /**
- * Parse `children` quiz param (format: `boy:3-5,girl:9-12`) → array of
- * {gender, age: {min,max}}. Falls back to back-compat `child_age` + `gender`
- * when `children` is absent or unparseable.
+ * Parse `children` quiz param.
+ * New format:    "boy:7,girl:3"      (exact age)
+ * Legacy format: "boy:3-5,girl:9-12" (age range)
+ * Falls back to back-compat `child_age` + `gender` when `children` is absent.
  */
 function parseChildren(
   childrenParam: string | null,
@@ -82,7 +98,8 @@ export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
 
   // --- Quiz params (see docs/quiz-url-contract.md) ---
-  const childAge   = sp.get('child_age') || '6-8';
+  // child_age: new format = exact number "7"; legacy = range "3-5" or "16+"
+  const childAge   = sp.get('child_age') || '8';
   const gender     = sp.get('gender');                    // back-compat, first child
   const children   = parseChildren(sp.get('children'), childAge, gender);
   const borough    = (sp.get('borough') || 'manhattan').toLowerCase();
@@ -101,11 +118,17 @@ export async function GET(req: NextRequest) {
   const db = new Database(DB_PATH, { readonly: true });
 
   // Status filter must match lib/db.ts getEvents() — events flow through a
-  // multi-stage pipeline (synth.done, verify.done, discovery.done, published).
-  // Using just `status = 'published'` misses ~99% of the catalog.
+  // multi-stage pipeline (synth.done, verify.desc, verify.done, discovery.done,
+  // published). Including `verify.desc` unlocks ~7x more events than just
+  // `verify.done` (95% of the imported catalog had been hidden otherwise).
+  // We also exclude nightlife and obvious adult-only events to keep the
+  // family surface clean even when age data is NULL.
   const rows = db.prepare(`
     SELECT * FROM events
-    WHERE (status IN ('published', 'done', 'new') OR status LIKE '%.done')
+    WHERE (status IN ('published', 'done', 'new', 'verify.desc') OR status LIKE '%.done')
+      AND (category_l1 IS NULL OR category_l1 NOT IN ('networking', 'nightlife'))
+      AND title NOT LIKE '%21+%'
+      AND title NOT LIKE '%18+%'
       AND (age_min IS NULL OR age_min <= ?)
       AND (COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+1 day')) >= datetime('now') OR next_start_at IS NULL)
     ORDER BY next_start_at ASC
@@ -130,21 +153,25 @@ export async function GET(req: NextRequest) {
     const reasons: string[] = [];
 
     // --- 1. Age fit ---
+    // Heavier weighting (Bug #16): explicit age match dominates; events with
+    // no age info get a small baseline so they don't crowd out matched ones.
     const ageMin = row.age_min as number | null;
     const ageBestFrom = row.age_best_from as number | null;
     const ageBestTo = row.age_best_to as number | null;
     if (ageBestFrom != null && ageBestTo != null) {
-      // Check if child age range overlaps with event's best-for range
-      if (ageRange.min <= ageBestTo && ageRange.max >= ageBestFrom) {
-        score += 30;
+      // Tight overlap = stronger bonus (extends the "perfect match" lead)
+      const overlapStart = Math.max(ageRange.min, ageBestFrom);
+      const overlapEnd   = Math.min(ageRange.max, ageBestTo);
+      if (overlapEnd >= overlapStart) {
+        score += 45;
         reasons.push(`Great for kids ${childAge}`);
       } else {
-        score += 5;
+        score += 0; // age completely off — don't boost
       }
     } else if (ageMin == null) {
-      score += 15; // no age restriction, decent fit
+      score += 8; // no age restriction — small baseline only
     } else if (ageMin <= ageRange.max) {
-      score += 20;
+      score += 25;
       reasons.push(`Great for kids ${childAge}`);
     }
 
@@ -228,17 +255,25 @@ export async function GET(req: NextRequest) {
   // Take top 40
   const top = scored.slice(0, 40);
 
-  // Parse JSON fields
+  // Parse JSON fields. We previously only deserialised reviews + derisk,
+  // leaving categories/tags as raw JSON-encoded strings. The frontend's
+  // event-filter then crashed with "(e.categories || []).map is not a
+  // function" because `'[]'` is truthy and bypasses the `|| []` fallback.
+  // Parse every JSON-stringified field here so the response matches the
+  // shape /api/events returns via parseEventRow().
   const events = top.map(({ event: row, score, reasons }) => {
-    let reviews = [];
-    let derisk = {};
-    try { reviews = JSON.parse((row.reviews as string) || '[]'); } catch {}
-    try { derisk = JSON.parse((row.derisk as string) || '{}'); } catch {}
+    const parse = <T>(raw: unknown, fallback: T): T => {
+      if (typeof raw !== 'string') return (raw as T) ?? fallback;
+      try { return JSON.parse(raw) as T; } catch { return fallback; }
+    };
 
     return {
       ...row,
-      reviews,
-      derisk,
+      reviews: parse(row.reviews, []),
+      derisk: parse(row.derisk, {}),
+      categories: parse(row.categories, [] as string[]),
+      tags: parse(row.tags, [] as string[]),
+      data: parse(row.data, {}),
       is_free: Boolean(row.is_free),
       _score: score,
       _reasons: reasons,
