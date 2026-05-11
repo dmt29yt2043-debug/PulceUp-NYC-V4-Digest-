@@ -140,7 +140,18 @@ function HomeInner() {
     if (typeof window !== 'undefined') {
       initAnalytics();
       const params = new URLSearchParams(window.location.search);
-      if (params.get('source') === 'quiz') setActiveTab('foryou');
+      // Auto-switch to "For you" for ANY funneled entry point that brought
+      // quiz-style preferences with it — not just literal `source=quiz`.
+      // chat-quiz uses `source=chat`, future entry points may use others.
+      // Detect by either explicit source labels OR presence of quiz params.
+      const src = params.get('source');
+      const hasQuizPrefs = !!(
+        params.get('borough') ||
+        params.get('child_age') ||
+        params.get('children') ||
+        params.get('interests')
+      );
+      if (src === 'quiz' || src === 'chat' || hasQuizPrefs) setActiveTab('foryou');
 
       // ── Quiz → main identity bridge ────────────────────────────────────
       // When the user arrives from quiz.pulseup.me, the URL contains

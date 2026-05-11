@@ -3,12 +3,15 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { ChatMessage, FilterState, Event, UserProfile, ChildProfile } from '@/lib/types';
 import ChatMessages from './ChatMessages';
-import type { MultiSelectState } from './ChatMessages';
+import type { MultiSelectState, EmailAskState } from './ChatMessages';
 import {
   trackChatMessageSent,
   trackChatResponseReceived,
+  trackChatFiltersExtracted,
   trackError,
   track,
+  identifyUser,
+  trackAutoBroadened,
 } from '@/lib/analytics';
 
 /**
@@ -32,8 +35,30 @@ type OnboardingStep =
   | 'q3_neighborhoods'
   | 'q4_budget'
   | 'q5_special'
+  | 'q6_email'
   | 'ready'
   | 'done';
+
+// Suppression keys so we never re-ask a user who already acted.
+//   subscribed → never ask again on this device.
+//   declined   → honour "Not now" for 30 days, then soft re-ask.
+const EMAIL_SUBSCRIBED_KEY = 'pulseup_email_subscribed';
+const EMAIL_DECLINED_KEY = 'pulseup_email_declined_at';
+const EMAIL_DECLINED_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+function hasSubscribedEmail(): boolean {
+  if (typeof localStorage === 'undefined') return false;
+  return localStorage.getItem(EMAIL_SUBSCRIBED_KEY) === '1';
+}
+
+function wasEmailRecentlyDeclined(): boolean {
+  if (typeof localStorage === 'undefined') return false;
+  const raw = localStorage.getItem(EMAIL_DECLINED_KEY);
+  if (!raw) return false;
+  const ts = Number(raw);
+  if (!Number.isFinite(ts)) return false;
+  return Date.now() - ts < EMAIL_DECLINED_TTL_MS;
+}
 
 const INTEREST_OPTIONS = ['Active', 'Creative', 'Educational', 'Shows', 'Outdoor', 'Fun & Play', 'Adventure', 'Books', 'Social'];
 const NEIGHBORHOOD_OPTIONS = ['Upper Manhattan', 'Midtown', 'Lower Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island', 'Anywhere in NYC'];
@@ -53,20 +78,26 @@ const INTEREST_TO_CATEGORIES: Record<string, string[]> = {
 
 // Quiz interests → API categories. Must cover all 9 values from
 // docs/quiz-url-contract.md + any legacy fallbacks.
+//
+// Design rule: map each interest to the MOST SPECIFIC and LITERAL categories
+// only. Adding extra "helpful" categories (like "Children's Activities" to
+// every kid-focused interest) pollutes the category filter — the user who
+// picks "Science & tech" on quiz does NOT want "Parents & Kids" auto-selected
+// alongside it. Keep it minimal; the auto-broaden logic in chat handles gaps.
 const QUIZ_INTEREST_TO_CATEGORIES: Record<string, string[]> = {
-  outdoor:     ['attractions', 'outdoors'],
-  playgrounds: ['family', "Children's Activities", 'attractions'],
-  museums:     ['arts', 'Art'],
-  classes:     ['arts', 'Art', "Children's Activities"],
-  arts_crafts: ['arts', 'Art'],
+  outdoor:     ['outdoors'],
+  playgrounds: ['outdoors', 'family'],
+  museums:     ['attractions', 'arts'],
+  classes:     ['education', 'arts'],
+  arts_crafts: ['arts'],
   sports:      ['sports'],
-  science:     ['science', "Children's Activities"],
-  animals:     ['family', 'attractions'],
-  indoor_play: ['family', "Children's Activities", 'attractions'],
+  science:     ['science'],
+  animals:     ['outdoors', 'nature'],
+  indoor_play: ['family', 'attractions'],
   // Legacy / alternate labels
   theater: ['theater'],
-  music:   ['arts'],
-  play:    ['family', "Children's Activities"],
+  music:   ['music'],
+  play:    ['family'],
 };
 
 const BOROUGH_TO_NEIGHBORHOODS: Record<string, string[]> = {
@@ -121,6 +152,8 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
   const [currentChildIndex, setCurrentChildIndex] = useState(0);
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
   const [parsingChildren, setParsingChildren] = useState(false);
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
 
   const partialProfileRef = useRef<Partial<UserProfile>>({});
 
@@ -130,6 +163,12 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
 
     if (p.children && p.children.length > 0) {
       newFilters.ageMax = Math.max(...p.children.map((c) => c.age));
+      // Propagate all children to filterChildren so WhoFilter shows them all.
+      // 'unknown' gender falls back to 'boy' (matches WhoFilter's own fallback).
+      newFilters.filterChildren = p.children.map((c) => ({
+        age: c.age,
+        gender: (c.gender === 'boy' || c.gender === 'girl' ? c.gender : 'boy') as 'boy' | 'girl',
+      }));
 
       // Profile interests are used for chat context only — don't auto-apply
       // categories so the "What" filter stays at the default "Activities".
@@ -157,36 +196,61 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
       const params = new URLSearchParams(window.location.search);
       const source = params.get('source');
 
-      if (source === 'quiz') {
+      // ── Why this changed ──
+      // We used to gate ALL quiz-style param parsing on `source === 'quiz'`.
+      // But the chat-quiz at quiz.pulseup.me/chat sends `source=chat`, and
+      // future entry points (fb-direct, partner-link, etc.) might use other
+      // labels. Result: real users with valid params (borough, child_age,
+      // interests) saw default Staten Island instead of their actual answers.
+      //
+      // The robust fix: detect quiz-like params by their PRESENCE, not by
+      // the source label. `source` stays as an analytics-only field.
+      const hasQuizParams = !!(
+        params.get('borough') ||
+        params.get('child_age') ||
+        params.get('children') ||
+        params.get('interests') ||
+        params.get('gender')
+      );
+
+      if (hasQuizParams) {
         // --- Parse per docs/quiz-url-contract.md -----------------------------
-        const childAge    = params.get('child_age') || '6-8';
+        // child_age: new format = exact number "7"; legacy = range "3-5" / "16+"
+        const childAge    = params.get('child_age') || '8';
         const genderLegacy = params.get('gender');               // back-compat
-        const childrenRaw = params.get('children');              // new multi-child
+        const childrenRaw = params.get('children');              // multi-child
         const borough     = (params.get('borough') || '').toLowerCase();
         const customArea  = params.get('custom_area') || '';
         const interests   = (params.get('interests') || '').split(',').map(s => s.trim()).filter(Boolean);
         const pain        = params.get('pain') || '';
 
-        // Parse `children` (format: "boy:3-5,girl:9-12"). Falls back to
-        // single-child `gender`+`child_age` when `children` is absent.
-        const labelToAgeMax = (label: string): number => {
-          if (label.includes('+')) return 18;
-          const parts = label.split('-').map(Number);
-          return parts[parts.length - 1] || 8;
+        // Parse age string → exact number.
+        // New format: "7" → 7. Legacy: "3-5" → 5 (max), "16+" → 18.
+        const parseChildAge = (ageStr: string): number => {
+          if (!ageStr) return 8;
+          if (ageStr.includes('+')) return 18;
+          if (!ageStr.includes('-')) return Number(ageStr) || 8; // exact number
+          const parts = ageStr.split('-').map(Number);
+          return parts[parts.length - 1] || 8;                   // range → take max
         };
+
+        // Parse `children` param.
+        // New format: "boy:7,girl:3" (exact ages)
+        // Legacy:     "boy:3-5,girl:9-12" (ranges)
+        // Falls back to single-child `gender`+`child_age`.
         const quizChildren: ChildProfile[] = (() => {
           const interestLabels = interests.map(i => i.replace(/_/g,' ')).map(i => i.charAt(0).toUpperCase() + i.slice(1));
           if (childrenRaw) {
             const parsed = childrenRaw.split(',').map(s => s.trim()).filter(Boolean).map((piece) => {
-              const [g, ageLabel] = piece.split(':');
-              if (!ageLabel) return null;
+              const [g, ageStr] = piece.split(':');
+              if (!ageStr) return null;
               const gender = (g === 'boy' || g === 'girl' ? g : 'unknown') as ChildProfile['gender'];
-              return { age: labelToAgeMax(ageLabel), gender, interests: interestLabels };
+              return { age: parseChildAge(ageStr), gender, interests: interestLabels };
             }).filter((x): x is ChildProfile => x !== null);
             if (parsed.length > 0) return parsed;
           }
           const g = (genderLegacy === 'boy' || genderLegacy === 'girl' ? genderLegacy : 'unknown') as ChildProfile['gender'];
-          return [{ age: labelToAgeMax(childAge), gender: g, interests: interestLabels }];
+          return [{ age: parseChildAge(childAge), gender: g, interests: interestLabels }];
         })();
 
         // ageMax = widest upper bound across all children (so feed includes
@@ -202,13 +266,19 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         // Map borough → neighborhoods (empty for 'other' — no geo filter).
         const neighborhoods = BOROUGH_TO_NEIGHBORHOODS[borough] || [];
 
-        // Build filters
-        const newFilters: FilterState = { ageMax };
-        if (cats.size > 0) newFilters.categories = [...cats];
-        if (neighborhoods.length > 0) newFilters.neighborhoods = neighborhoods;
-        if (pain === 'too_expensive') newFilters.isFree = true;
+        // Build STRICT filters — with categories applied (may be too narrow)
+        const strictFilters: FilterState = {
+          ageMax,
+          filterChildren: quizChildren.map((c) => ({
+            age: c.age,
+            gender: (c.gender === 'boy' || c.gender === 'girl' ? c.gender : 'boy') as 'boy' | 'girl',
+          })),
+        };
+        if (cats.size > 0) strictFilters.categories = [...cats];
+        if (neighborhoods.length > 0) strictFilters.neighborhoods = neighborhoods;
+        if (pain === 'too_expensive') strictFilters.isFree = true;
 
-        // Build profile & store
+        // Build profile & store (synchronous — no need to wait)
         const quizProfile: UserProfile = {
           children: quizChildren,
           neighborhoods,
@@ -219,10 +289,8 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         storeProfile(quizProfile);
         setOnboardingDone(true);
         setOnboardingStep('done');
-        // Quiz onboarding → 'ui' (came via quiz URL, effectively manual setup)
-        onFiltersChange(newFilters, 'ui');
 
-        // Chat welcome message — summarise what we applied.
+        // Build welcome message summary data (reused for both branches below)
         const boroughLabel = borough === 'other' && customArea
           ? customArea
           : borough.charAt(0).toUpperCase() + borough.slice(1);
@@ -231,13 +299,77 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
           return `${emoji} ${c.age}yo`;
         }).join(' · ');
         const interestLabels = interests.map(i => i.replace(/_/g,' ')).map(i => i.charAt(0).toUpperCase() + i.slice(1));
-        setMessages([{
-          role: 'assistant',
-          content: `Great picks for your family! Here's what I found:\n\n${childSummary}\n\uD83D\uDCCD ${boroughLabel}\n\u2B50 ${interestLabels.join(', ')}\n\nI've filtered the best events for you. Feel free to ask me anything to refine!`,
-        }]);
 
-        // Clean URL without reload
-        window.history.replaceState({}, '', '/');
+        // ── Preflight auto-broaden ─────────────────────────────────────────
+        // Data-scarce boroughs (Queens/Bronx) + multiple quiz-derived category
+        // filters often collapse to 0-1 events. Check total first; if the
+        // strict combo is too narrow, silently drop categories so the user
+        // lands on a populated feed instead of a ghost page.
+        //
+        // We still save interests to profile.children[].interests so the chat
+        // ranking and prompts can use them — just not as a hard filter.
+        const MIN_EVENTS = 5;
+        const buildCountParams = (f: FilterState): string => {
+          const qs = new URLSearchParams();
+          if (f.categories?.length) qs.set('categories', f.categories.join(','));
+          if (f.ageMax !== undefined) qs.set('age', String(f.ageMax));
+          if (f.neighborhoods?.length) qs.set('neighborhoods', f.neighborhoods.join(','));
+          if (f.isFree) qs.set('is_free', 'true');
+          qs.set('page_size', '1');
+          return qs.toString();
+        };
+
+        (async () => {
+          let finalFilters: FilterState = strictFilters;
+          let wasBroadened = false;
+
+          // Only broaden if categories are the likely culprit
+          if (strictFilters.categories && strictFilters.categories.length > 0) {
+            try {
+              const res = await fetch(`/api/events?${buildCountParams(strictFilters)}`);
+              if (res.ok) {
+                const data = await res.json();
+                const total = Number(data.total) || 0;
+                if (total < MIN_EVENTS) {
+                  const broadened: FilterState = { ...strictFilters };
+                  delete broadened.categories;
+                  finalFilters = broadened;
+                  wasBroadened = true;
+                  // Track every silent broaden as a signal: if this event fires a
+                  // lot we know our DB is under-populated for common quiz combos
+                  // (critical for Queens/Bronx/Staten Island coverage).
+                  trackAutoBroadened({
+                    strict_count: total,
+                    dropped: ['categories'],
+                    // Use actual source from URL ('quiz', 'chat', 'fb', …) so
+                    // we can slice auto-broaden rates per entry point and see
+                    // if one funnel is consistently delivering data-scarce
+                    // quiz combos.
+                    source: source || 'quiz',
+                    borough,
+                  });
+                }
+              }
+            } catch {
+              // Network error — fall back to strict filters, user can adjust manually
+            }
+          }
+
+          // Quiz onboarding → 'ui' (came via quiz URL, effectively manual setup)
+          onFiltersChange(finalFilters, 'ui');
+
+          const broadenedNote = wasBroadened
+            ? `\n\nI loosened the category filter so you'd see more options in ${boroughLabel}. Tap "What" to narrow.`
+            : '';
+          setMessages([{
+            role: 'assistant',
+            content: `Great picks for your family! Here's what I found:\n\n${childSummary}\n\uD83D\uDCCD ${boroughLabel}\n\u2B50 ${interestLabels.join(', ')}\n\nI've filtered the best events for you. Feel free to ask me anything to refine!${broadenedNote}`,
+          }]);
+
+          // Clean URL without reload
+          window.history.replaceState({}, '', '/');
+        })();
+
         return;
       }
     }
@@ -390,30 +522,134 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Finish onboarding
-  const finishOnboarding = useCallback(() => {
-    const finalProfile: UserProfile = {
-      children: partialProfileRef.current.children || parsedChildren,
-      neighborhoods: partialProfileRef.current.neighborhoods || [],
-      budget: partialProfileRef.current.budget || 'Any budget',
-      specialNeeds: partialProfileRef.current.specialNeeds,
-    };
-    setProfile(finalProfile);
-    storeProfile(finalProfile);
-    setOnboardingDone(true);
-    setOnboardingStep('done');
-    track('onboarding_completed', { children_count: finalProfile.children.length, neighborhoods_count: finalProfile.neighborhoods.length });
-    applyProfileFilters(finalProfile);
+  // Builds the final UserProfile from whatever we've collected. Called by
+  // both email-step handlers (submit & skip) and the skip path when we decide
+  // not to show the email ask at all.
+  const buildFinalProfile = useCallback((): UserProfile => ({
+    children: partialProfileRef.current.children || parsedChildren,
+    neighborhoods: partialProfileRef.current.neighborhoods || [],
+    budget: partialProfileRef.current.budget || 'Any budget',
+    specialNeeds: partialProfileRef.current.specialNeeds,
+  }), [parsedChildren]);
 
+  // Renders the "All set! Here's your profile…" summary and moves to `done`.
+  // Split out of finishOnboarding so we can run it either straight after
+  // q5_special (when email ask is suppressed) or after the q6_email step.
+  const emitFinalSummary = useCallback((finalProfile: UserProfile) => {
+    setOnboardingStep('done');
     const childrenDesc = finalProfile.children.map((c) =>
       `${genderEmoji(c.gender)} ${c.name || `${c.age}yo`} \u2014 ${c.interests.join(', ')}`
     ).join('\n');
-
     setMessages((prev) => [...prev, {
       role: 'assistant',
       content: `All set! Here's your profile:\n\n${childrenDesc}\n\uD83D\uDCCD ${finalProfile.neighborhoods.length ? finalProfile.neighborhoods.join(', ') : 'Anywhere in NYC'}\n\uD83D\uDCB0 ${finalProfile.budget}${finalProfile.specialNeeds ? `\n\uD83D\uDCDD ${finalProfile.specialNeeds}` : ''}\n\nAsk me anything about events!`,
     }]);
-  }, [parsedChildren, applyProfileFilters]);
+  }, []);
+
+  // Called when the user finishes q5_special. Locks in the profile + filters
+  // (so the feed is usable regardless of what they do next), then either
+  // shows the email-ask step or jumps straight to the final summary when
+  // suppressed (already subscribed on this device, or recently declined).
+  const finishOnboarding = useCallback(() => {
+    const finalProfile = buildFinalProfile();
+    setProfile(finalProfile);
+    storeProfile(finalProfile);
+    setOnboardingDone(true);
+    track('onboarding_completed', {
+      children_count: finalProfile.children.length,
+      neighborhoods_count: finalProfile.neighborhoods.length,
+    });
+    applyProfileFilters(finalProfile);
+
+    // Skip email ask entirely for users who already acted on a previous visit.
+    if (hasSubscribedEmail() || wasEmailRecentlyDeclined()) {
+      emitFinalSummary(finalProfile);
+      return;
+    }
+
+    // Personalized copy — use first child's name when provided, else describe
+    // by age + gender. Falls back to "your family" if something odd happened.
+    const first = finalProfile.children[0];
+    const who = first?.name
+      ? first.name
+      : first
+        ? `your ${first.age}yo ${first.gender === 'girl' ? 'girl' : first.gender === 'boy' ? 'boy' : 'kid'}`
+        : 'your family';
+    const where = finalProfile.neighborhoods.length > 0 && !finalProfile.neighborhoods.includes('Anywhere in NYC')
+      ? finalProfile.neighborhoods.join(', ')
+      : 'NYC';
+    const content = `One last thing \u2014 want me to email 10 fresh picks for ${who} every Thursday?\n\n\uD83D\uDCCD Matched to ${where} \u00B7 ${finalProfile.budget}\n\nUnsubscribe anytime.`;
+
+    setOnboardingStep('q6_email');
+    track('email_ask_shown', {
+      source: 'chat_onboarding',
+      has_child_name: !!first?.name,
+    });
+    setMessages((prev) => [...prev, { role: 'assistant', content }]);
+  }, [buildFinalProfile, applyProfileFilters, emitFinalSummary]);
+
+  // Email step — submit. POSTs to /api/subscribe, shows thank-you message,
+  // then emits the final summary. Stays in q6_email on failure so the user
+  // can retry without losing their place.
+  const handleEmailSubmit = useCallback(async (email: string) => {
+    setEmailSubmitting(true);
+    setEmailError(undefined);
+    const finalProfile = buildFinalProfile();
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: 'chat_onboarding',
+          profile: finalProfile,
+          referrer_url: typeof window !== 'undefined' ? window.location.href : undefined,
+        }),
+      });
+      const data = await res.json().catch(() => ({ ok: false, error: 'Bad response' }));
+      if (!res.ok || !data.ok) {
+        setEmailError(data.error || 'Could not save email, try again?');
+        setEmailSubmitting(false);
+        return;
+      }
+      try { localStorage.setItem(EMAIL_SUBSCRIBED_KEY, '1'); } catch { /* ignore */ }
+      track('email_ask_submitted', {
+        source: 'chat_onboarding',
+        already_subscribed: data.created === false,
+      });
+      // Bind the anonymous PostHog user to a durable email-based identity.
+      // This stitches their past anonymous events to the subscriber record so
+      // we can build "signed-up users" cohorts, retention funnels, and
+      // cross-device tracking.
+      identifyUser(email.trim(), {
+        already_subscribed: data.created === false,
+        source: 'chat_onboarding',
+      });
+      // Show the user a brief confirmation echo, then the final summary.
+      setMessages((prev) => [
+        ...prev,
+        { role: 'user', content: email },
+        { role: 'assistant', content: '\u2728 Got it \u2014 your first picks land Thursday.' },
+      ]);
+      emitFinalSummary(finalProfile);
+    } catch (err) {
+      setEmailError('Network error, try again?');
+      trackError({
+        type: 'email_subscribe_failed',
+        message: err instanceof Error ? err.message : String(err),
+      });
+    } finally {
+      setEmailSubmitting(false);
+    }
+  }, [buildFinalProfile, emitFinalSummary]);
+
+  // Email step — skip. Record declined-at so we don't re-ask soon.
+  const handleEmailSkip = useCallback(() => {
+    try { localStorage.setItem(EMAIL_DECLINED_KEY, String(Date.now())); } catch { /* ignore */ }
+    track('email_ask_skipped', { source: 'chat_onboarding' });
+    const finalProfile = buildFinalProfile();
+    emitFinalSummary(finalProfile);
+  }, [buildFinalProfile, emitFinalSummary]);
 
   // Handle quick reply
   const handleQuickReply = useCallback((reply: string) => {
@@ -499,6 +735,18 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
         latency_ms: Date.now() - __recsStart,
       });
 
+      // Pipeline observability: fires once per chat message with extraction
+      // latency, the actual filters the LLM picked, and whether auto-broaden ran.
+      // Lets us debug "why did chat return the wrong events?" at the filter stage.
+      if (data.filters !== undefined) {
+        trackChatFiltersExtracted({
+          query: msgText,
+          extracted_filters: data.filters as Record<string, unknown>,
+          extraction_latency_ms: data.meta?.extraction_latency_ms,
+          was_relaxed: data.meta?.was_relaxed ?? false,
+        });
+      }
+
       if (data.filters && Object.keys(data.filters).length > 0) {
         // AI-generated filters → tag as 'chat'
         onFiltersChange(data.filters, 'chat');
@@ -541,16 +789,32 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
     return null;
   }, [onboardingStep, selectedItems, handleToggle, handleMultiDone]);
 
+  // Email-ask state — active only during q6_email.
+  const emailAskState: EmailAskState | null = useMemo(() => {
+    if (onboardingStep !== 'q6_email') return null;
+    return {
+      submitting: emailSubmitting,
+      error: emailError,
+      onSubmit: handleEmailSubmit,
+      onSkip: handleEmailSkip,
+    };
+  }, [onboardingStep, emailSubmitting, emailError, handleEmailSubmit, handleEmailSkip]);
+
   // Placeholder text
   const placeholder = useMemo(() => {
     if (onboardingStep === 'q1_children') return 'e.g. "daughter 6 and son 3"';
     if (onboardingStep === 'q5_special') return 'e.g. "no nuts, wheelchair accessible"';
-    if (onboardingDone) return 'Ask about events...';
+    if (onboardingDone) return 'Ask AI anything';
     return '';
   }, [onboardingStep, onboardingDone]);
 
-  // Show input only for free-text steps and post-onboarding
-  const showInput = onboardingStep === 'q1_children' || onboardingStep === 'q5_special' || onboardingDone;
+  // Show input only for free-text steps and post-onboarding. Hide during
+  // q6_email so the inline email input in the message is the only focus.
+  const showInput =
+    (onboardingStep === 'q1_children' ||
+      onboardingStep === 'q5_special' ||
+      onboardingDone) &&
+    onboardingStep !== 'q6_email';
 
   const chatContent = (
     <div className="chat-sidebar-inner">
@@ -564,6 +828,7 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
           onEventClick={onEventClick}
           onQuickReply={handleQuickReply}
           multiSelectState={multiSelectState}
+          emailAskState={emailAskState}
           onSkip={handleSkip}
         />
         <div ref={messagesEndRef} />
@@ -578,10 +843,10 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              rows={1}
+              rows={2}
               data-ph-no-capture
-              className="flex-1 resize-none px-3 py-2 border border-[rgba(255,255,255,0.1)] rounded-xl text-sm focus:outline-none focus:border-[#e91e63] max-h-24 bg-[#16143a] text-white placeholder-gray-500"
-              style={{ minHeight: 38 }}
+              className="flex-1 resize-none px-3 py-2 border border-[rgba(255,255,255,0.15)] rounded-xl text-sm focus:outline-none focus:border-[#e91e63] max-h-32 bg-[#2a2760] text-white placeholder-gray-400"
+              style={{ minHeight: 58 }}
             />
             <button
               onClick={() => sendMessage()}
@@ -623,7 +888,7 @@ export default function ChatSidebar({ filters, onFiltersChange, onEventClick }: 
           <div className="chat-mobile-backdrop" onClick={() => setMobileOpen(false)} />
           <div className="chat-mobile-panel">
             <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(255,255,255,0.08)]">
-              <span className="font-semibold text-sm text-white">Pulse Assistant</span>
+              <span className="font-semibold text-sm text-white">Pulse AI assistant</span>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.06)]"
