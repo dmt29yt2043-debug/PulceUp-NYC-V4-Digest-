@@ -4,6 +4,35 @@ import { useState, useEffect, useRef } from 'react';
 import type { Event } from '@/lib/types';
 import { useFavorites } from '@/lib/FavoritesContext';
 import { track, trackBuyTicketsClicked } from '@/lib/analytics';
+import { formatAgeLabel } from '@/lib/age-label';
+
+/**
+ * QA-only UI gate. The event_id badge + "Wrong age range" flag row is a
+ * debugging aid for us — regular users should never see it. Turn on per-
+ * device with:  localStorage.setItem('pulseup_debug', '1')
+ */
+function useDebugMode(): boolean {
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    try { setEnabled(localStorage.getItem('pulseup_debug') === '1'); } catch {}
+  }, []);
+  return enabled;
+}
+
+/** Attribution context — filled by the parent (page.tsx) so that the
+ *  buy_tickets_clicked event carries full context about what the user was
+ *  doing when they converted. Essential for "where do conversions come from?"
+ *  analysis. All fields optional — missing context is still valid. */
+export interface AttributionContext {
+  source?: 'feed' | 'chat' | 'digest';
+  position?: number;
+  list_total?: number;
+  came_from_tab?: 'foryou' | 'feed';
+  came_from_digest?: string | null;
+  has_filters?: boolean;
+  active_categories?: string[];
+  active_neighborhoods?: string[];
+}
 
 interface EventDetailProps {
   event: Event | null;
@@ -11,6 +40,7 @@ interface EventDetailProps {
   onClose: () => void;
   isFlagged?: boolean;
   onToggleFlag?: (event: Event, flagged: boolean) => void;
+  attribution?: AttributionContext;
 }
 
 /* ── helpers ── */
@@ -106,7 +136,7 @@ function MetaBar({ event }: { event: Event }) {
   const cols = [
     { label: dateMeta.label, value: dateMeta.value },
     { label: 'START TIME', value: formatTime(event.next_start_at) },
-    { label: 'AGE GROUP', value: event.age_label || 'All Ages' },
+    { label: 'AGE GROUP', value: formatAgeLabel(event.age_label) || 'All Ages' },
     { label: 'PRICE', value: priceLabel(event) },
   ];
 
@@ -319,10 +349,11 @@ function LocationTab({ event }: { event: Event }) {
 
 /* ── main component ── */
 
-export default function EventDetail({ event, open, onClose, isFlagged = false, onToggleFlag }: EventDetailProps) {
+export default function EventDetail({ event, open, onClose, isFlagged = false, onToggleFlag, attribution }: EventDetailProps) {
   const [imgError, setImgError] = useState(false);
   const { isFavorite, toggle } = useFavorites();
   const liked = event ? isFavorite(event.id) : false;
+  const debugMode = useDebugMode();
 
   // Reset transient UI state when the displayed event changes
   const [prevId, setPrevId] = useState<number | null>(null);
@@ -365,7 +396,7 @@ export default function EventDetail({ event, open, onClose, isFlagged = false, o
               aria-label="Save"
               onClick={() => toggle(event)}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill={liked ? '#ff8d89' : 'none'} stroke={liked ? '#ff8d89' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={liked ? '#e91e63' : 'none'} stroke={liked ? '#e91e63' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </button>
           </div>
         </div>
@@ -375,26 +406,28 @@ export default function EventDetail({ event, open, onClose, isFlagged = false, o
           <div className="ed-title-row">
             <h2 className="ed-title">{event.title}</h2>
           </div>
-          <div className="ed-debug-row">
-            <button
-              type="button"
-              className="ed-event-id"
-              onClick={handleCopyId}
-              title="Click to copy event_id"
-            >
-              event_id: {event.id}
-            </button>
-            {onToggleFlag && (
-              <label className={`ed-flag-checkbox ${isFlagged ? 'checked' : ''}`}>
-                <input
-                  type="checkbox"
-                  checked={isFlagged}
-                  onChange={(e) => onToggleFlag(event, e.target.checked)}
-                />
-                <span>Wrong age range</span>
-              </label>
-            )}
-          </div>
+          {debugMode && (
+            <div className="ed-debug-row">
+              <button
+                type="button"
+                className="ed-event-id"
+                onClick={handleCopyId}
+                title="Click to copy event_id"
+              >
+                event_id: {event.id}
+              </button>
+              {onToggleFlag && (
+                <label className={`ed-flag-checkbox ${isFlagged ? 'checked' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={isFlagged}
+                    onChange={(e) => onToggleFlag(event, e.target.checked)}
+                  />
+                  <span>Wrong age range</span>
+                </label>
+              )}
+            </div>
+          )}
           <div className="ed-subtitle-row">
             {event.city && <span className="ed-subtitle-item">{event.city}</span>}
             {event.venue_name && (
@@ -452,10 +485,9 @@ export default function EventDetail({ event, open, onClose, isFlagged = false, o
                 <span className="ed-qi-text">{event.subway}</span>
               </div>
             )}
-            {(event.data?.venue_stroller_friendly || event.data?.venue_wheelchair_accessible) && (
+            {event.data?.venue_stroller_friendly && (
               <div className="ed-qi-badges">
-                {event.data.venue_wheelchair_accessible && <span className="ed-qi-badge">♿ Wheelchair accessible</span>}
-                {event.data.venue_stroller_friendly && <span className="ed-qi-badge">🍼 Stroller friendly</span>}
+                <span className="ed-qi-badge">🍼 Stroller friendly</span>
               </div>
             )}
           </div>
@@ -498,11 +530,14 @@ export default function EventDetail({ event, open, onClose, isFlagged = false, o
               onClick={() => {
                 // ⭐ North Star: user leaves to buy a ticket.
                 // price_min drives the price_bucket dimension in analytics.
+                // Enrich with whatever attribution the parent surfaces. Missing
+                // fields are acceptable — PostHog accepts undefined props.
                 trackBuyTicketsClicked({
                   event_id: event.id,
                   event_title: event.title,
                   destination_url: event.source_url,
                   price_min: event.price_min ?? 0,
+                  ...(attribution || {}),
                 });
               }}
             >

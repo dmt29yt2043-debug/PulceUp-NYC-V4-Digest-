@@ -7,9 +7,16 @@
  */
 
 // ─── Live-event SQL filter ────────────────────────────────────────────────────
-// Must stay in sync with the pattern used in `lib/db.ts` and
-// `app/api/events/personalized/route.ts`.
-export const LIVE_STATUS_FILTER = `(status IN ('published', 'done', 'new') OR status LIKE '%.done')`;
+// Must stay in sync with the pattern used in `lib/db.ts` (getEvents,
+// getCategories, getEventsForChat) and `app/api/events/personalized/route.ts`.
+//
+// `verify.desc` is included on purpose: the scraper pipeline parks ~600
+// otherwise-complete events in this stage when the AI age-classification
+// step doesn't produce a confident range. Excluding it cost us ~16x of the
+// catalog. Downstream code (digest scorers, card UI) tolerates NULL age,
+// and `lib/db.ts:parseEventRow` synthesizes a default age band from
+// `category_l1` so the cards still render meaningfully.
+export const LIVE_STATUS_FILTER = `(status IN ('published', 'done', 'new', 'verify.desc') OR status LIKE '%.done')`;
 
 // ─── NYC geo ──────────────────────────────────────────────────────────────────
 

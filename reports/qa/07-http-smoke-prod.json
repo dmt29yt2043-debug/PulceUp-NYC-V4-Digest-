@@ -1,0 +1,189 @@
+{
+  "base": "https://pulseup.me",
+  "cases": [
+    {
+      "id": "h01",
+      "name": "GET /api/events (baseline)",
+      "ok": true,
+      "detail": "315 total events",
+      "latencyMs": 581,
+      "status": 200
+    },
+    {
+      "id": "h02",
+      "name": "Age=4 — no events outside bounds",
+      "ok": true,
+      "detail": "251 events, all age-fit",
+      "latencyMs": 520,
+      "status": 200
+    },
+    {
+      "id": "h03",
+      "name": "Age=7 + girl (regression: was HTTP 500)",
+      "ok": true,
+      "detail": "271 events returned",
+      "latencyMs": 158,
+      "status": 200
+    },
+    {
+      "id": "h04",
+      "name": "Brooklyn — no Manhattan leaks",
+      "ok": true,
+      "detail": "56 events, all in Kings County",
+      "latencyMs": 152,
+      "status": 200
+    },
+    {
+      "id": "h05",
+      "name": "Manhattan filter",
+      "ok": true,
+      "detail": "168 Manhattan events",
+      "latencyMs": 153,
+      "status": 200
+    },
+    {
+      "id": "h06",
+      "name": "Free-only filter",
+      "ok": true,
+      "detail": "197 free events",
+      "latencyMs": 158,
+      "status": 200
+    },
+    {
+      "id": "h07",
+      "name": "Science category returns something",
+      "ok": true,
+      "detail": "6 science events",
+      "latencyMs": 144,
+      "status": 200
+    },
+    {
+      "id": "h08",
+      "name": "Combo: 4yo + Brooklyn + free",
+      "ok": true,
+      "detail": "31 events, all clean",
+      "latencyMs": 139,
+      "status": 200
+    },
+    {
+      "id": "h09",
+      "name": "GET /api/digests",
+      "ok": true,
+      "detail": "15 digests",
+      "latencyMs": 472,
+      "status": 200
+    },
+    {
+      "id": "h10",
+      "name": "Digest by slug: weekend-kids-nyc",
+      "ok": true,
+      "detail": "10 events",
+      "latencyMs": 700,
+      "status": 200
+    },
+    {
+      "id": "h11",
+      "name": "Digest by slug: indoor-rainy-day",
+      "ok": true,
+      "detail": "10 events",
+      "latencyMs": 314,
+      "status": 200
+    },
+    {
+      "id": "h12",
+      "name": "GET /api/categories",
+      "ok": true,
+      "detail": "17 categories",
+      "latencyMs": 280,
+      "status": 200
+    },
+    {
+      "id": "h13",
+      "name": "Chat API — simple query",
+      "ok": true,
+      "detail": "20 events, filters: {\"dateFrom\":\"2026-05-16\",\"dateTo\":\"2026-05-17\"}",
+      "latencyMs": 2579,
+      "status": 200
+    },
+    {
+      "id": "h14",
+      "name": "Chat API — age + gender (was 500)",
+      "ok": true,
+      "detail": "7 events",
+      "latencyMs": 3769,
+      "status": 200
+    },
+    {
+      "id": "h15",
+      "name": "/api/events/personalized returns events (was untested)",
+      "ok": true,
+      "detail": "40 events",
+      "latencyMs": 363,
+      "status": 200
+    },
+    {
+      "id": "h16",
+      "name": "/api/events/personalized — categories field is an ARRAY (Bug #4 May-11)",
+      "ok": true,
+      "detail": "categories + tags are proper arrays",
+      "latencyMs": 152,
+      "status": 200
+    },
+    {
+      "id": "h17",
+      "name": "/api/digests — nested event.categories is an ARRAY (Bug #5 May-11)",
+      "ok": true,
+      "detail": "digest events have proper arrays",
+      "latencyMs": 594,
+      "status": 200
+    },
+    {
+      "id": "h18",
+      "name": "/api/digests/[slug] — nested event.categories is an ARRAY (Bug #5)",
+      "ok": true,
+      "detail": "digest-slug events have proper arrays",
+      "latencyMs": 770,
+      "status": 200
+    },
+    {
+      "id": "h19",
+      "name": "next_start_at parses (Bug #2 May-11 — timezone-suffix issue)",
+      "ok": true,
+      "detail": "first event date=2026-05-11T14:30:00Z",
+      "latencyMs": 160,
+      "status": 200
+    },
+    {
+      "id": "h20",
+      "name": "lat/lon coverage ≥ 80% (Bug #1 May-11 — column rename)",
+      "ok": true,
+      "detail": "100% have lat/lon",
+      "latencyMs": 176,
+      "status": 200
+    },
+    {
+      "id": "h21",
+      "name": "age=8 NEVER returns events with age_best_to=null (Bug #3 May-11)",
+      "ok": true,
+      "detail": "all 100 events have proper age bounds",
+      "latencyMs": 173,
+      "status": 200
+    },
+    {
+      "id": "h22",
+      "name": "age=2 (toddler) — no clearly-teen events returned",
+      "ok": true,
+      "detail": "50 toddler events, none teen-only",
+      "latencyMs": 151,
+      "status": 200
+    },
+    {
+      "id": "h23",
+      "name": "age=14 (teen) — no clearly-toddler events returned",
+      "ok": true,
+      "detail": "50 teen events, none baby-only",
+      "latencyMs": 156,
+      "status": 200
+    }
+  ]
+}

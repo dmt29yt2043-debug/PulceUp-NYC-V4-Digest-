@@ -1,0 +1,48 @@
+{
+  "base": "https://pulseup.me",
+  "runAt": "2026-05-11T13:27:10.296Z",
+  "cases": [
+    {
+      "id": "b01",
+      "name": "home page renders + shows events",
+      "ok": true,
+      "detail": "cards=328 apiCalls=3",
+      "latencyMs": 5107
+    },
+    {
+      "id": "b02",
+      "name": "no \"Invalid Date\" on any card (Bug #2 May-11 timezone)",
+      "ok": true,
+      "detail": "cards=0 apiCalls=0",
+      "latencyMs": 2833
+    },
+    {
+      "id": "b03",
+      "name": "/results?source=chat&borough=manhattan applies filters (Bug May-10)",
+      "ok": true,
+      "detail": "cards=0 apiCalls=1",
+      "latencyMs": 11277
+    },
+    {
+      "id": "b04",
+      "name": "/results?source=quiz also works (back-compat)",
+      "ok": true,
+      "detail": "cards=0 apiCalls=1",
+      "latencyMs": 10374
+    },
+    {
+      "id": "b05",
+      "name": "direct /?borough=queens applies even without source label",
+      "ok": true,
+      "detail": "cards=0 apiCalls=2",
+      "latencyMs": 17519
+    },
+    {
+      "id": "b06",
+      "name": "/api/events/personalized response does not crash event-filter (Bug #4 May-11)",
+      "ok": true,
+      "detail": "cards=0 apiCalls=1",
+      "latencyMs": 6919
+    }
+  ]
+}

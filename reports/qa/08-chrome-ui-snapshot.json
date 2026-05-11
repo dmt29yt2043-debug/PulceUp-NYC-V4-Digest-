@@ -1,0 +1,21 @@
+{
+  "base": "https://pulseup.me",
+  "checked_via": "Chrome extension (DOM snapshot)",
+  "timestamp": "2026-04-22",
+  "dom_state": {
+    "body_background_color": "rgb(15, 13, 46)",
+    "header_title": "Better Moments with your Kids. Less Planning",
+    "tab_labels": ["All (195)", "For you (195)"],
+    "digest_cards_count": 5,
+    "digest_tag_labels": ["WEEKEND", "INDOOR", "EASY", "BUDGET", "POPULAR"],
+    "digest_titles_truncated": [
+      "Top 10 Things to Do with Kids in NYC Thi",
+      "Top 10 Indoor Activities for Kids in NYC",
+      "10 Easy Things to Do with Kids in NYC (N",
+      "Top 15 Free & Affordable Things to Do wi",
+      "10 Things Kids Love (And Parents Don't R"
+    ],
+    "has_leaflet_map": true
+  },
+  "notes": "Async fetch via Chrome JS context was unstable (timeouts). HTTP-level validation is covered by 07-http-smoke-prod.json which hits the same endpoints the UI calls (14/14 passed). This snapshot only confirms that the rendered page matches expected structure."
+}

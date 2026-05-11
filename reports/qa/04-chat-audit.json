@@ -1,0 +1,511 @@
+{
+  "queries": [
+    {
+      "id": "q01",
+      "query": "Things to do this weekend with 4 and 7 year old",
+      "extracted_filters": {
+        "dateFrom": "2026-04-25",
+        "dateTo": "2026-04-26",
+        "ageMax": 7
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#1374 Creatures of the Night: Family Night Hike",
+        "#1371 Walking Tour: “All-of-a-Kind Family”",
+        "#1143 Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood",
+        "#1590 Story Time by Design",
+        "#1065 Book Launch: Found Sound"
+      ],
+      "reply_snippet": "You might enjoy \"Rising NYRR Spring Jamboree Presented by TCS\" at Icahn Stadium on April 25, which is a free event for ages 2-18. Additionally, \"Celebrate Holi\" at Brooklyn Children’s Museum on the sa",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#992 age-appropriate and free",
+        "#1240 age-appropriate and free",
+        "#1327 age-appropriate and free"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Good matches but missed some relevant free events."
+    },
+    {
+      "id": "q02",
+      "query": "Science museum for 5 year old",
+      "extracted_filters": {
+        "categories": [
+          "attractions",
+          "science"
+        ],
+        "ageMax": 5
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo",
+        "#90007 Queens Zoo: Family Exploration Day"
+      ],
+      "reply_snippet": "I recommend checking out \"Saturday Science: From A to ZI\" at Columbia's Jerome L. Greene Science Center on April 25, which is free and designed for ages 5-12. Another great option is \"Sunday Science: ",
+      "relevance": 3,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#872 not returned but relevant"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Returned events are science-related but not museums."
+    },
+    {
+      "id": "q03",
+      "query": "Cheap rainy day activities for kids",
+      "extracted_filters": {
+        "isFree": false,
+        "priceMax": 25,
+        "ageMax": 7
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90002 Spring Garden Exploration for Families",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo",
+        "#90007 Queens Zoo: Family Exploration Day",
+        "#1172 Broadway Trivia"
+      ],
+      "reply_snippet": "Consider \"Pinocchio at Puppetworks\" on 2026-04-25, which is $11 for children and offers a delightful puppet show perfect for ages 3-10. Another option is \"Celebrate Holi\" at the Brooklyn Children’s Mu",
+      "relevance": 3,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#1609 better indoor fit for young kids"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Returned events are not specifically indoor or rainy day focused."
+    },
+    {
+      "id": "q04",
+      "query": "Teen hangouts in Brooklyn",
+      "extracted_filters": {
+        "ageMax": 18,
+        "search": "teen"
+      },
+      "returned_count": 6,
+      "top_titles": [
+        "#1220 Teen Open Mic Night with the Nuyorican Poets Cafe and Writopia",
+        "#1370 Teen Workshop | P.O.V. Who Tells the Story?",
+        "#1376 ReelAbilities Comedy Night at Lincoln Center",
+        "#1259 Illustrated Ink Club",
+        "#1300 Oneohtrix Point Never, Tyondai Braxton"
+      ],
+      "reply_snippet": "Couldn't find exact teen hangouts, but here are the closest matches: \"Teen Open Mic Night with the Nuyorican Poets Cafe and Writopia\" on April 25 is free and aimed at ages 13-18. Also, you might consi",
+      "relevance": 3,
+      "hallucination": "yes",
+      "missed_from_db": [],
+      "diagnosis": "partial_match",
+      "notes": "Events not specific to Brooklyn; some events not ideal for teens."
+    },
+    {
+      "id": "q05",
+      "query": "Stroller-friendly nature walk Sunday",
+      "extracted_filters": {
+        "categories": [
+          "nature"
+        ],
+        "strollerFriendly": true,
+        "dateFrom": "2026-04-25",
+        "dateTo": "2026-04-25"
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#1591 Face Value: Celebrity Press Photography",
+        "#661 In Motion Workshops: For children ages 8-12",
+        "#1369 Eat Your Art Out! – Fundraiser with Panera",
+        "#781 Open Hours at Environmental Education Center",
+        "#1528 Animal Encounters"
+      ],
+      "reply_snippet": "Consider the \"Open Hours at Environmental Education Center\" on April 23, which is a free event suitable for ages 3-12. It's a great opportunity to explore nature in a stroller-friendly environment.",
+      "relevance": 2,
+      "hallucination": "yes",
+      "missed_from_db": [
+        "#1377 nature walk",
+        "#1014 Earth Day Festival",
+        "#1015 Earth Day in Carl Schurz Park"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Returned events lack stroller-friendly nature walks."
+    },
+    {
+      "id": "q06",
+      "query": "Last minute plan for today, kids 3 and 6",
+      "extracted_filters": {
+        "dateFrom": "2026-04-23",
+        "dateTo": "2026-04-23",
+        "ageMax": 6
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#513 Paint Your heART Out! Painting Class for Kids",
+        "#1591 Face Value: Celebrity Press Photography",
+        "#1179 Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+        "#1369 Eat Your Art Out! – Fundraiser with Panera",
+        "#781 Open Hours at Environmental Education Center"
+      ],
+      "reply_snippet": "Consider heading to \"Open Hours at Environmental Education Center\" today, which is free and welcoming for ages 3-12. Alternatively, you can check out \"Animal Encounters\" at the Brooklyn Children’s Mus",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [],
+      "diagnosis": "good_match",
+      "notes": "Events match age and date; no hallucinations detected."
+    },
+    {
+      "id": "q07",
+      "query": "After-school Tuesday activity Manhattan",
+      "extracted_filters": {
+        "neighborhoods": [
+          "Upper Manhattan",
+          "Midtown",
+          "Lower Manhattan"
+        ],
+        "dateFrom": "2026-04-26",
+        "dateTo": "2026-04-26"
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#888 Storie Storie: An African Storytelling Experience Live on Broadway",
+        "#1007 Car-Free Earth Day",
+        "#1378 Car-Free Earth Day 2026",
+        "#1010 Recreating Radio: Hawk of the Moon at the Paley Center",
+        "#1009 STEAM Dream in Rockefeller Park"
+      ],
+      "reply_snippet": "I recommend the \"Car-Free Earth Day 2026\" event at Flatiron Plaza, which is free and designed for ages 5-12, taking place on April 25. Another great option is \"Kids @ Grand Central x The Rock & Roll P",
+      "relevance": 3,
+      "hallucination": "yes",
+      "missed_from_db": [
+        "#1044 better fit for after-school activity",
+        "#1067 better fit for after-school activity"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Events returned don't match 'after-school' focus well."
+    },
+    {
+      "id": "q08",
+      "query": "Birthday party venue for a 7-year-old",
+      "extracted_filters": {
+        "search": "birthday party",
+        "ageMax": 7
+      },
+      "returned_count": 0,
+      "top_titles": [],
+      "reply_snippet": "I'm sorry, but there are currently no events matched for a birthday party venue. You might want to relax a filter for the age range to find additional options.",
+      "relevance": 1,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#780 not explicitly a birthday venue",
+        "#788 not explicitly a birthday venue",
+        "#548 not explicitly a birthday venue"
+      ],
+      "diagnosis": "db_gap",
+      "notes": "No explicit birthday venues in DB snippet."
+    },
+    {
+      "id": "q09",
+      "query": "Free outdoor Saturday in Manhattan with 4yo",
+      "extracted_filters": {
+        "isFree": true,
+        "dateFrom": "2026-04-23",
+        "dateTo": "2026-04-23",
+        "ageMax": 4,
+        "neighborhoods": [
+          "Upper Manhattan",
+          "Midtown",
+          "Lower Manhattan"
+        ]
+      },
+      "returned_count": 4,
+      "top_titles": [
+        "#1591 Face Value: Celebrity Press Photography",
+        "#1179 Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+        "#885 Macy’s Flower Show",
+        "#886 Move to the Rhythm"
+      ],
+      "reply_snippet": "On April 23, you can enjoy the \"Macy’s Flower Show\" at Macy’s Herald Square, which is a free event suitable for ages 0-12. Another great option is \"Move to the Rhythm\" at the Children’s Museum of Manh",
+      "relevance": 3,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#1015 age fit and outdoor",
+        "#1014 age fit and outdoor",
+        "#1024 age fit and outdoor"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Returned events are relevant but missed outdoor options."
+    },
+    {
+      "id": "q10",
+      "query": "Bilingual Spanish storytime",
+      "extracted_filters": {},
+      "returned_count": 10,
+      "top_titles": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo"
+      ],
+      "reply_snippet": "Couldn't find exact bilingual Spanish storytime, but here are the closest matches: \"Family Story Time at Queens Public Library\" is a free event designed for ages 0-5, and \"Kids Story Time at Bronx Lib",
+      "relevance": 2,
+      "hallucination": "no",
+      "missed_from_db": [],
+      "diagnosis": "db_gap",
+      "notes": "No bilingual Spanish storytime events in DB."
+    },
+    {
+      "id": "q11",
+      "query": "Art classes for kids",
+      "extracted_filters": {
+        "categories": [
+          "arts"
+        ],
+        "ageMax": 7
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90003 Free Family Sundays at Queens Museum",
+        "#513 Paint Your heART Out! Painting Class for Kids",
+        "#1591 Face Value: Celebrity Press Photography",
+        "#1369 Eat Your Art Out! – Fundraiser with Panera",
+        "#1590 Story Time by Design"
+      ],
+      "reply_snippet": "I recommend \"Paint Your heART Out! Painting Class for Kids\" at The Art Studio NY on April 22, which is a free event for ages 6-10. Also, check out \"Free Family Sundays at Queens Museum\" for a great ar",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#535 relevant stencil class",
+        "#778 relevant journaling workshop",
+        "#1102 relevant word portraits"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Good matches but missed relevant DB events."
+    },
+    {
+      "id": "q12",
+      "query": "Outdoor activities in Brooklyn this weekend",
+      "extracted_filters": {
+        "categories": [
+          "outdoors"
+        ],
+        "dateFrom": "2026-04-25",
+        "dateTo": "2026-04-26",
+        "neighborhoods": [
+          "Brooklyn"
+        ]
+      },
+      "returned_count": 9,
+      "top_titles": [
+        "#887 Arbor Day in Prospect Park",
+        "#1008 Arbor Day at the Audubon Center in Prospect Park",
+        "#1051 Bike Skills 101: Learn to Ride-Kids 11AM",
+        "#1149 Community Work Day on the Wyckoff Urban Farm",
+        "#1054 Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+      ],
+      "reply_snippet": "I recommend visiting \"Arbor Day in Prospect Park\" on April 25, which is free and great for ages 5-12. Alternatively, check out \"Earth Day at the KoKo Lot\" on the same day, also free and welcoming for ",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#1008 better match for outdoors",
+        "#1052 relevant bike event"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Missed relevant events from DB, but no hallucination."
+    },
+    {
+      "id": "q13",
+      "query": "Dance or music classes for 6yo",
+      "extracted_filters": {
+        "ageMax": 6,
+        "categories": [
+          "music",
+          "theater"
+        ]
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#1172 Broadway Trivia",
+        "#888 Storie Storie: An African Storytelling Experience Live on Broadway",
+        "#815 Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+        "#1013 Broadway Celebrates Earth Day 2026",
+        "#1380 5th Annual Broadway Celebrates Earth Day Concert"
+      ],
+      "reply_snippet": "You might enjoy \"Magic Show for All Ages - Broadway Magic Hour in Times Square\" on April 25, which offers a fun performance for ages 6-18. Another great option is \"Step Afrika\" at Lehman Center for th",
+      "relevance": 2,
+      "hallucination": "yes",
+      "missed_from_db": [
+        "#1075 music event for kids",
+        "#992 music event for kids",
+        "#1146 dance event for kids"
+      ],
+      "diagnosis": "pipeline_issue",
+      "notes": "Mismatch in categories and age filter misapplied."
+    },
+    {
+      "id": "q14",
+      "query": "Sports activities for boy age 8",
+      "extracted_filters": {
+        "ageMax": 8,
+        "categories": [
+          "sports"
+        ]
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#1396 2026 New York Lymphoma Walk",
+        "#1408 Bronx Bound: SIS 5K Run/Walk",
+        "#1413 Cliff Runner 5K",
+        "#1422 Bridge The Gap 5K Run/Walk",
+        "#1423 New York Harbor Oyster Classic 5K"
+      ],
+      "reply_snippet": "Consider the \"Cliff Runner 5K\" on May 2, which is free and open to ages 8-18. Another option is the \"Bronx Bound: SIS 5K Run/Walk\" on the same day, also free, for ages 5-18. These events are a great w",
+      "relevance": 4,
+      "hallucination": "yes",
+      "missed_from_db": [],
+      "diagnosis": "partial_match",
+      "notes": "Misstated age range for Bronx Bound event."
+    },
+    {
+      "id": "q15",
+      "query": "Free things to do with kids under 5",
+      "extracted_filters": {
+        "isFree": true,
+        "ageMax": 5
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90006 Kids Story Time at Bronx Library Center",
+        "#1591 Face Value: Celebrity Press Photography",
+        "#1179 Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+      ],
+      "reply_snippet": "Check out \"Family Story Time at Queens Public Library,\" which is a wonderful event for ages 0-5, and perfect for some relaxed reading time. Another great option is \"Move to the Rhythm\" at the Children",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [],
+      "diagnosis": "good_match",
+      "notes": "Events match query well; no better DB options."
+    },
+    {
+      "id": "q16",
+      "query": "Activities under $20 per person",
+      "extracted_filters": {
+        "priceMax": 20
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo"
+      ],
+      "reply_snippet": "I recommend checking out \"Family Story Time at Queens Public Library,\" which is a wonderful free event perfect for ages 0-5. Additionally, \"In Motion Workshops: For children ages 8-12\" offers a fun ex",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [],
+      "diagnosis": "good_match",
+      "notes": "Events match price filter; no DB events under $20 missed."
+    },
+    {
+      "id": "q17",
+      "query": "Events near Midtown Manhattan",
+      "extracted_filters": {
+        "neighborhoods": [
+          "Midtown"
+        ]
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#513 Paint Your heART Out! Painting Class for Kids",
+        "#1591 Face Value: Celebrity Press Photography",
+        "#661 In Motion Workshops: For children ages 8-12",
+        "#1179 Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+        "#1370 Teen Workshop | P.O.V. Who Tells the Story?"
+      ],
+      "reply_snippet": "You might enjoy the \"Macy’s Flower Show\" on April 23, which is free and suitable for ages 0-12. Another great option is \"Move to the Rhythm\" at the Children’s Museum of Manhattan, also free, taking pl",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#548 better fit for family events",
+        "#1044 relevant free event",
+        "#1020 relevant flower show"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Good match but missed some relevant DB events."
+    },
+    {
+      "id": "q18",
+      "query": "Anything in the Bronx for kids",
+      "extracted_filters": {
+        "neighborhoods": [
+          "Bronx"
+        ],
+        "ageMax": 7
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo",
+        "#882 Rising NYRR Spring Jamboree Presented by TCS",
+        "#1386 Woodlawn Family Fun Day",
+        "#1016 Woodlawn Family Fun Day"
+      ],
+      "reply_snippet": "I recommend checking out \"Family Day at the Bronx Zoo,\" which is a classic family outing suitable for ages 1-16, although the date is still to be determined. Another great option is the \"Woodlawn Fami",
+      "relevance": 5,
+      "hallucination": "no",
+      "missed_from_db": [],
+      "diagnosis": "good_match",
+      "notes": "All events are relevant and correctly mentioned."
+    },
+    {
+      "id": "q19",
+      "query": "We are bored, suggest something fun for 4yo",
+      "extracted_filters": {
+        "ageMax": 4
+      },
+      "returned_count": 10,
+      "top_titles": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo"
+      ],
+      "reply_snippet": "Check out \"Family Story Time at Queens Public Library,\" which is a free event designed for ages 0-5. Another great option is \"Free Family Sundays at Queens Museum,\" also free and perfect for ages 3-16",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#884 age-appropriate"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Good options given, but missed age-specific event #884."
+    },
+    {
+      "id": "q20",
+      "query": "Best family experience in NYC right now",
+      "extracted_filters": {},
+      "returned_count": 10,
+      "top_titles": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo"
+      ],
+      "reply_snippet": "Check out \"Free Family Sundays at Queens Museum,\" which is a fantastic way to explore art while enjoying engaging activities suitable for ages 3-16. Alternatively, consider the \"Family Day at the Bron",
+      "relevance": 4,
+      "hallucination": "no",
+      "missed_from_db": [
+        "#548 broader age range",
+        "#780 unique experience",
+        "#882 large age range"
+      ],
+      "diagnosis": "partial_match",
+      "notes": "Good event selection but missed some broader age range options."
+    }
+  ]
+}

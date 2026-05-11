@@ -1,0 +1,222 @@
+{
+  "queries": [
+    {
+      "id": "r01",
+      "label": "Free weekend family fun (age 5)",
+      "returned": 20,
+      "ndcg_at_10": 0.828,
+      "top3": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90006 Kids Story Time at Bronx Library Center"
+      ],
+      "flops_at_top": [],
+      "gems_below": [
+        "#781 pos7 Open Hours at Environmental Education Center",
+        "#1528 pos8 Animal Encounters",
+        "#885 pos9 Macy’s Flower Show",
+        "#886 pos10 Move to the Rhythm",
+        "#1374 pos11 Creatures of the Night: Family Night Hike",
+        "#1590 pos12 Story Time by Design",
+        "#882 pos13 Rising NYRR Spring Jamboree Presented by TCS",
+        "#887 pos14 Arbor Day in Prospect Park",
+        "#895 pos15 Kids Interactive Poetry",
+        "#1384 pos16 Earth Day Festival",
+        "#1386 pos17 Woodlawn Family Fun Day",
+        "#1387 pos18 Super Family Saturday: Artful Earth",
+        "#815 pos19 Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+        "#1007 pos20 Car-Free Earth Day"
+      ]
+    },
+    {
+      "id": "r02",
+      "label": "Arts for 7yo",
+      "returned": 20,
+      "ndcg_at_10": 0.747,
+      "top3": [
+        "#90003 Free Family Sundays at Queens Museum",
+        "#513 Paint Your heART Out! Painting Class for Kids",
+        "#1591 Face Value: Celebrity Press Photography"
+      ],
+      "flops_at_top": [],
+      "gems_below": [
+        "#1102 pos16 Word Portraits at Lehman College Art Gallery"
+      ]
+    },
+    {
+      "id": "r03",
+      "label": "Outdoor Saturday Brooklyn kids",
+      "returned": 12,
+      "ndcg_at_10": 0.992,
+      "top3": [
+        "#887 Arbor Day in Prospect Park",
+        "#1008 Arbor Day at the Audubon Center in Prospect Park",
+        "#1051 Bike Skills 101: Learn to Ride-Kids 11AM"
+      ],
+      "flops_at_top": [],
+      "gems_below": []
+    },
+    {
+      "id": "r04",
+      "label": "Cheap plans under $25 for 6yo",
+      "returned": 20,
+      "ndcg_at_10": 0.724,
+      "top3": [
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG"
+      ],
+      "flops_at_top": [],
+      "gems_below": [
+        "#513 pos6 Paint Your heART Out! Painting Class for Kids",
+        "#1591 pos7 Face Value: Celebrity Press Photography",
+        "#1369 pos9 Eat Your Art Out! – Fundraiser with Panera",
+        "#781 pos10 Open Hours at Environmental Education Center",
+        "#1528 pos11 Animal Encounters",
+        "#885 pos12 Macy’s Flower Show",
+        "#1374 pos14 Creatures of the Night: Family Night Hike",
+        "#1590 pos17 Story Time by Design",
+        "#882 pos18 Rising NYRR Spring Jamboree Presented by TCS",
+        "#887 pos19 Arbor Day in Prospect Park"
+      ]
+    },
+    {
+      "id": "r05",
+      "label": "Indoor rainy day kids",
+      "returned": 20,
+      "ndcg_at_10": 0.451,
+      "top3": [
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG"
+      ],
+      "flops_at_top": [
+        "#90002 Spring Garden Exploration for Families",
+        "#90004 Family Garden Walks at NYBG"
+      ],
+      "gems_below": [
+        "#513 pos6 Paint Your heART Out! Painting Class for Kids",
+        "#1591 pos7 Face Value: Celebrity Press Photography",
+        "#1172 pos13 Broadway Trivia",
+        "#1590 pos17 Story Time by Design",
+        "#1065 pos18 Book Launch: Found Sound"
+      ]
+    },
+    {
+      "id": "r06",
+      "label": "Teen (14) things",
+      "returned": 20,
+      "ndcg_at_10": 1,
+      "top3": [
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90004 Family Garden Walks at NYBG",
+        "#90005 Family Day at the Bronx Zoo"
+      ],
+      "flops_at_top": [],
+      "gems_below": [
+        "#1179 pos6 Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+        "#1371 pos7 Walking Tour: “All-of-a-Kind Family”",
+        "#1143 pos8 Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood",
+        "#1194 pos9 Twelfth Night",
+        "#882 pos10 Rising NYRR Spring Jamboree Presented by TCS",
+        "#888 pos11 Storie Storie: An African Storytelling Experience Live on Broadway",
+        "#1387 pos12 Super Family Saturday: Artful Earth",
+        "#1129 pos13 NYC Family Resource Fair to Connect Families with Child Care Resources",
+        "#1377 pos14 Guided Nature Walk – Celebrating Earth Day 2026",
+        "#1010 pos15 Recreating Radio: Hawk of the Moon at the Paley Center",
+        "#1012 pos16 Met Opera Spring Open House",
+        "#1149 pos17 Community Work Day on the Wyckoff Urban Farm",
+        "#1381 pos18 Earth Day Celebration",
+        "#1014 pos19 Earth Day Festival on Randall's Island",
+        "#1044 pos20 Kids Class! Ice Cream Sundae Decorating in Manhattan"
+      ]
+    },
+    {
+      "id": "r07",
+      "label": "Toddler (3) activity",
+      "returned": 20,
+      "ndcg_at_10": 0.866,
+      "top3": [
+        "#90001 Family Story Time at Queens Public Library",
+        "#90002 Spring Garden Exploration for Families",
+        "#90003 Free Family Sundays at Queens Museum"
+      ],
+      "flops_at_top": [],
+      "gems_below": [
+        "#90006 pos6 Kids Story Time at Bronx Library Center",
+        "#90007 pos7 Queens Zoo: Family Exploration Day",
+        "#781 pos11 Open Hours at Environmental Education Center",
+        "#1528 pos12 Animal Encounters",
+        "#886 pos14 Move to the Rhythm",
+        "#1302 pos15 Iron Horse Party 2026",
+        "#882 pos16 Rising NYRR Spring Jamboree Presented by TCS",
+        "#996 pos18 Pinocchio at Puppetworks",
+        "#1384 pos19 Earth Day Festival",
+        "#1017 pos20 Meet the Animals at the Queens County Farm Museum"
+      ]
+    },
+    {
+      "id": "r08",
+      "label": "Manhattan family",
+      "returned": 20,
+      "ndcg_at_10": 0.675,
+      "top3": [
+        "#513 Paint Your heART Out! Painting Class for Kids",
+        "#1591 Face Value: Celebrity Press Photography",
+        "#661 In Motion Workshops: For children ages 8-12"
+      ],
+      "flops_at_top": [
+        "#1591 Face Value: Celebrity Press Photography"
+      ],
+      "gems_below": [
+        "#885 pos6 Macy’s Flower Show",
+        "#886 pos7 Move to the Rhythm",
+        "#1371 pos11 Walking Tour: “All-of-a-Kind Family”",
+        "#1590 pos12 Story Time by Design",
+        "#888 pos14 Storie Storie: An African Storytelling Experience Live on Broadway",
+        "#1384 pos15 Earth Day Festival",
+        "#1378 pos17 Car-Free Earth Day 2026",
+        "#1009 pos18 STEAM Dream in Rockefeller Park",
+        "#1010 pos19 Recreating Radio: Hawk of the Moon at the Paley Center",
+        "#1011 pos20 La MaMa Kids: Hula Magic"
+      ]
+    },
+    {
+      "id": "r09",
+      "label": "Music for kids",
+      "returned": 15,
+      "ndcg_at_10": 0.55,
+      "top3": [
+        "#1306 WU LYF, Lauren Auder",
+        "#1013 Broadway Celebrates Earth Day 2026",
+        "#1237 The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+      ],
+      "flops_at_top": [
+        "#1306 WU LYF, Lauren Auder",
+        "#1237 The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+      ],
+      "gems_below": [
+        "#1189 pos6 Met Chorus Artists presents Spring Sing: Celebrating Shakespeare",
+        "#1075 pos7 JAZZ AT ONE: Silvano Monasterios Venezuelan Nonet",
+        "#1432 pos15 Artful Tales"
+      ]
+    },
+    {
+      "id": "r10",
+      "label": "Museum-type for kid",
+      "returned": 6,
+      "ndcg_at_10": 0.921,
+      "top3": [
+        "#90003 Free Family Sundays at Queens Museum",
+        "#90005 Family Day at the Bronx Zoo",
+        "#90007 Queens Zoo: Family Exploration Day"
+      ],
+      "flops_at_top": [
+        "#90005 Family Day at the Bronx Zoo",
+        "#90007 Queens Zoo: Family Exploration Day"
+      ],
+      "gems_below": []
+    }
+  ],
+  "mean_ndcg_at_10": 0.7754000000000001
+}

@@ -17,6 +17,7 @@ import { getIndoorDigest } from './indoor';
 import { getEasyDigest } from './easy';
 import { getAffordableDigest } from './affordable';
 import { getWorthItDigest } from './worth-it';
+import { MORE_DIGEST_RUNNERS, MORE_DIGEST_SLUGS } from './more-digests';
 
 const DB_PATH = path.join(process.cwd(), 'data', 'events.db');
 
@@ -27,6 +28,13 @@ function loadLiveEvents(): EventRow[] {
       SELECT * FROM events
       WHERE ${LIVE_STATUS_FILTER}
         AND disabled = 0 AND archived = 0
+        -- Past-event guard: same semantics as lib/db.ts getEvents().
+        -- Without this, digest scorers surface yesterday's shows as today's
+        -- top picks. (Bug #1 in QA-REPORT.md.)
+        AND (
+          COALESCE(NULLIF(next_end_at, ''), datetime(next_start_at, '+3 hours')) >= datetime('now')
+          OR next_start_at IS NULL
+        )
     `).all() as EventRow[];
     return rows;
   } finally {
@@ -50,6 +58,8 @@ export function runAllDigests(): DigestResult[] {
     getEasyDigest(enriched),
     getAffordableDigest(enriched),
     getWorthItDigest(enriched),
+    // 10 parent-query-style digests (see more-digests.ts for rationale)
+    ...MORE_DIGEST_RUNNERS.map((runner) => runner(enriched)),
   ];
 
   // Post-process: ensure each digest uses a DIFFERENT cover image.
@@ -116,7 +126,11 @@ export function getDigestBySlug(slug: string): { digest: DigestMeta; events: Eve
   return { digest: found.meta, events: found.events };
 }
 
-/** All 5 slugs — useful for validation / routing. */
+/** All 15 slugs — useful for validation / routing. */
 export function allSlugs(): string[] {
-  return ['weekend-kids-nyc', 'indoor-rainy-day', 'easy-no-planning', 'free-affordable', 'kids-love-parents-approve'];
+  return [
+    'weekend-kids-nyc', 'indoor-rainy-day', 'easy-no-planning',
+    'free-affordable', 'kids-love-parents-approve',
+    ...MORE_DIGEST_SLUGS,
+  ];
 }

@@ -104,18 +104,81 @@ export interface MultiSelectState {
   doneLabel?: string;
 }
 
+/**
+ * State for the final email-capture step in onboarding. Rendered only on the
+ * last assistant message — we show an email input + submit + "Not now" skip.
+ */
+export interface EmailAskState {
+  submitting: boolean;
+  error?: string;
+  onSubmit: (email: string) => void;
+  onSkip: () => void;
+}
+
+function EmailAskBlock({ state }: { state: EmailAskState }) {
+  const [email, setEmail] = useState('');
+  const disabled = state.submitting || email.trim().length < 5;
+  const submit = () => {
+    if (disabled) return;
+    state.onSubmit(email.trim());
+  };
+  return (
+    <div className="mt-2 space-y-2">
+      <div className="flex items-stretch gap-1.5">
+        <input
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              submit();
+            }
+          }}
+          data-ph-no-capture
+          className="flex-1 min-w-0 px-3 py-2 rounded-xl text-sm bg-[#2a2760] text-white placeholder-gray-400 border border-[rgba(255,255,255,0.15)] focus:outline-none focus:border-[#e91e63]"
+        />
+        <button
+          type="button"
+          onClick={submit}
+          disabled={disabled}
+          className="px-3 py-2 rounded-xl text-sm font-semibold text-white disabled:opacity-40 transition-opacity whitespace-nowrap"
+          style={{ backgroundColor: '#e91e63' }}
+        >
+          {state.submitting ? '…' : 'Send weekly'}
+        </button>
+      </div>
+      {state.error && (
+        <div className="text-xs text-[#ff8d89]">{state.error}</div>
+      )}
+      <button
+        type="button"
+        onClick={state.onSkip}
+        disabled={state.submitting}
+        className="skip-btn"
+      >
+        Not now, thanks
+      </button>
+    </div>
+  );
+}
+
 interface ChatMessagesProps {
   messages: ChatMessage[];
   isLoading?: boolean;
   onEventClick?: (event: Event) => void;
   onQuickReply?: (reply: string) => void;
   multiSelectState?: MultiSelectState | null;
+  emailAskState?: EmailAskState | null;
   onSkip?: () => void;
 }
 
 export default function ChatMessages({
   messages, isLoading, onQuickReply,
-  multiSelectState, onSkip,
+  multiSelectState, emailAskState, onSkip,
 }: ChatMessagesProps) {
   if (messages.length === 0 && !isLoading) return null;
 
@@ -196,6 +259,11 @@ export default function ChatMessages({
               <div className="mt-2">
                 <button onClick={onSkip} className="skip-btn">Skip</button>
               </div>
+            )}
+
+            {/* Email-capture block — last onboarding step */}
+            {msg.role === 'assistant' && isLast && emailAskState && (
+              <EmailAskBlock state={emailAskState} />
             )}
           </div>
         );

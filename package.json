@@ -7,8 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "reimport": "npx tsx scripts/import-csv.ts && npx tsx scripts/seed-digests.ts && node qa/scripts/data_tests.js",
-    "qa": "node qa/scripts/data_tests.js && node qa/scripts/e2e_tests.js && node qa/scripts/security_tests.js"
+    "reimport": "npx tsx scripts/import-csv.ts && npx tsx scripts/import-supplements.ts && npx tsx scripts/seed-digests.ts && node qa/scripts/data_tests.js",
+    "qa": "node qa/scripts/data_tests.js && node qa/scripts/e2e_tests.js && node qa/scripts/security_tests.js",
+    "qa:ci:quick": "npx tsx scripts/qa/ci.ts quick",
+    "qa:ci:full": "npx tsx scripts/qa/ci.ts full",
+    "qa:ci:smoke": "npx tsx scripts/qa/ci.ts smoke",
+    "qa:schema": "npx tsx scripts/qa/schema-check.ts",
+    "qa:tags": "npx tsx scripts/qa/tag-coverage.ts",
+    "qa:import": "npx tsx scripts/qa/11-import-quality.ts",
+    "qa:browser": "npx tsx scripts/qa/10-browser-smoke.ts",
+    "qa:post-import": "npm run qa:schema && npm run qa:import && npm run qa:ci:quick && npm run qa:tags"
   },
   "dependencies": {
     "better-sqlite3": "^12.8.0",

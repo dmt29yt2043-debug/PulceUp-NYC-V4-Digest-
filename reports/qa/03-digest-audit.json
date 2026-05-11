@@ -1,0 +1,710 @@
+{
+  "digests": [
+    {
+      "slug": "weekend-kids-nyc",
+      "title": "Top 10 Things to Do with Kids in NYC This Weekend",
+      "included_count": 10,
+      "rule_violations": [
+        {
+          "type": "rule_violation",
+          "event_id": 886,
+          "title": "Move to the Rhythm",
+          "detail": "next_start_at is not an upcoming Sat/Sun"
+        }
+      ],
+      "low_judge_scores": [
+        {
+          "type": "low_judge_score",
+          "event_id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "detail": "judge=1: Event is on a weekday, not weekend."
+        }
+      ],
+      "missed_candidates": [
+        {
+          "type": "missed_candidate",
+          "event_id": 971,
+          "title": "Broadway Magic Hour at the Broadway Comedy Club",
+          "detail": "judge=5: Family-friendly magic show in NYC this weekend."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "detail": "judge=5: Free, family-friendly, weekend event in NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1012,
+          "title": "Met Opera Spring Open House",
+          "detail": "judge=5: Kids-friendly, NYC, weekend event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "detail": "judge=5: Free, family-friendly, weekend event in NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "detail": "judge=5: Perfect weekend kids event in NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1026,
+          "title": "Wings over Wave Hill",
+          "detail": "judge=5: Perfect weekend, kid-friendly, NYC event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1239,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY",
+          "detail": "judge=5: Kids-friendly, weekend event in NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1380,
+          "title": "5th Annual Broadway Celebrates Earth Day Concert",
+          "detail": "judge=5: Free, family-friendly event this weekend in NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1384,
+          "title": "Earth Day Festival",
+          "detail": "judge=5: Perfect match for kids-friendly weekend event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 975,
+          "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+          "detail": "judge=5: Perfect weekend kids event in NYC."
+        }
+      ],
+      "judge_avg": 4.4,
+      "judge_scores": [
+        {
+          "id": 1011,
+          "title": "La MaMa Kids: Hula Magic",
+          "score": 5,
+          "why": "Kids-friendly, NYC, weekend event"
+        },
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Kids-friendly, NYC, Saturday event, free entry."
+        },
+        {
+          "id": 1378,
+          "title": "Car-Free Earth Day 2026",
+          "score": 5,
+          "why": "Kids-friendly, weekend event in NYC."
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 5,
+          "why": "Kids-friendly, NYC, weekend event"
+        },
+        {
+          "id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "score": 1,
+          "why": "Event is on a weekday, not weekend."
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 5,
+          "why": "Kids-friendly, weekend, NYC, engaging activity."
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 3,
+          "why": "Event spans multiple days, not weekend-specific."
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Free, kids-friendly, weekend event in NYC."
+        },
+        {
+          "id": 1005,
+          "title": "Comic Arts Fest at L'Alliance New York",
+          "score": 5,
+          "why": "Kids-friendly, weekend event in NYC."
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Kids-friendly, NYC, weekend event."
+        }
+      ]
+    },
+    {
+      "slug": "indoor-rainy-day",
+      "title": "Top 10 Indoor Activities for Kids in NYC (Rainy Day Edition)",
+      "included_count": 10,
+      "rule_violations": [
+        {
+          "type": "rule_violation",
+          "event_id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "detail": "looks outdoor (festival/park/street)"
+        }
+      ],
+      "low_judge_scores": [],
+      "missed_candidates": [
+        {
+          "type": "missed_candidate",
+          "event_id": 971,
+          "title": "Broadway Magic Hour at the Broadway Comedy Club",
+          "detail": "judge=5: Indoor, weather-proof, engaging theater show."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 812,
+          "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+          "detail": "judge=5: Indoor magic show, perfect rainy day activity."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "detail": "judge=5: Indoor, weather-proof, family-friendly theater show."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1012,
+          "title": "Met Opera Spring Open House",
+          "detail": "judge=5: Indoor, educational, hands-on, weather-proof."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1067,
+          "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+          "detail": "judge=5: Indoor, weather-proof, hands-on class."
+        }
+      ],
+      "judge_avg": 4.9,
+      "judge_scores": [
+        {
+          "id": 1590,
+          "title": "Story Time by Design",
+          "score": 5,
+          "why": "Indoor, museum, hands-on, perfect rainy day fit."
+        },
+        {
+          "id": 1414,
+          "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+          "score": 5,
+          "why": "Indoor museum event, perfect for rainy days."
+        },
+        {
+          "id": 1385,
+          "title": "Autism-Friendly Access Workshops",
+          "score": 5,
+          "why": "Indoor, workshop, inclusive, weather-proof"
+        },
+        {
+          "id": 902,
+          "title": "Reading into History: Immigrant Stories",
+          "score": 5,
+          "why": "Indoor museum event, fits rainy day theme."
+        },
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 5,
+          "why": "Indoor, educational, weather-proof class"
+        },
+        {
+          "id": 1447,
+          "title": "Broadway Magic Hour – NYC’s Favorite Family Magic Show",
+          "score": 5,
+          "why": "Indoor, weather-proof, family-friendly theater show"
+        },
+        {
+          "id": 1591,
+          "title": "Face Value: Celebrity Press Photography",
+          "score": 4,
+          "why": "Indoor museum visit, fits rainy day theme."
+        },
+        {
+          "id": 898,
+          "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+          "score": 5,
+          "why": "Indoor museum workshop, perfect rainy day activity."
+        },
+        {
+          "id": 1434,
+          "title": "the Boy & the Ball at Lincoln Center",
+          "score": 5,
+          "why": "Indoor theater show, perfect rainy day activity."
+        },
+        {
+          "id": 737,
+          "title": "Watson Adventures’ Wizard School Scavenger Hunt",
+          "score": 5,
+          "why": "Indoor, museum-based, educational, weather-proof."
+        }
+      ]
+    },
+    {
+      "slug": "easy-no-planning",
+      "title": "10 Easy Things to Do with Kids in NYC (No Planning Needed)",
+      "included_count": 10,
+      "rule_violations": [],
+      "low_judge_scores": [
+        {
+          "type": "low_judge_score",
+          "event_id": 899,
+          "title": "Hablemos: The New York Sari",
+          "detail": "judge=2: Requires registration, not drop-in"
+        }
+      ],
+      "missed_candidates": [
+        {
+          "type": "missed_candidate",
+          "event_id": 812,
+          "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+          "detail": "judge=4: Drop-in magic show, minimal planning needed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "detail": "judge=5: Drop-in, no RSVP, easy art activity."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "detail": "judge=5: Free, drop-in, no planning needed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "detail": "judge=5: Free, drop-in, no planning needed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1007,
+          "title": "Car-Free Earth Day",
+          "detail": "judge=5: Drop-in, free, no planning needed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "detail": "judge=4: Free, drop-in, but specific date needed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1380,
+          "title": "5th Annual Broadway Celebrates Earth Day Concert",
+          "detail": "judge=4: Free, drop-in, family-friendly concert."
+        }
+      ],
+      "judge_avg": 4.3,
+      "judge_scores": [
+        {
+          "id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "score": 5,
+          "why": "Free, drop-in, no planning needed."
+        },
+        {
+          "id": 1378,
+          "title": "Car-Free Earth Day 2026",
+          "score": 5,
+          "why": "Free, drop-in, no planning needed."
+        },
+        {
+          "id": 1590,
+          "title": "Story Time by Design",
+          "score": 4,
+          "why": "Drop-in, free, but museum visit may need planning."
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 3,
+          "why": "Requires ticket purchase, not fully drop-in."
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 2,
+          "why": "Requires registration, not drop-in"
+        },
+        {
+          "id": 1414,
+          "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+          "score": 5,
+          "why": "Drop-in, free, no planning needed."
+        },
+        {
+          "id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "score": 5,
+          "why": "Drop-in, free, no planning needed."
+        },
+        {
+          "id": 885,
+          "title": "Macy’s Flower Show",
+          "score": 5,
+          "why": "Free, drop-in, no planning needed."
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 5,
+          "why": "Drop-in, no RSVP, free with admission."
+        },
+        {
+          "id": 900,
+          "title": "The New York Sari Sunday Family Fun Day",
+          "score": 4,
+          "why": "Drop-in, no RSVP, educational, free."
+        }
+      ]
+    },
+    {
+      "slug": "free-affordable",
+      "title": "Top 15 Free & Affordable Things to Do with Kids in NYC",
+      "included_count": 15,
+      "rule_violations": [],
+      "low_judge_scores": [],
+      "missed_candidates": [
+        {
+          "type": "missed_candidate",
+          "event_id": 812,
+          "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+          "detail": "judge=5: Affordable magic show fits digest theme."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "detail": "judge=5: Free family-friendly magic show."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "detail": "judge=5: Free, educational, kid-focused activity."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "detail": "judge=5: Free, educational, creative activity for kids."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 885,
+          "title": "Macy’s Flower Show",
+          "detail": "judge=5: Free, kid-friendly, aligns with digest theme."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "detail": "judge=5: Free, family-friendly, educational concert."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "detail": "judge=5: Free, diverse activities, fits digest theme."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1026,
+          "title": "Wings over Wave Hill",
+          "detail": "judge=5: Free, educational, hands-on, family-friendly."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1239,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY",
+          "detail": "judge=5: Free, educational, and family-friendly event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1245,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim New Hyde Park, NY",
+          "detail": "judge=4: Free, educational, but outside NYC."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1380,
+          "title": "5th Annual Broadway Celebrates Earth Day Concert",
+          "detail": "judge=5: Free, family-friendly, and educational."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1384,
+          "title": "Earth Day Festival",
+          "detail": "judge=5: Free, family-friendly, diverse activities."
+        }
+      ],
+      "judge_avg": 5,
+      "judge_scores": [
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Free, educational, fits age range perfectly."
+        },
+        {
+          "id": 1378,
+          "title": "Car-Free Earth Day 2026",
+          "score": 5,
+          "why": "Free, family-friendly, aligns with digest theme."
+        },
+        {
+          "id": 1590,
+          "title": "Story Time by Design",
+          "score": 5,
+          "why": "Free, interactive, educational, fits digest theme."
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 5,
+          "why": "Free, educational, hands-on, fits digest theme."
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 5,
+          "why": "Free, engaging, educational for kids."
+        },
+        {
+          "id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "score": 5,
+          "why": "Free, kid-friendly, interactive music event."
+        },
+        {
+          "id": 1414,
+          "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+          "score": 5,
+          "why": "Free, kid-friendly, educational activity."
+        },
+        {
+          "id": 1416,
+          "title": "PAW Day Pet Health & Wellness Fair 2026",
+          "score": 5,
+          "why": "Free, family-friendly, interactive, fits digest theme."
+        },
+        {
+          "id": 1323,
+          "title": "Spring Fling: Little Sprouts",
+          "score": 5,
+          "why": "Free, diverse activities for kids"
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Free art class fits digest theme perfectly."
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 5,
+          "why": "Free, engaging, and age-appropriate activity."
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Free, inclusive, and family-friendly event."
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Free, educational, and family-friendly event."
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 5,
+          "why": "Free, kid-friendly, educational, aligns with digest theme."
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 5,
+          "why": "Free, educational, and family-friendly event."
+        }
+      ]
+    },
+    {
+      "slug": "kids-love-parents-approve",
+      "title": "10 Things Kids Love (And Parents Don't Regret)",
+      "included_count": 10,
+      "rule_violations": [],
+      "low_judge_scores": [],
+      "missed_candidates": [
+        {
+          "type": "missed_candidate",
+          "event_id": 1420,
+          "title": "Soulful Sounds in Rockland",
+          "detail": "judge=4: Engaging music, interactive, but pricey for families."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 971,
+          "title": "Broadway Magic Hour at the Broadway Comedy Club",
+          "detail": "judge=5: Engaging, well-reviewed, family-friendly magic show."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 812,
+          "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+          "detail": "judge=5: Engaging magic show, well-suited for kids and parents."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "detail": "judge=5: Engaging, free, family-friendly magic show."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "detail": "judge=5: Engaging, educational, and free for kids."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "detail": "judge=5: Engaging, educational, well-reviewed, and free."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 885,
+          "title": "Macy’s Flower Show",
+          "detail": "judge=5: Engaging, free, educational, and well-reviewed."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "detail": "judge=5: Engaging, educational, and well-reviewed event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1012,
+          "title": "Met Opera Spring Open House",
+          "detail": "judge=5: Engaging, educational, and well-reviewed event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "detail": "judge=5: Engaging, educational, free, and well-rounded."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "detail": "judge=5: Engaging, well-reviewed, free, and diverse activities."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1026,
+          "title": "Wings over Wave Hill",
+          "detail": "judge=5: Engaging, educational, and well-reviewed event."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1239,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY",
+          "detail": "judge=5: Engaging, educational, and free; parents appreciate safety focus."
+        },
+        {
+          "type": "missed_candidate",
+          "event_id": 1245,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim New Hyde Park, NY",
+          "detail": "judge=5: Engaging, educational, and free; parents appreciate safety focus."
+        }
+      ],
+      "judge_avg": 4.9,
+      "judge_scores": [
+        {
+          "id": 1011,
+          "title": "La MaMa Kids: Hula Magic",
+          "score": 5,
+          "why": "Engaging, educational, well-reviewed, affordable."
+        },
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Engaging, educational, well-reviewed, and free."
+        },
+        {
+          "id": 1378,
+          "title": "Car-Free Earth Day 2026",
+          "score": 5,
+          "why": "Engaging, free, educational, and well-reviewed."
+        },
+        {
+          "id": 1590,
+          "title": "Story Time by Design",
+          "score": 5,
+          "why": "Engaging, educational, and free event for kids."
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Engaging, educational, free, and well-structured."
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 4,
+          "why": "Engaging, educational, but niche cultural focus."
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Inclusive, engaging, and well-reviewed event."
+        },
+        {
+          "id": 1005,
+          "title": "Comic Arts Fest at L'Alliance New York",
+          "score": 5,
+          "why": "Engaging, educational, well-reviewed event for kids."
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Engaging, educational, free, and well-reviewed."
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 5,
+          "why": "Engaging, educational, well-reviewed, and free."
+        }
+      ]
+    }
+  ]
+}

@@ -17,8 +17,8 @@ https://pulseup.me/results?source=quiz&<params>
 | ------------- | ------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------ |
 | `source`      | yes          | `quiz`                                                                                     | Marks traffic origin                       |
 | `gender`      | yes          | `boy` \| `girl`                                                                            | First child gender (back-compat)           |
-| `child_age`   | yes          | `0-2` \| `3-5` \| `6-8` \| `9-12` \| `13-15` \| `16+`                                      | First child age (back-compat)              |
-| `children`    | yes          | `boy:3-5` or `boy:3-5,girl:9-12`                                                           | All children, comma-sep `gender:age` pairs |
+| `child_age`   | yes          | Integer 0–17 (e.g. `7`). Legacy range format (`3-5`, `16+`) still accepted for back-compat. | First child age (back-compat)            |
+| `children`    | yes          | `boy:7` or `boy:7,girl:3` — comma-sep `gender:age` pairs, age is an integer 0–17. Legacy range format (`boy:3-5`) still accepted. | All children |
 | `borough`     | yes          | `manhattan` \| `brooklyn` \| `queens` \| `bronx` \| `staten_island` \| `other`             | NYC borough                                |
 | `custom_area` | only if `borough=other` | free-text                                                                       | User-entered area name                     |
 | `interests`   | yes          | comma-sep subset of: `outdoor` `playgrounds` `museums` `classes` `arts_crafts` `sports` `science` `animals` `indoor_play` | Interests (default `outdoor` if empty) |
@@ -47,7 +47,13 @@ https://pulseup.me/results?source=quiz&<params>
 
 ## Example
 
-Family with two kids (boy 3–5 / girl 9–12), Brooklyn, museums + sports:
+Family with two kids (boy 7 / girl 3), Brooklyn, museums + sports:
+
+```
+https://pulseup.me/results?source=quiz&gender=boy&child_age=7&children=boy:7,girl:3&borough=brooklyn&interests=museums,sports
+```
+
+Legacy format (still supported for back-compat):
 
 ```
 https://pulseup.me/results?source=quiz&gender=boy&child_age=3-5&children=boy:3-5,girl:9-12&borough=brooklyn&interests=museums,sports

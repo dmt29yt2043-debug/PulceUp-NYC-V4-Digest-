@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
       const genders = childGendersParam
         .split(',')
         .map((s) => s.trim().toLowerCase())
-        .filter((g): g is 'boy' | 'girl' | 'other' => ['boy', 'girl', 'other'].includes(g));
+        .filter((g): g is 'boy' | 'girl' => ['boy', 'girl'].includes(g));
       if (genders.length > 0) filters.childGenders = genders;
     }
 
@@ -84,6 +84,15 @@ export async function GET(request: NextRequest) {
 
     const ratingMin = searchParams.get('rating_min');
     if (ratingMin !== null && ratingMin !== '') filters.ratingMin = parseFloat(ratingMin);
+
+    // Accessibility filters — accepted as snake_case from client / camelCase
+    // for compatibility with chat-extracted FilterState bodies. Without this,
+    // the URL param was silently dropped (Bug #2 in QA-REPORT.md).
+    const stroller = searchParams.get('stroller_friendly') ?? searchParams.get('strollerFriendly');
+    if (stroller === 'true') filters.strollerFriendly = true;
+
+    const wheelchair = searchParams.get('wheelchair_accessible') ?? searchParams.get('wheelchairAccessible');
+    if (wheelchair === 'true') filters.wheelchairAccessible = true;
 
     const result = getEvents(filters);
 

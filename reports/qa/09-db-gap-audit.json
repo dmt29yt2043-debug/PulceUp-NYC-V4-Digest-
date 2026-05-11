@@ -1,0 +1,6700 @@
+{
+  "probes": [
+    {
+      "id": "G01",
+      "intent": "Science museum or STEM activity for a 5-year-old",
+      "filters": {
+        "ageMax": 5,
+        "categories": [
+          "science"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "STEM workshop for 5-year-olds"
+        },
+        {
+          "id": 872,
+          "title": "Museum Adventure Activity: Sea Survival Challenge",
+          "score": 4,
+          "why": "Museum activity with educational focus"
+        },
+        {
+          "id": 1399,
+          "title": "Sunday Science: Reptile Rumble Juniors",
+          "score": 5,
+          "why": "Science workshop for kids"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI"
+          },
+          {
+            "id": 1399,
+            "title": "Sunday Science: Reptile Rumble Juniors"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge",
+            "score": 4,
+            "why": "Museum activity with educational focus"
+          }
+        ],
+        "coverage_pct": 67,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "science museum for a 5 year old",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show"
+          },
+          {
+            "id": 1399,
+            "title": "Sunday Science: Reptile Rumble Juniors"
+          },
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge"
+          },
+          {
+            "id": 1427,
+            "title": "Adventureland Honors Moms on Mother’s Day"
+          }
+        ],
+        "strong_shown": 3,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "id": "G02",
+      "intent": "Free outdoor weekend activity for a 4-year-old",
+      "filters": {
+        "ageMax": 4,
+        "isFree": true,
+        "categories": [
+          "outdoors"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1377,
+          "title": "Guided Nature Walk – Celebrating Earth Day 2026",
+          "score": 4,
+          "why": "Free outdoor, but in Nassau County"
+        },
+        {
+          "id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "score": 5,
+          "why": "Free outdoor family fun day, suitable for 4-year-olds"
+        },
+        {
+          "id": 1327,
+          "title": "Spring Family Discovery Weekends",
+          "score": 5,
+          "why": "Free outdoor family event, suitable for 4-year-olds"
+        },
+        {
+          "id": 1380,
+          "title": "5th Annual Broadway Celebrates Earth Day Concert",
+          "score": 4,
+          "why": "Free outdoor concert, suitable for 4-year-olds"
+        },
+        {
+          "id": 1384,
+          "title": "Earth Day Festival",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1386,
+          "title": "Woodlawn Family Fun Day",
+          "score": 5,
+          "why": "Free outdoor family fun day, suitable for 4-year-olds"
+        },
+        {
+          "id": 1530,
+          "title": "Earth Day Celebration",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1381,
+          "title": "Earth Day Celebration",
+          "score": 4,
+          "why": "Free outdoor festival, but location unspecified"
+        },
+        {
+          "id": 1253,
+          "title": "Tot Time Tuesdays",
+          "score": 4,
+          "why": "Free outdoor activity, but not a festival"
+        },
+        {
+          "id": 1254,
+          "title": "Tot Time",
+          "score": 5,
+          "why": "Free outdoor playgroup, suitable for 4-year-olds"
+        },
+        {
+          "id": 1015,
+          "title": "Earth Day in Carl Schurz Park",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1054,
+          "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26",
+          "score": 4,
+          "why": "Free outdoor festival, but focus on mental health"
+        },
+        {
+          "id": 882,
+          "title": "Rising NYRR Spring Jamboree Presented by TCS",
+          "score": 4,
+          "why": "Free outdoor sports event, suitable for 4-year-olds"
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1018,
+          "title": "Celebrate Holi with the Brooklyn Children's Museum",
+          "score": 5,
+          "why": "Free outdoor festival, suitable for 4-year-olds"
+        },
+        {
+          "id": 1024,
+          "title": "Earthing in My City at Success Community Garden",
+          "score": 5,
+          "why": "Free outdoor activity, suitable for 4-year-olds"
+        },
+        {
+          "id": 1082,
+          "title": "Earth Day at the KoKo Lot",
+          "score": 4,
+          "why": "Free outdoor event, but focus on community service"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 1381,
+            "title": "Earth Day Celebration"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden"
+          },
+          {
+            "id": 1082,
+            "title": "Earth Day at the KoKo Lot"
+          },
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends"
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration"
+          },
+          {
+            "id": 1610,
+            "title": "Victory Boulevard Spring Stroll"
+          },
+          {
+            "id": 1416,
+            "title": "PAW Day Pet Health & Wellness Fair 2026"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays"
+          },
+          {
+            "id": 1254,
+            "title": "Tot Time"
+          },
+          {
+            "id": 1442,
+            "title": "STRENGTH IN THE CITY NYC Festival"
+          },
+          {
+            "id": 1444,
+            "title": "FAD Market: Mother’s Day"
+          }
+        ],
+        "strong_shown": 15,
+        "strong_missed": [
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS",
+            "score": 4,
+            "why": "Free outdoor sports event, suitable for 4-year-olds"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm",
+            "score": 5,
+            "why": "Free outdoor festival, suitable for 4-year-olds"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 5,
+            "why": "Free outdoor festival, suitable for 4-year-olds"
+          }
+        ],
+        "coverage_pct": 83,
+        "verdict": "PASS"
+      },
+      "chat_path": {
+        "query": "free outdoor weekend plans for 4 year old",
+        "returned": [
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 1381,
+            "title": "Earth Day Celebration"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day"
+          }
+        ],
+        "strong_shown": 9,
+        "strong_missed": [
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends",
+            "score": 5,
+            "why": "Free outdoor family event, suitable for 4-year-olds"
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration",
+            "score": 5,
+            "why": "Free outdoor festival, suitable for 4-year-olds"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays",
+            "score": 4,
+            "why": "Free outdoor activity, but not a festival"
+          },
+          {
+            "id": 1254,
+            "title": "Tot Time",
+            "score": 5,
+            "why": "Free outdoor playgroup, suitable for 4-year-olds"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS",
+            "score": 4,
+            "why": "Free outdoor sports event, suitable for 4-year-olds"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm",
+            "score": 5,
+            "why": "Free outdoor festival, suitable for 4-year-olds"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 5,
+            "why": "Free outdoor festival, suitable for 4-year-olds"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden",
+            "score": 5,
+            "why": "Free outdoor activity, suitable for 4-year-olds"
+          },
+          {
+            "id": 1082,
+            "title": "Earth Day at the KoKo Lot",
+            "score": 4,
+            "why": "Free outdoor event, but focus on community service"
+          }
+        ],
+        "coverage_pct": 50,
+        "verdict": "WARN"
+      }
+    },
+    {
+      "id": "G03",
+      "intent": "Arts / craft class for a 6-year-old",
+      "filters": {
+        "ageMax": 6,
+        "categories": [
+          "arts"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 5,
+          "why": "Arts class for 6-year-old"
+        },
+        {
+          "id": 778,
+          "title": "Art Journaling Group Workshop",
+          "score": 5,
+          "why": "Art journaling class for kids"
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Painting class for kids"
+        },
+        {
+          "id": 838,
+          "title": "Recycled Ocean Crafts",
+          "score": 4,
+          "why": "Crafts workshop for kids"
+        },
+        {
+          "id": 895,
+          "title": "Kids Interactive Poetry",
+          "score": 4,
+          "why": "Poetry workshop for kids"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+          },
+          {
+            "id": 1067,
+            "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC"
+          },
+          {
+            "id": 1140,
+            "title": "Collage/Mixed Media for Families"
+          },
+          {
+            "id": 1237,
+            "title": "The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+          },
+          {
+            "id": 1005,
+            "title": "Comic Arts Fest at L'Alliance New York"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show"
+          },
+          {
+            "id": 1102,
+            "title": "Word Portraits at Lehman College Art Gallery"
+          },
+          {
+            "id": 1240,
+            "title": "Free Inclusive Family Program - April 26, 10:30am-12:30pm"
+          },
+          {
+            "id": 1099,
+            "title": "Family Gathering: Puppet Workshop and Show with Spellbound Theater"
+          },
+          {
+            "id": 1217,
+            "title": "Candlelight CircleSing"
+          },
+          {
+            "id": 1414,
+            "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Arts class for 6-year-old"
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Art journaling class for kids"
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 4,
+            "why": "Crafts workshop for kids"
+          }
+        ],
+        "coverage_pct": 40,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "arts and crafts class for 6 year old",
+        "returned": [
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Arts class for 6-year-old"
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Art journaling class for kids"
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 4,
+            "why": "Crafts workshop for kids"
+          }
+        ],
+        "coverage_pct": 40,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G04",
+      "intent": "Indoor rainy-day activity for a toddler (age 2)",
+      "filters": {
+        "ageMax": 2
+      },
+      "db_strong": [
+        {
+          "id": 1609,
+          "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!",
+          "score": 5,
+          "why": "Indoor, toddler-friendly, interactive play"
+        },
+        {
+          "id": 898,
+          "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+          "score": 4,
+          "why": "Indoor, includes story time for toddlers"
+        },
+        {
+          "id": 1004,
+          "title": "Move to the Rhythm at Children's Museum of Manhattan",
+          "score": 5,
+          "why": "Indoor, toddler-friendly playgroup"
+        },
+        {
+          "id": 1044,
+          "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan",
+          "score": 4,
+          "why": "Indoor, suitable for toddlers"
+        },
+        {
+          "id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "score": 4,
+          "why": "Indoor, toddler-friendly music"
+        },
+        {
+          "id": 1209,
+          "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+          "score": 4,
+          "why": "Indoor, includes story time for toddlers"
+        },
+        {
+          "id": 1253,
+          "title": "Tot Time Tuesdays",
+          "score": 4,
+          "why": "Indoor, toddler-focused activities"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1609,
+            "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum"
+          },
+          {
+            "id": 1129,
+            "title": "NYC Family Resource Fair to Connect Families with Child Care Resources"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1168,
+            "title": "Kids @ Grand Central x The Rock & Roll Playhouse"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+            "score": 4,
+            "why": "Indoor, includes story time for toddlers"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Indoor, toddler-friendly playgroup"
+          },
+          {
+            "id": 1044,
+            "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan",
+            "score": 4,
+            "why": "Indoor, suitable for toddlers"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+            "score": 4,
+            "why": "Indoor, includes story time for toddlers"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays",
+            "score": 4,
+            "why": "Indoor, toddler-focused activities"
+          }
+        ],
+        "coverage_pct": 29,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "indoor rainy day activity for my 2 year old",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1609,
+            "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!",
+            "score": 5,
+            "why": "Indoor, toddler-friendly, interactive play"
+          },
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+            "score": 4,
+            "why": "Indoor, includes story time for toddlers"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Indoor, toddler-friendly playgroup"
+          },
+          {
+            "id": 1044,
+            "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan",
+            "score": 4,
+            "why": "Indoor, suitable for toddlers"
+          },
+          {
+            "id": 1168,
+            "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+            "score": 4,
+            "why": "Indoor, toddler-friendly music"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+            "score": 4,
+            "why": "Indoor, includes story time for toddlers"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays",
+            "score": 4,
+            "why": "Indoor, toddler-focused activities"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G05",
+      "intent": "Storytime / library event for preschooler",
+      "filters": {
+        "ageMax": 4,
+        "categories": [
+          "books"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 90006,
+          "title": "Kids Story Time at Bronx Library Center",
+          "score": 5,
+          "why": "Perfect match for intent"
+        },
+        {
+          "id": 90001,
+          "title": "Family Story Time at Queens Public Library",
+          "score": 5,
+          "why": "Perfect match for intent"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 1132,
+            "title": "In-Store: Indie Bookstore Day Storytime w/ Drag Artists for Expression NYC"
+          },
+          {
+            "id": 1180,
+            "title": "Ready, Set, Kindergarten!"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day"
+          },
+          {
+            "id": 1098,
+            "title": "Storytime Can You Grow a Stripped Banana?"
+          },
+          {
+            "id": 1057,
+            "title": "A Hundred Years of Childhood"
+          },
+          {
+            "id": 1414,
+            "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "PASS"
+      },
+      "chat_path": {
+        "query": "storytime for my preschooler",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1132,
+            "title": "In-Store: Indie Bookstore Day Storytime w/ Drag Artists for Expression NYC"
+          },
+          {
+            "id": 1180,
+            "title": "Ready, Set, Kindergarten!"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 1005,
+            "title": "Comic Arts Fest at L'Alliance New York"
+          },
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "id": "G06",
+      "intent": "Theater / Broadway show kid-friendly",
+      "filters": {
+        "ageMax": 8,
+        "categories": [
+          "theater"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 896,
+          "title": "Hampton Ballet Theatre School Presents Sleeping Beauty",
+          "score": 4,
+          "why": "Kid-friendly ballet show"
+        },
+        {
+          "id": 971,
+          "title": "Broadway Magic Hour at the Broadway Comedy Club",
+          "score": 5,
+          "why": "Broadway magic show, kid-friendly"
+        },
+        {
+          "id": 1021,
+          "title": "Dreamcats! at the Gene Frankel Theatre",
+          "score": 5,
+          "why": "Kid-friendly theater show"
+        },
+        {
+          "id": 1445,
+          "title": "New Owner",
+          "score": 5,
+          "why": "Kid-friendly puppet theater"
+        },
+        {
+          "id": 1418,
+          "title": "Family Matinee: PARSONS Dance Company at The Joyce",
+          "score": 4,
+          "why": "Dance show, kid-friendly"
+        },
+        {
+          "id": 1434,
+          "title": "the Boy & the Ball at Lincoln Center",
+          "score": 4,
+          "why": "Childrens theater, younger age"
+        },
+        {
+          "id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "score": 5,
+          "why": "Broadway magic show, kid-friendly"
+        },
+        {
+          "id": 1447,
+          "title": "Broadway Magic Hour – NYC’s Favorite Family Magic Show",
+          "score": 5,
+          "why": "Family magic show, kid-friendly"
+        },
+        {
+          "id": 1458,
+          "title": "Magic Show for All Ages - Broadway Magic Hour in Times Square",
+          "score": 5,
+          "why": "Magic show, kid-friendly"
+        },
+        {
+          "id": 996,
+          "title": "Pinocchio at Puppetworks",
+          "score": 5,
+          "why": "Puppet theater, kid-friendly"
+        },
+        {
+          "id": 888,
+          "title": "Storie Storie: An African Storytelling Experience Live on Broadway",
+          "score": 5,
+          "why": "Storytelling theater, kid-friendly"
+        },
+        {
+          "id": 812,
+          "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+          "score": 5,
+          "why": "Broadway magic show, kid-friendly"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 888,
+            "title": "Storie Storie: An African Storytelling Experience Live on Broadway"
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 971,
+            "title": "Broadway Magic Hour at the Broadway Comedy Club"
+          },
+          {
+            "id": 1458,
+            "title": "Magic Show for All Ages - Broadway Magic Hour in Times Square"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika"
+          },
+          {
+            "id": 1021,
+            "title": "Dreamcats! at the Gene Frankel Theatre"
+          },
+          {
+            "id": 1099,
+            "title": "Family Gathering: Puppet Workshop and Show with Spellbound Theater"
+          },
+          {
+            "id": 548,
+            "title": "Parallel Exit presents the Sunset Circus"
+          },
+          {
+            "id": 1446,
+            "title": "Musical Explorers Family"
+          },
+          {
+            "id": 812,
+            "title": "Jim Vines and Carl Mercurio Broadway Magic Hour"
+          },
+          {
+            "id": 1447,
+            "title": "Broadway Magic Hour – NYC’s Favorite Family Magic Show"
+          },
+          {
+            "id": 1445,
+            "title": "New Owner"
+          },
+          {
+            "id": 896,
+            "title": "Hampton Ballet Theatre School Presents Sleeping Beauty"
+          }
+        ],
+        "strong_shown": 9,
+        "strong_missed": [
+          {
+            "id": 1418,
+            "title": "Family Matinee: PARSONS Dance Company at The Joyce",
+            "score": 4,
+            "why": "Dance show, kid-friendly"
+          },
+          {
+            "id": 1434,
+            "title": "the Boy & the Ball at Lincoln Center",
+            "score": 4,
+            "why": "Childrens theater, younger age"
+          },
+          {
+            "id": 996,
+            "title": "Pinocchio at Puppetworks",
+            "score": 5,
+            "why": "Puppet theater, kid-friendly"
+          }
+        ],
+        "coverage_pct": 75,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "theater show for kids",
+        "returned": [
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          },
+          {
+            "id": 1158,
+            "title": "NYC Magic Ensemble @ Young Ethel's (04/23)"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1194,
+            "title": "Twelfth Night"
+          },
+          {
+            "id": 888,
+            "title": "Storie Storie: An African Storytelling Experience Live on Broadway"
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 971,
+            "title": "Broadway Magic Hour at the Broadway Comedy Club"
+          }
+        ],
+        "strong_shown": 3,
+        "strong_missed": [
+          {
+            "id": 896,
+            "title": "Hampton Ballet Theatre School Presents Sleeping Beauty",
+            "score": 4,
+            "why": "Kid-friendly ballet show"
+          },
+          {
+            "id": 1021,
+            "title": "Dreamcats! at the Gene Frankel Theatre",
+            "score": 5,
+            "why": "Kid-friendly theater show"
+          },
+          {
+            "id": 1445,
+            "title": "New Owner",
+            "score": 5,
+            "why": "Kid-friendly puppet theater"
+          },
+          {
+            "id": 1418,
+            "title": "Family Matinee: PARSONS Dance Company at The Joyce",
+            "score": 4,
+            "why": "Dance show, kid-friendly"
+          },
+          {
+            "id": 1434,
+            "title": "the Boy & the Ball at Lincoln Center",
+            "score": 4,
+            "why": "Childrens theater, younger age"
+          },
+          {
+            "id": 1447,
+            "title": "Broadway Magic Hour – NYC’s Favorite Family Magic Show",
+            "score": 5,
+            "why": "Family magic show, kid-friendly"
+          },
+          {
+            "id": 1458,
+            "title": "Magic Show for All Ages - Broadway Magic Hour in Times Square",
+            "score": 5,
+            "why": "Magic show, kid-friendly"
+          },
+          {
+            "id": 996,
+            "title": "Pinocchio at Puppetworks",
+            "score": 5,
+            "why": "Puppet theater, kid-friendly"
+          },
+          {
+            "id": 812,
+            "title": "Jim Vines and Carl Mercurio Broadway Magic Hour",
+            "score": 5,
+            "why": "Broadway magic show, kid-friendly"
+          }
+        ],
+        "coverage_pct": 25,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G07",
+      "intent": "Music / concert for a 5-year-old",
+      "filters": {
+        "ageMax": 5,
+        "categories": [
+          "music"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1013,
+          "title": "Broadway Celebrates Earth Day 2026",
+          "score": 5,
+          "why": "Free concert for young kids"
+        },
+        {
+          "id": 1189,
+          "title": "Met Chorus Artists presents Spring Sing: Celebrating Shakespeare",
+          "score": 4,
+          "why": "Free concert, kid-friendly theme"
+        },
+        {
+          "id": 901,
+          "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+          "score": 5,
+          "why": "Kids concert, interactive"
+        },
+        {
+          "id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "score": 5,
+          "why": "Free kids concert, family-friendly"
+        },
+        {
+          "id": 1493,
+          "title": "Joyful Community Concert: Willan Academy of Music",
+          "score": 5,
+          "why": "Free kids concert, family-friendly"
+        },
+        {
+          "id": 1055,
+          "title": "Classical4Kids",
+          "score": 4,
+          "why": "Free classical music for kids"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1237,
+            "title": "The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+          },
+          {
+            "id": 1308,
+            "title": "Clan of Xymox, Cold Cave"
+          },
+          {
+            "id": 1189,
+            "title": "Met Chorus Artists presents Spring Sing: Celebrating Shakespeare"
+          },
+          {
+            "id": 1075,
+            "title": "JAZZ AT ONE: Silvano Monasterios Venezuelan Nonet"
+          },
+          {
+            "id": 1420,
+            "title": "Soulful Sounds in Rockland"
+          },
+          {
+            "id": 1429,
+            "title": "Divas Thru the Decades @ Bayway Arts Center"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Kids concert, interactive"
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free kids concert, family-friendly"
+          },
+          {
+            "id": 1493,
+            "title": "Joyful Community Concert: Willan Academy of Music",
+            "score": 5,
+            "why": "Free kids concert, family-friendly"
+          },
+          {
+            "id": 1055,
+            "title": "Classical4Kids",
+            "score": 4,
+            "why": "Free classical music for kids"
+          }
+        ],
+        "coverage_pct": 33,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "kids music concert for 5 year old",
+        "returned": [
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1237,
+            "title": "The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+          },
+          {
+            "id": 1308,
+            "title": "Clan of Xymox, Cold Cave"
+          },
+          {
+            "id": 1189,
+            "title": "Met Chorus Artists presents Spring Sing: Celebrating Shakespeare"
+          },
+          {
+            "id": 1075,
+            "title": "JAZZ AT ONE: Silvano Monasterios Venezuelan Nonet"
+          },
+          {
+            "id": 1420,
+            "title": "Soulful Sounds in Rockland"
+          },
+          {
+            "id": 1429,
+            "title": "Divas Thru the Decades @ Bayway Arts Center"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Kids concert, interactive"
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free kids concert, family-friendly"
+          },
+          {
+            "id": 1493,
+            "title": "Joyful Community Concert: Willan Academy of Music",
+            "score": 5,
+            "why": "Free kids concert, family-friendly"
+          },
+          {
+            "id": 1055,
+            "title": "Classical4Kids",
+            "score": 4,
+            "why": "Free classical music for kids"
+          }
+        ],
+        "coverage_pct": 33,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G08",
+      "intent": "Free event specifically in Manhattan this weekend",
+      "filters": {
+        "isFree": true,
+        "neighborhoods": [
+          "Manhattan"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1020,
+          "title": "Macy's Herald Square Annual Flower Show",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1004,
+          "title": "Move to the Rhythm at Children's Museum of Manhattan",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 885,
+          "title": "Macy’s Flower Show",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1013,
+          "title": "Broadway Celebrates Earth Day 2026",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1179,
+          "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 521,
+          "title": "Swiss Institute Family Hours",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 821,
+          "title": "EVC Intergenerational Choir",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 900,
+          "title": "The New York Sari Sunday Family Fun Day",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 902,
+          "title": "Reading into History: Immigrant Stories",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1009,
+          "title": "STEAM Dream in Rockefeller Park",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1015,
+          "title": "Earth Day in Carl Schurz Park",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1023,
+          "title": "Dig Into Earth Week at the Habitat Garden at Pier 66",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1168,
+          "title": "Kids @ Grand Central x The Rock & Roll Playhouse",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1305,
+          "title": "ATSs and Off-Exchange Trading - Opportunities and Challenges 2026",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1323,
+          "title": "Spring Fling: Little Sprouts",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        },
+        {
+          "id": 1370,
+          "title": "Teen Workshop | P.O.V. Who Tells the Story?",
+          "score": 5,
+          "why": "Free event in Manhattan"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day"
+          },
+          {
+            "id": 1378,
+            "title": "Car-Free Earth Day 2026"
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center"
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1168,
+            "title": "Kids @ Grand Central x The Rock & Roll Playhouse"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island"
+          },
+          {
+            "id": 1023,
+            "title": "Dig Into Earth Week at the Habitat Garden at Pier 66"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI"
+          }
+        ],
+        "strong_shown": 15,
+        "strong_missed": [
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 821,
+            "title": "EVC Intergenerational Choir",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1305,
+            "title": "ATSs and Off-Exchange Trading - Opportunities and Challenges 2026",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1323,
+            "title": "Spring Fling: Little Sprouts",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          }
+        ],
+        "coverage_pct": 58,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "free things to do in Manhattan this weekend",
+        "returned": [
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day"
+          },
+          {
+            "id": 1378,
+            "title": "Car-Free Earth Day 2026"
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center"
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1168,
+            "title": "Kids @ Grand Central x The Rock & Roll Playhouse"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 1023,
+            "title": "Dig Into Earth Week at the Habitat Garden at Pier 66"
+          }
+        ],
+        "strong_shown": 7,
+        "strong_missed": [
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 821,
+            "title": "EVC Intergenerational Choir",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1305,
+            "title": "ATSs and Off-Exchange Trading - Opportunities and Challenges 2026",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1323,
+            "title": "Spring Fling: Little Sprouts",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?",
+            "score": 5,
+            "why": "Free event in Manhattan"
+          }
+        ],
+        "coverage_pct": 27,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G09",
+      "intent": "Anything in Queens for kids",
+      "filters": {
+        "neighborhoods": [
+          "Queens"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 975,
+          "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+          "score": 5,
+          "why": "Perfect match, kid-friendly event in Queens"
+        },
+        {
+          "id": 1069,
+          "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+          "score": 5,
+          "why": "Kid-friendly workshop in Queens"
+        },
+        {
+          "id": 1017,
+          "title": "Meet the Animals at the Queens County Farm Museum",
+          "score": 5,
+          "why": "Kid-friendly event in Queens"
+        },
+        {
+          "id": 1229,
+          "title": "Fresh Decks Spades Tournament - Season 2: Spring Edition",
+          "score": 5,
+          "why": "Family-friendly event in Queens"
+        },
+        {
+          "id": 90001,
+          "title": "Family Story Time at Queens Public Library",
+          "score": 5,
+          "why": "Kid-friendly event in Queens"
+        },
+        {
+          "id": 90002,
+          "title": "Spring Garden Exploration for Families",
+          "score": 5,
+          "why": "Family-friendly outdoor activity in Queens"
+        },
+        {
+          "id": 90003,
+          "title": "Free Family Sundays at Queens Museum",
+          "score": 5,
+          "why": "Family-friendly museum event in Queens"
+        },
+        {
+          "id": 90007,
+          "title": "Queens Zoo: Family Exploration Day",
+          "score": 5,
+          "why": "Family-friendly zoo event in Queens"
+        },
+        {
+          "id": 1239,
+          "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY",
+          "score": 5,
+          "why": "Kid-friendly event in Queens"
+        },
+        {
+          "id": 1254,
+          "title": "Tot Time",
+          "score": 5,
+          "why": "Kid-friendly event in Queens"
+        },
+        {
+          "id": 892,
+          "title": "Animal Care Trainee",
+          "score": 5,
+          "why": "Kid-friendly event in Queens"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 892,
+            "title": "Animal Care Trainee"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum"
+          },
+          {
+            "id": 1229,
+            "title": "Fresh Decks Spades Tournament - Season 2: Spring Edition"
+          },
+          {
+            "id": 1239,
+            "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum"
+          },
+          {
+            "id": 1185,
+            "title": "INFINITE (KRAFF, SKENG AND RAJAH WYLD LIVE)"
+          },
+          {
+            "id": 1254,
+            "title": "Tot Time"
+          }
+        ],
+        "strong_shown": 10,
+        "strong_missed": [
+          {
+            "id": 1069,
+            "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+            "score": 5,
+            "why": "Kid-friendly workshop in Queens"
+          }
+        ],
+        "coverage_pct": 91,
+        "verdict": "PASS"
+      },
+      "chat_path": {
+        "query": "something for kids in Queens",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 892,
+            "title": "Animal Care Trainee"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum"
+          },
+          {
+            "id": 1229,
+            "title": "Fresh Decks Spades Tournament - Season 2: Spring Edition"
+          },
+          {
+            "id": 1239,
+            "title": "Water Safety Splash & Learn - Saf-T-Swim Little Neck, NY"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum"
+          },
+          {
+            "id": 1185,
+            "title": "INFINITE (KRAFF, SKENG AND RAJAH WYLD LIVE)"
+          }
+        ],
+        "strong_shown": 9,
+        "strong_missed": [
+          {
+            "id": 1069,
+            "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+            "score": 5,
+            "why": "Kid-friendly workshop in Queens"
+          },
+          {
+            "id": 1254,
+            "title": "Tot Time",
+            "score": 5,
+            "why": "Kid-friendly event in Queens"
+          }
+        ],
+        "coverage_pct": 82,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "id": "G10",
+      "intent": "Anything in Bronx for kids",
+      "filters": {
+        "neighborhoods": [
+          "Bronx"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1408,
+          "title": "Bronx Bound: SIS 5K Run/Walk",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx event"
+        },
+        {
+          "id": 1102,
+          "title": "Word Portraits at Lehman College Art Gallery",
+          "score": 5,
+          "why": "Free, suitable for kids, Bronx"
+        },
+        {
+          "id": 1240,
+          "title": "Free Inclusive Family Program - April 26, 10:30am-12:30pm",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx"
+        },
+        {
+          "id": 90004,
+          "title": "Family Garden Walks at NYBG",
+          "score": 5,
+          "why": "Family-friendly, Bronx, outdoors"
+        },
+        {
+          "id": 90005,
+          "title": "Family Day at the Bronx Zoo",
+          "score": 5,
+          "why": "Family-friendly, Bronx, outdoors"
+        },
+        {
+          "id": 90006,
+          "title": "Kids Story Time at Bronx Library Center",
+          "score": 5,
+          "why": "Free, suitable for young kids"
+        },
+        {
+          "id": 882,
+          "title": "Rising NYRR Spring Jamboree Presented by TCS",
+          "score": 4,
+          "why": "Free, family-friendly, not in Bronx"
+        },
+        {
+          "id": 907,
+          "title": "Step Afrika",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx"
+        },
+        {
+          "id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx"
+        },
+        {
+          "id": 1026,
+          "title": "Wings over Wave Hill",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx"
+        },
+        {
+          "id": 1386,
+          "title": "Woodlawn Family Fun Day",
+          "score": 5,
+          "why": "Free, family-friendly, Bronx"
+        },
+        {
+          "id": 1612,
+          "title": "Owl Pellet Dissection",
+          "score": 5,
+          "why": "Free, educational, Bronx"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika"
+          },
+          {
+            "id": 1026,
+            "title": "Wings over Wave Hill"
+          },
+          {
+            "id": 1612,
+            "title": "Owl Pellet Dissection"
+          },
+          {
+            "id": 1397,
+            "title": "Sensory Sensitive Morning: Children’s Zoo"
+          },
+          {
+            "id": 1102,
+            "title": "Word Portraits at Lehman College Art Gallery"
+          },
+          {
+            "id": 1240,
+            "title": "Free Inclusive Family Program - April 26, 10:30am-12:30pm"
+          },
+          {
+            "id": 1408,
+            "title": "Bronx Bound: SIS 5K Run/Walk"
+          },
+          {
+            "id": 1340,
+            "title": "Wild Wonders (Bronx Zoo)"
+          }
+        ],
+        "strong_shown": 12,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "PASS"
+      },
+      "chat_path": {
+        "query": "something for kids in the Bronx",
+        "returned": [
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika"
+          },
+          {
+            "id": 1026,
+            "title": "Wings over Wave Hill"
+          },
+          {
+            "id": 1612,
+            "title": "Owl Pellet Dissection"
+          },
+          {
+            "id": 1397,
+            "title": "Sensory Sensitive Morning: Children’s Zoo"
+          }
+        ],
+        "strong_shown": 9,
+        "strong_missed": [
+          {
+            "id": 1408,
+            "title": "Bronx Bound: SIS 5K Run/Walk",
+            "score": 5,
+            "why": "Free, family-friendly, Bronx event"
+          },
+          {
+            "id": 1102,
+            "title": "Word Portraits at Lehman College Art Gallery",
+            "score": 5,
+            "why": "Free, suitable for kids, Bronx"
+          },
+          {
+            "id": 1240,
+            "title": "Free Inclusive Family Program - April 26, 10:30am-12:30pm",
+            "score": 5,
+            "why": "Free, family-friendly, Bronx"
+          }
+        ],
+        "coverage_pct": 75,
+        "verdict": "WARN"
+      }
+    },
+    {
+      "id": "G11",
+      "intent": "Zoo / animals for a young child",
+      "filters": {
+        "ageMax": 6
+      },
+      "db_strong": [
+        {
+          "id": 1397,
+          "title": "Sensory Sensitive Morning: Children’s Zoo",
+          "score": 5,
+          "why": "Children's zoo, perfect match"
+        },
+        {
+          "id": 90005,
+          "title": "Family Day at the Bronx Zoo",
+          "score": 5,
+          "why": "Bronx Zoo, ideal for intent"
+        },
+        {
+          "id": 90007,
+          "title": "Queens Zoo: Family Exploration Day",
+          "score": 5,
+          "why": "Queens Zoo, ideal for intent"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1143,
+            "title": "Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1302,
+            "title": "Iron Horse Party 2026"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1397,
+            "title": "Sensory Sensitive Morning: Children’s Zoo",
+            "score": 5,
+            "why": "Children's zoo, perfect match"
+          }
+        ],
+        "coverage_pct": 67,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "zoo or animals activity for young kid",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1397,
+            "title": "Sensory Sensitive Morning: Children’s Zoo",
+            "score": 5,
+            "why": "Children's zoo, perfect match"
+          }
+        ],
+        "coverage_pct": 67,
+        "verdict": "WARN"
+      }
+    },
+    {
+      "id": "G12",
+      "intent": "Nature / garden / park outing for family",
+      "filters": {
+        "categories": [
+          "outdoors"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 90002,
+          "title": "Spring Garden Exploration for Families",
+          "score": 5,
+          "why": "Perfect match for nature outing"
+        },
+        {
+          "id": 90004,
+          "title": "Family Garden Walks at NYBG",
+          "score": 5,
+          "why": "Perfect match for garden outing"
+        },
+        {
+          "id": 1327,
+          "title": "Spring Family Discovery Weekends",
+          "score": 4,
+          "why": "Strong match with nature exploration"
+        },
+        {
+          "id": 1387,
+          "title": "Super Family Saturday: Artful Earth",
+          "score": 4,
+          "why": "Includes nature walks, relevant"
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 4,
+          "why": "Festival with nature appreciation"
+        },
+        {
+          "id": 1023,
+          "title": "Dig Into Earth Week at the Habitat Garden at Pier 66",
+          "score": 4,
+          "why": "Nature walks in habitat garden"
+        },
+        {
+          "id": 1024,
+          "title": "Earthing in My City at Success Community Garden",
+          "score": 4,
+          "why": "Garden and nature activities"
+        },
+        {
+          "id": 1377,
+          "title": "Guided Nature Walk – Celebrating Earth Day 2026",
+          "score": 5,
+          "why": "Guided nature walk, perfect match"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 891,
+            "title": "Doggie Day Hike"
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1378,
+            "title": "Car-Free Earth Day 2026"
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1051,
+            "title": "Bike Skills 101: Learn to Ride-Kids 11AM"
+          },
+          {
+            "id": 1149,
+            "title": "Community Work Day on the Wyckoff Urban Farm"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          }
+        ],
+        "strong_shown": 4,
+        "strong_missed": [
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends",
+            "score": 4,
+            "why": "Strong match with nature exploration"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 4,
+            "why": "Festival with nature appreciation"
+          },
+          {
+            "id": 1023,
+            "title": "Dig Into Earth Week at the Habitat Garden at Pier 66",
+            "score": 4,
+            "why": "Nature walks in habitat garden"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden",
+            "score": 4,
+            "why": "Garden and nature activities"
+          }
+        ],
+        "coverage_pct": 50,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "nature or park outing for family",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 891,
+            "title": "Doggie Day Hike"
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends",
+            "score": 4,
+            "why": "Strong match with nature exploration"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth",
+            "score": 4,
+            "why": "Includes nature walks, relevant"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 4,
+            "why": "Festival with nature appreciation"
+          },
+          {
+            "id": 1023,
+            "title": "Dig Into Earth Week at the Habitat Garden at Pier 66",
+            "score": 4,
+            "why": "Nature walks in habitat garden"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden",
+            "score": 4,
+            "why": "Garden and nature activities"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026",
+            "score": 5,
+            "why": "Guided nature walk, perfect match"
+          }
+        ],
+        "coverage_pct": 25,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G13",
+      "intent": "Cheap (< $20) activity for a 7-year-old",
+      "filters": {
+        "ageMax": 7,
+        "priceMax": 20
+      },
+      "db_strong": [
+        {
+          "id": 1385,
+          "title": "Autism-Friendly Access Workshops",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 996,
+          "title": "Pinocchio at Puppetworks",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 1402,
+          "title": "Kvell Together – Capes for a Cause",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 1140,
+          "title": "Collage/Mixed Media for Families",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 548,
+          "title": "Parallel Exit presents the Sunset Circus",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 788,
+          "title": "Turtle Time",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 872,
+          "title": "Museum Adventure Activity: Sea Survival Challenge",
+          "score": 4,
+          "why": "Potentially over $20 for non-members."
+        },
+        {
+          "id": 882,
+          "title": "Rising NYRR Spring Jamboree Presented by TCS",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 885,
+          "title": "Macy’s Flower Show",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 901,
+          "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 907,
+          "title": "Step Afrika",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1013,
+          "title": "Broadway Celebrates Earth Day 2026",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 521,
+          "title": "Swiss Institute Family Hours",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 658,
+          "title": "Video Games: The Great Connector",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 778,
+          "title": "Art Journaling Group Workshop",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 838,
+          "title": "Recycled Ocean Crafts",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 859,
+          "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 887,
+          "title": "Arbor Day in Prospect Park",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 889,
+          "title": "Celebrate Holi",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        },
+        {
+          "id": 895,
+          "title": "Kids Interactive Poetry",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 900,
+          "title": "The New York Sari Sunday Family Fun Day",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 902,
+          "title": "Reading into History: Immigrant Stories",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1008,
+          "title": "Arbor Day at the Audubon Center in Prospect Park",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1009,
+          "title": "STEAM Dream in Rockefeller Park",
+          "score": 5,
+          "why": "Free, suitable for age."
+        },
+        {
+          "id": 1011,
+          "title": "La MaMa Kids: Hula Magic",
+          "score": 5,
+          "why": "Affordable, suitable for age."
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1065,
+            "title": "Book Launch: Found Sound"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 888,
+            "title": "Storie Storie: An African Storytelling Experience Live on Broadway"
+          }
+        ],
+        "strong_shown": 5,
+        "strong_missed": [
+          {
+            "id": 1385,
+            "title": "Autism-Friendly Access Workshops",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 996,
+            "title": "Pinocchio at Puppetworks",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 1402,
+            "title": "Kvell Together – Capes for a Cause",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 1140,
+            "title": "Collage/Mixed Media for Families",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 548,
+            "title": "Parallel Exit presents the Sunset Circus",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge",
+            "score": 4,
+            "why": "Potentially over $20 for non-members."
+          },
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 658,
+            "title": "Video Games: The Great Connector",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 859,
+            "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1011,
+            "title": "La MaMa Kids: Hula Magic",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          }
+        ],
+        "coverage_pct": 14,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "cheap activity under 20 dollars for 7 year old",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1385,
+            "title": "Autism-Friendly Access Workshops",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 996,
+            "title": "Pinocchio at Puppetworks",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 1402,
+            "title": "Kvell Together – Capes for a Cause",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 1140,
+            "title": "Collage/Mixed Media for Families",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 548,
+            "title": "Parallel Exit presents the Sunset Circus",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge",
+            "score": 4,
+            "why": "Potentially over $20 for non-members."
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 658,
+            "title": "Video Games: The Great Connector",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 859,
+            "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park",
+            "score": 5,
+            "why": "Free, suitable for age."
+          },
+          {
+            "id": 1011,
+            "title": "La MaMa Kids: Hula Magic",
+            "score": 5,
+            "why": "Affordable, suitable for age."
+          }
+        ],
+        "coverage_pct": 6,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G14",
+      "intent": "Teen (age 13-14) hangout or event",
+      "filters": {
+        "ageMax": 14
+      },
+      "db_strong": [
+        {
+          "id": 1194,
+          "title": "Twelfth Night",
+          "score": 4,
+          "why": "Theater show suitable for teens"
+        },
+        {
+          "id": 1220,
+          "title": "Teen Open Mic Night with the Nuyorican Poets Cafe and Writopia",
+          "score": 5,
+          "why": "Teen-focused open mic event"
+        },
+        {
+          "id": 1019,
+          "title": "Richard lll: A Twisted Fairytale",
+          "score": 4,
+          "why": "Theater show suitable for teens"
+        },
+        {
+          "id": 1259,
+          "title": "Illustrated Ink Club",
+          "score": 4,
+          "why": "Teen book club, relevant age group"
+        },
+        {
+          "id": 737,
+          "title": "Watson Adventures’ Wizard School Scavenger Hunt",
+          "score": 4,
+          "why": "Scavenger hunt suitable for teens"
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 4,
+          "why": "Workshop suitable for teens"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1143,
+            "title": "Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood"
+          },
+          {
+            "id": 1194,
+            "title": "Twelfth Night"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 888,
+            "title": "Storie Storie: An African Storytelling Experience Live on Broadway"
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth"
+          },
+          {
+            "id": 1129,
+            "title": "NYC Family Resource Fair to Connect Families with Child Care Resources"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center"
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House"
+          },
+          {
+            "id": 1149,
+            "title": "Community Work Day on the Wyckoff Urban Farm"
+          },
+          {
+            "id": 1381,
+            "title": "Earth Day Celebration"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island"
+          },
+          {
+            "id": 1044,
+            "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1220,
+            "title": "Teen Open Mic Night with the Nuyorican Poets Cafe and Writopia",
+            "score": 5,
+            "why": "Teen-focused open mic event"
+          },
+          {
+            "id": 1019,
+            "title": "Richard lll: A Twisted Fairytale",
+            "score": 4,
+            "why": "Theater show suitable for teens"
+          },
+          {
+            "id": 1259,
+            "title": "Illustrated Ink Club",
+            "score": 4,
+            "why": "Teen book club, relevant age group"
+          },
+          {
+            "id": 737,
+            "title": "Watson Adventures’ Wizard School Scavenger Hunt",
+            "score": 4,
+            "why": "Scavenger hunt suitable for teens"
+          }
+        ],
+        "coverage_pct": 33,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "things for a 14 year old teen",
+        "returned": [
+          {
+            "id": 1220,
+            "title": "Teen Open Mic Night with the Nuyorican Poets Cafe and Writopia"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 1376,
+            "title": "ReelAbilities Comedy Night at Lincoln Center"
+          },
+          {
+            "id": 1259,
+            "title": "Illustrated Ink Club"
+          },
+          {
+            "id": 1300,
+            "title": "Oneohtrix Point Never, Tyondai Braxton"
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 1194,
+            "title": "Twelfth Night",
+            "score": 4,
+            "why": "Theater show suitable for teens"
+          },
+          {
+            "id": 1019,
+            "title": "Richard lll: A Twisted Fairytale",
+            "score": 4,
+            "why": "Theater show suitable for teens"
+          },
+          {
+            "id": 737,
+            "title": "Watson Adventures’ Wizard School Scavenger Hunt",
+            "score": 4,
+            "why": "Scavenger hunt suitable for teens"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+            "score": 4,
+            "why": "Workshop suitable for teens"
+          }
+        ],
+        "coverage_pct": 33,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G15",
+      "intent": "Birthday party venue / group activity",
+      "filters": {
+        "ageMax": 8
+      },
+      "db_strong": [
+        {
+          "id": 1609,
+          "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!",
+          "score": 5,
+          "why": "Interactive playground, ideal for parties"
+        },
+        {
+          "id": 975,
+          "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+          "score": 5,
+          "why": "Carnival, ideal for parties"
+        },
+        {
+          "id": 780,
+          "title": "The Grandest Princess Ball Ever at Carmine’s",
+          "score": 5,
+          "why": "Interactive playgroup, ideal for parties"
+        },
+        {
+          "id": 889,
+          "title": "Celebrate Holi",
+          "score": 5,
+          "why": "Holi party, ideal for group activity"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1143,
+            "title": "Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1065,
+            "title": "Book Launch: Found Sound"
+          },
+          {
+            "id": 1302,
+            "title": "Iron Horse Party 2026"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1609,
+            "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!",
+            "score": 5,
+            "why": "Interactive playground, ideal for parties"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+            "score": 5,
+            "why": "Carnival, ideal for parties"
+          },
+          {
+            "id": 780,
+            "title": "The Grandest Princess Ball Ever at Carmine’s",
+            "score": 5,
+            "why": "Interactive playgroup, ideal for parties"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Holi party, ideal for group activity"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "birthday party venue for a 7 year old",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1609,
+            "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!",
+            "score": 5,
+            "why": "Interactive playground, ideal for parties"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+            "score": 5,
+            "why": "Carnival, ideal for parties"
+          },
+          {
+            "id": 780,
+            "title": "The Grandest Princess Ball Ever at Carmine’s",
+            "score": 5,
+            "why": "Interactive playgroup, ideal for parties"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Holi party, ideal for group activity"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G16",
+      "intent": "Sports class for an 8-year-old",
+      "filters": {
+        "ageMax": 8,
+        "categories": [
+          "sports"
+        ]
+      },
+      "db_strong": [],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 1396,
+            "title": "2026 New York Lymphoma Walk"
+          },
+          {
+            "id": 1408,
+            "title": "Bronx Bound: SIS 5K Run/Walk"
+          },
+          {
+            "id": 1413,
+            "title": "Cliff Runner 5K"
+          },
+          {
+            "id": 1422,
+            "title": "Bridge The Gap 5K Run/Walk"
+          },
+          {
+            "id": 1423,
+            "title": "New York Harbor Oyster Classic 5K"
+          },
+          {
+            "id": 1435,
+            "title": "Run Your Y 5K"
+          },
+          {
+            "id": 1436,
+            "title": "Glen Cove YMCA 5K Run/Walk"
+          },
+          {
+            "id": 1441,
+            "title": "Veterans Everyday 5K Run/Walk"
+          },
+          {
+            "id": 1410,
+            "title": "Run for the Petals 5K Run/Walk"
+          },
+          {
+            "id": 1437,
+            "title": "Central Islip Fire Department 5K Run/Walk"
+          },
+          {
+            "id": 1443,
+            "title": "20th Annual John May Mile & 5K Run/Walk"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "sports class for 8 year old",
+        "returned": [
+          {
+            "id": 1396,
+            "title": "2026 New York Lymphoma Walk"
+          },
+          {
+            "id": 1408,
+            "title": "Bronx Bound: SIS 5K Run/Walk"
+          },
+          {
+            "id": 1413,
+            "title": "Cliff Runner 5K"
+          },
+          {
+            "id": 1422,
+            "title": "Bridge The Gap 5K Run/Walk"
+          },
+          {
+            "id": 1423,
+            "title": "New York Harbor Oyster Classic 5K"
+          },
+          {
+            "id": 1435,
+            "title": "Run Your Y 5K"
+          },
+          {
+            "id": 1436,
+            "title": "Glen Cove YMCA 5K Run/Walk"
+          },
+          {
+            "id": 1441,
+            "title": "Veterans Everyday 5K Run/Walk"
+          },
+          {
+            "id": 1410,
+            "title": "Run for the Petals 5K Run/Walk"
+          },
+          {
+            "id": 1437,
+            "title": "Central Islip Fire Department 5K Run/Walk"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "WARN"
+      }
+    },
+    {
+      "id": "G17",
+      "intent": "Dance class for a 6-year-old girl",
+      "filters": {
+        "ageMax": 6
+      },
+      "db_strong": [
+        {
+          "id": 1011,
+          "title": "La MaMa Kids: Hula Magic",
+          "score": 4,
+          "why": "Hula dance workshop, relevant"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1143,
+            "title": "Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1302,
+            "title": "Iron Horse Party 2026"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1011,
+            "title": "La MaMa Kids: Hula Magic",
+            "score": 4,
+            "why": "Hula dance workshop, relevant"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "dance class for 6 year old girl",
+        "returned": [
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 888,
+            "title": "Storie Storie: An African Storytelling Experience Live on Broadway"
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          },
+          {
+            "id": 971,
+            "title": "Broadway Magic Hour at the Broadway Comedy Club"
+          },
+          {
+            "id": 1458,
+            "title": "Magic Show for All Ages - Broadway Magic Hour in Times Square"
+          },
+          {
+            "id": 1237,
+            "title": "The Fairy Tale Art Cart LIVE: Featuring Andy Seagrave"
+          },
+          {
+            "id": 1308,
+            "title": "Clan of Xymox, Cold Cave"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1011,
+            "title": "La MaMa Kids: Hula Magic",
+            "score": 4,
+            "why": "Hula dance workshop, relevant"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G18",
+      "intent": "Baby/toddler class (under 2)",
+      "filters": {
+        "ageMax": 2
+      },
+      "db_strong": [
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 4,
+          "why": "Includes playgroup, suitable for under 2"
+        },
+        {
+          "id": 1004,
+          "title": "Move to the Rhythm at Children's Museum of Manhattan",
+          "score": 4,
+          "why": "Includes playgroup, suitable for under 2"
+        },
+        {
+          "id": 1209,
+          "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+          "score": 4,
+          "why": "Includes playgroup, suitable for under 2"
+        },
+        {
+          "id": 1253,
+          "title": "Tot Time Tuesdays",
+          "score": 5,
+          "why": "Perfect match for under 2"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi"
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day"
+          },
+          {
+            "id": 1609,
+            "title": "RECESS!! Epic Interactive Family Fun at a Surreal Playground!"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum"
+          },
+          {
+            "id": 1129,
+            "title": "NYC Family Resource Fair to Connect Families with Child Care Resources"
+          },
+          {
+            "id": 1377,
+            "title": "Guided Nature Walk – Celebrating Earth Day 2026"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026"
+          },
+          {
+            "id": 1168,
+            "title": "Kids @ Grand Central x The Rock & Roll Playhouse"
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert"
+          }
+        ],
+        "strong_shown": 1,
+        "strong_missed": [
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 4,
+            "why": "Includes playgroup, suitable for under 2"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+            "score": 4,
+            "why": "Includes playgroup, suitable for under 2"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays",
+            "score": 5,
+            "why": "Perfect match for under 2"
+          }
+        ],
+        "coverage_pct": 25,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "baby class for my 18-month-old",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          }
+        ],
+        "strong_shown": 1,
+        "strong_missed": [
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 4,
+            "why": "Includes playgroup, suitable for under 2"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+            "score": 4,
+            "why": "Includes playgroup, suitable for under 2"
+          },
+          {
+            "id": 1253,
+            "title": "Tot Time Tuesdays",
+            "score": 5,
+            "why": "Perfect match for under 2"
+          }
+        ],
+        "coverage_pct": 25,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G19",
+      "intent": "Educational but fun activity for 7yo",
+      "filters": {
+        "ageMax": 7
+      },
+      "db_strong": [
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 4,
+          "why": "Educational art class, fun for 7yo."
+        },
+        {
+          "id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "score": 5,
+          "why": "Educational and fun, nature-focused."
+        },
+        {
+          "id": 788,
+          "title": "Turtle Time",
+          "score": 5,
+          "why": "Educational nature class, engaging for 7yo."
+        },
+        {
+          "id": 872,
+          "title": "Museum Adventure Activity: Sea Survival Challenge",
+          "score": 5,
+          "why": "Educational museum activity, fun challenge."
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 4,
+          "why": "Educational Earth Day event, fun elements."
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 4,
+          "why": "Educational opera event, engaging for kids."
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 4,
+          "why": "Educational Earth Day festival, fun activities."
+        },
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Educational science workshop, fun for 7yo."
+        },
+        {
+          "id": 1327,
+          "title": "Spring Family Discovery Weekends",
+          "score": 5,
+          "why": "Educational nature exploration, fun activities."
+        },
+        {
+          "id": 1380,
+          "title": "5th Annual Broadway Celebrates Earth Day Concert",
+          "score": 4,
+          "why": "Fun concert, some educational elements."
+        },
+        {
+          "id": 1384,
+          "title": "Earth Day Festival",
+          "score": 5,
+          "why": "Educational Earth Day festival, fun crafts."
+        },
+        {
+          "id": 1386,
+          "title": "Woodlawn Family Fun Day",
+          "score": 4,
+          "why": "Fun festival, some educational crafts."
+        },
+        {
+          "id": 1387,
+          "title": "Super Family Saturday: Artful Earth",
+          "score": 5,
+          "why": "Educational art and nature activities, fun."
+        },
+        {
+          "id": 1530,
+          "title": "Earth Day Celebration",
+          "score": 5,
+          "why": "Educational Earth Day event, fun activities."
+        },
+        {
+          "id": 1611,
+          "title": "Children’s Business Fair",
+          "score": 4,
+          "why": "Educational business fair, fun for kids."
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 4,
+          "why": "Educational art class, fun for 7yo."
+        },
+        {
+          "id": 658,
+          "title": "Video Games: The Great Connector",
+          "score": 4,
+          "why": "Educational gaming exhibition, fun for 7yo."
+        },
+        {
+          "id": 659,
+          "title": "50 Years of Apple Computers: The Kevin Lenane Collection",
+          "score": 4,
+          "why": "Educational tech exhibition, fun for 7yo."
+        },
+        {
+          "id": 778,
+          "title": "Art Journaling Group Workshop",
+          "score": 4,
+          "why": "Educational art journaling, fun for 7yo."
+        },
+        {
+          "id": 838,
+          "title": "Recycled Ocean Crafts",
+          "score": 5,
+          "why": "Educational crafts, fun for 7yo."
+        },
+        {
+          "id": 859,
+          "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+          "score": 5,
+          "why": "Educational historical program, fun for 7yo."
+        },
+        {
+          "id": 887,
+          "title": "Arbor Day in Prospect Park",
+          "score": 5,
+          "why": "Educational Arbor Day event, fun activities."
+        },
+        {
+          "id": 890,
+          "title": "Orienteering Meet at West Hills County Park – North",
+          "score": 4,
+          "why": "Educational orienteering, fun for 7yo."
+        },
+        {
+          "id": 895,
+          "title": "Kids Interactive Poetry",
+          "score": 5,
+          "why": "Educational poetry workshop, fun for 7yo."
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1371,
+            "title": "Walking Tour: “All-of-a-Kind Family”"
+          },
+          {
+            "id": 1143,
+            "title": "Increasing Access to Evidence-Based Treatment for Common Mental Health Problems in Childhood"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1065,
+            "title": "Book Launch: Found Sound"
+          },
+          {
+            "id": 1302,
+            "title": "Iron Horse Party 2026"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 4,
+            "why": "Educational art class, fun for 7yo."
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time",
+            "score": 5,
+            "why": "Educational nature class, engaging for 7yo."
+          },
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge",
+            "score": 5,
+            "why": "Educational museum activity, fun challenge."
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 4,
+            "why": "Educational Earth Day event, fun elements."
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 4,
+            "why": "Educational opera event, engaging for kids."
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 4,
+            "why": "Educational Earth Day festival, fun activities."
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI",
+            "score": 5,
+            "why": "Educational science workshop, fun for 7yo."
+          },
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends",
+            "score": 5,
+            "why": "Educational nature exploration, fun activities."
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert",
+            "score": 4,
+            "why": "Fun concert, some educational elements."
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival",
+            "score": 5,
+            "why": "Educational Earth Day festival, fun crafts."
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day",
+            "score": 4,
+            "why": "Fun festival, some educational crafts."
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth",
+            "score": 5,
+            "why": "Educational art and nature activities, fun."
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration",
+            "score": 5,
+            "why": "Educational Earth Day event, fun activities."
+          },
+          {
+            "id": 1611,
+            "title": "Children’s Business Fair",
+            "score": 4,
+            "why": "Educational business fair, fun for kids."
+          },
+          {
+            "id": 658,
+            "title": "Video Games: The Great Connector",
+            "score": 4,
+            "why": "Educational gaming exhibition, fun for 7yo."
+          },
+          {
+            "id": 659,
+            "title": "50 Years of Apple Computers: The Kevin Lenane Collection",
+            "score": 4,
+            "why": "Educational tech exhibition, fun for 7yo."
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 4,
+            "why": "Educational art journaling, fun for 7yo."
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 5,
+            "why": "Educational crafts, fun for 7yo."
+          },
+          {
+            "id": 859,
+            "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+            "score": 5,
+            "why": "Educational historical program, fun for 7yo."
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 5,
+            "why": "Educational Arbor Day event, fun activities."
+          },
+          {
+            "id": 890,
+            "title": "Orienteering Meet at West Hills County Park – North",
+            "score": 4,
+            "why": "Educational orienteering, fun for 7yo."
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry",
+            "score": 5,
+            "why": "Educational poetry workshop, fun for 7yo."
+          }
+        ],
+        "coverage_pct": 8,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "educational but fun activity for 7 year old",
+        "returned": [
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          }
+        ],
+        "strong_shown": 2,
+        "strong_missed": [
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 4,
+            "why": "Educational art class, fun for 7yo."
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time",
+            "score": 5,
+            "why": "Educational nature class, engaging for 7yo."
+          },
+          {
+            "id": 872,
+            "title": "Museum Adventure Activity: Sea Survival Challenge",
+            "score": 5,
+            "why": "Educational museum activity, fun challenge."
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 4,
+            "why": "Educational Earth Day event, fun elements."
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 4,
+            "why": "Educational opera event, engaging for kids."
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 4,
+            "why": "Educational Earth Day festival, fun activities."
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI",
+            "score": 5,
+            "why": "Educational science workshop, fun for 7yo."
+          },
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends",
+            "score": 5,
+            "why": "Educational nature exploration, fun activities."
+          },
+          {
+            "id": 1380,
+            "title": "5th Annual Broadway Celebrates Earth Day Concert",
+            "score": 4,
+            "why": "Fun concert, some educational elements."
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival",
+            "score": 5,
+            "why": "Educational Earth Day festival, fun crafts."
+          },
+          {
+            "id": 1386,
+            "title": "Woodlawn Family Fun Day",
+            "score": 4,
+            "why": "Fun festival, some educational crafts."
+          },
+          {
+            "id": 1387,
+            "title": "Super Family Saturday: Artful Earth",
+            "score": 5,
+            "why": "Educational art and nature activities, fun."
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration",
+            "score": 5,
+            "why": "Educational Earth Day event, fun activities."
+          },
+          {
+            "id": 1611,
+            "title": "Children’s Business Fair",
+            "score": 4,
+            "why": "Educational business fair, fun for kids."
+          },
+          {
+            "id": 658,
+            "title": "Video Games: The Great Connector",
+            "score": 4,
+            "why": "Educational gaming exhibition, fun for 7yo."
+          },
+          {
+            "id": 659,
+            "title": "50 Years of Apple Computers: The Kevin Lenane Collection",
+            "score": 4,
+            "why": "Educational tech exhibition, fun for 7yo."
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 4,
+            "why": "Educational art journaling, fun for 7yo."
+          },
+          {
+            "id": 838,
+            "title": "Recycled Ocean Crafts",
+            "score": 5,
+            "why": "Educational crafts, fun for 7yo."
+          },
+          {
+            "id": 859,
+            "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+            "score": 5,
+            "why": "Educational historical program, fun for 7yo."
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 5,
+            "why": "Educational Arbor Day event, fun activities."
+          },
+          {
+            "id": 890,
+            "title": "Orienteering Meet at West Hills County Park – North",
+            "score": 4,
+            "why": "Educational orienteering, fun for 7yo."
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry",
+            "score": 5,
+            "why": "Educational poetry workshop, fun for 7yo."
+          }
+        ],
+        "coverage_pct": 8,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G20",
+      "intent": "Free activity for family of 4 on Sunday",
+      "filters": {
+        "isFree": true
+      },
+      "db_strong": [
+        {
+          "id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 882,
+          "title": "Rising NYRR Spring Jamboree Presented by TCS",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 885,
+          "title": "Macy’s Flower Show",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 901,
+          "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 907,
+          "title": "Step Afrika",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 974,
+          "title": "Big Umbrella Festival at Lincoln Center",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1007,
+          "title": "Car-Free Earth Day",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1012,
+          "title": "Met Opera Spring Open House",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1013,
+          "title": "Broadway Celebrates Earth Day 2026",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1014,
+          "title": "Earth Day Festival on Randall's Island",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1016,
+          "title": "Woodlawn Family Fun Day",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1018,
+          "title": "Celebrate Holi with the Brooklyn Children's Museum",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1020,
+          "title": "Macy's Herald Square Annual Flower Show",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1065,
+          "title": "Book Launch: Found Sound",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1067,
+          "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1178,
+          "title": "Saturday Science: From A to ZI",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1179,
+          "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 513,
+          "title": "Paint Your heART Out! Painting Class for Kids",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 521,
+          "title": "Swiss Institute Family Hours",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 535,
+          "title": "All-Ages Weekend Stencil Class",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 778,
+          "title": "Art Journaling Group Workshop",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 815,
+          "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 886,
+          "title": "Move to the Rhythm",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 887,
+          "title": "Arbor Day in Prospect Park",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 895,
+          "title": "Kids Interactive Poetry",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 899,
+          "title": "Hablemos: The New York Sari",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 900,
+          "title": "The New York Sari Sunday Family Fun Day",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 902,
+          "title": "Reading into History: Immigrant Stories",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1004,
+          "title": "Move to the Rhythm at Children's Museum of Manhattan",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1008,
+          "title": "Arbor Day at the Audubon Center in Prospect Park",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1009,
+          "title": "STEAM Dream in Rockefeller Park",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1010,
+          "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        },
+        {
+          "id": 1015,
+          "title": "Earth Day in Carl Schurz Park",
+          "score": 5,
+          "why": "Free, family, Sunday activity"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1065,
+            "title": "Book Launch: Found Sound"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 891,
+            "title": "Doggie Day Hike"
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry"
+          },
+          {
+            "id": 1384,
+            "title": "Earth Day Festival"
+          }
+        ],
+        "strong_shown": 9,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1067,
+            "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          }
+        ],
+        "coverage_pct": 26,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "free Sunday activity for family of 4",
+        "returned": [
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          },
+          {
+            "id": 1590,
+            "title": "Story Time by Design"
+          },
+          {
+            "id": 1065,
+            "title": "Book Launch: Found Sound"
+          },
+          {
+            "id": 882,
+            "title": "Rising NYRR Spring Jamboree Presented by TCS"
+          }
+        ],
+        "strong_shown": 5,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 907,
+            "title": "Step Afrika",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 974,
+            "title": "Big Umbrella Festival at Lincoln Center",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1007,
+            "title": "Car-Free Earth Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1012,
+            "title": "Met Opera Spring Open House",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1013,
+            "title": "Broadway Celebrates Earth Day 2026",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1014,
+            "title": "Earth Day Festival on Randall's Island",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1016,
+            "title": "Woodlawn Family Fun Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1067,
+            "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1178,
+            "title": "Saturday Science: From A to ZI",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 521,
+            "title": "Swiss Institute Family Hours",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 535,
+            "title": "All-Ages Weekend Stencil Class",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 778,
+            "title": "Art Journaling Group Workshop",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 815,
+            "title": "Jim Vines and Carl Mercurio announce Broadway Magic Hour April 2026 Shows",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 895,
+            "title": "Kids Interactive Poetry",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 899,
+            "title": "Hablemos: The New York Sari",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 902,
+            "title": "Reading into History: Immigrant Stories",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1009,
+            "title": "STEAM Dream in Rockefeller Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1010,
+            "title": "Recreating Radio: Hawk of the Moon at the Paley Center",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          },
+          {
+            "id": 1015,
+            "title": "Earth Day in Carl Schurz Park",
+            "score": 5,
+            "why": "Free, family, Sunday activity"
+          }
+        ],
+        "coverage_pct": 15,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G21",
+      "intent": "Brooklyn outdoor weekend for 5yo",
+      "filters": {
+        "ageMax": 5,
+        "neighborhoods": [
+          "Brooklyn"
+        ],
+        "categories": [
+          "outdoors"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 901,
+          "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+          "score": 4,
+          "why": "Outdoor concert, suitable for 5yo."
+        },
+        {
+          "id": 992,
+          "title": "Bargemusic \"Music in Motion\" Concerts",
+          "score": 5,
+          "why": "Outdoor concert in Brooklyn."
+        },
+        {
+          "id": 1018,
+          "title": "Celebrate Holi with the Brooklyn Children's Museum",
+          "score": 4,
+          "why": "Outdoor festival, suitable for 5yo."
+        },
+        {
+          "id": 1327,
+          "title": "Spring Family Discovery Weekends",
+          "score": 5,
+          "why": "Outdoor nature exploration."
+        },
+        {
+          "id": 1530,
+          "title": "Earth Day Celebration",
+          "score": 5,
+          "why": "Outdoor family event in Brooklyn."
+        },
+        {
+          "id": 1052,
+          "title": "Bike Skills 101: Learn to Ride-Kids 2PM (Sunset Park, BK)",
+          "score": 4,
+          "why": "Outdoor bike class, suitable for 5yo."
+        },
+        {
+          "id": 1008,
+          "title": "Arbor Day at the Audubon Center in Prospect Park",
+          "score": 5,
+          "why": "Outdoor nature event in Brooklyn."
+        },
+        {
+          "id": 788,
+          "title": "Turtle Time",
+          "score": 4,
+          "why": "Outdoor nature class, suitable for 5yo."
+        },
+        {
+          "id": 887,
+          "title": "Arbor Day in Prospect Park",
+          "score": 5,
+          "why": "Outdoor Arbor Day event in Brooklyn."
+        },
+        {
+          "id": 1024,
+          "title": "Earthing in My City at Success Community Garden",
+          "score": 5,
+          "why": "Outdoor nature event in Brooklyn."
+        },
+        {
+          "id": 1054,
+          "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26",
+          "score": 4,
+          "why": "Outdoor festival, suitable for 5yo."
+        },
+        {
+          "id": 1082,
+          "title": "Earth Day at the KoKo Lot",
+          "score": 4,
+          "why": "Outdoor Earth Day event."
+        },
+        {
+          "id": 1428,
+          "title": "Church Avenue Street Fair",
+          "score": 4,
+          "why": "Outdoor street fair, family-friendly."
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden"
+          },
+          {
+            "id": 1082,
+            "title": "Earth Day at the KoKo Lot"
+          },
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends"
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration"
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time"
+          },
+          {
+            "id": 1442,
+            "title": "STRENGTH IN THE CITY NYC Festival"
+          },
+          {
+            "id": 1444,
+            "title": "FAD Market: Mother’s Day"
+          }
+        ],
+        "strong_shown": 8,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 4,
+            "why": "Outdoor concert, suitable for 5yo."
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Outdoor concert in Brooklyn."
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 4,
+            "why": "Outdoor festival, suitable for 5yo."
+          },
+          {
+            "id": 1052,
+            "title": "Bike Skills 101: Learn to Ride-Kids 2PM (Sunset Park, BK)",
+            "score": 4,
+            "why": "Outdoor bike class, suitable for 5yo."
+          },
+          {
+            "id": 1428,
+            "title": "Church Avenue Street Fair",
+            "score": 4,
+            "why": "Outdoor street fair, family-friendly."
+          }
+        ],
+        "coverage_pct": 62,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "outdoor weekend activity in Brooklyn for 5 year old",
+        "returned": [
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park"
+          },
+          {
+            "id": 1008,
+            "title": "Arbor Day at the Audubon Center in Prospect Park"
+          },
+          {
+            "id": 1054,
+            "title": "Wellness Counseling Services Kids Spring Fundraiser Event 4/25/26"
+          },
+          {
+            "id": 1024,
+            "title": "Earthing in My City at Success Community Garden"
+          },
+          {
+            "id": 1082,
+            "title": "Earth Day at the KoKo Lot"
+          },
+          {
+            "id": 1327,
+            "title": "Spring Family Discovery Weekends"
+          },
+          {
+            "id": 1530,
+            "title": "Earth Day Celebration"
+          }
+        ],
+        "strong_shown": 7,
+        "strong_missed": [
+          {
+            "id": 901,
+            "title": "The Rock and Roll Playhouse Plays: Music of Harry Styles + More",
+            "score": 4,
+            "why": "Outdoor concert, suitable for 5yo."
+          },
+          {
+            "id": 992,
+            "title": "Bargemusic \"Music in Motion\" Concerts",
+            "score": 5,
+            "why": "Outdoor concert in Brooklyn."
+          },
+          {
+            "id": 1018,
+            "title": "Celebrate Holi with the Brooklyn Children's Museum",
+            "score": 4,
+            "why": "Outdoor festival, suitable for 5yo."
+          },
+          {
+            "id": 1052,
+            "title": "Bike Skills 101: Learn to Ride-Kids 2PM (Sunset Park, BK)",
+            "score": 4,
+            "why": "Outdoor bike class, suitable for 5yo."
+          },
+          {
+            "id": 788,
+            "title": "Turtle Time",
+            "score": 4,
+            "why": "Outdoor nature class, suitable for 5yo."
+          },
+          {
+            "id": 1428,
+            "title": "Church Avenue Street Fair",
+            "score": 4,
+            "why": "Outdoor street fair, family-friendly."
+          }
+        ],
+        "coverage_pct": 54,
+        "verdict": "WARN"
+      }
+    },
+    {
+      "id": "G22",
+      "intent": "Museum visit for 4-year-old",
+      "filters": {
+        "ageMax": 4,
+        "categories": [
+          "attractions"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 781,
+          "title": "Open Hours at Environmental Education Center",
+          "score": 4,
+          "why": "Relevant museum visit for kids"
+        },
+        {
+          "id": 1407,
+          "title": "Find the Mayflowers!",
+          "score": 4,
+          "why": "Museum visit with activities"
+        },
+        {
+          "id": 1528,
+          "title": "Animal Encounters",
+          "score": 5,
+          "why": "Museum visit with animals"
+        },
+        {
+          "id": 90003,
+          "title": "Free Family Sundays at Queens Museum",
+          "score": 5,
+          "why": "Direct museum visit"
+        },
+        {
+          "id": 1017,
+          "title": "Meet the Animals at the Queens County Farm Museum",
+          "score": 4,
+          "why": "Museum visit with animals"
+        },
+        {
+          "id": 1414,
+          "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+          "score": 5,
+          "why": "Museum visit with storytime"
+        },
+        {
+          "id": 900,
+          "title": "The New York Sari Sunday Family Fun Day",
+          "score": 4,
+          "why": "Museum visit with activities"
+        },
+        {
+          "id": 898,
+          "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+          "score": 4,
+          "why": "Museum visit with activities"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show"
+          },
+          {
+            "id": 1427,
+            "title": "Adventureland Honors Moms on Mother’s Day"
+          }
+        ],
+        "strong_shown": 1,
+        "strong_missed": [
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center",
+            "score": 4,
+            "why": "Relevant museum visit for kids"
+          },
+          {
+            "id": 1407,
+            "title": "Find the Mayflowers!",
+            "score": 4,
+            "why": "Museum visit with activities"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters",
+            "score": 5,
+            "why": "Museum visit with animals"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum",
+            "score": 4,
+            "why": "Museum visit with animals"
+          },
+          {
+            "id": 1414,
+            "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+            "score": 5,
+            "why": "Museum visit with storytime"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 4,
+            "why": "Museum visit with activities"
+          },
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+            "score": 4,
+            "why": "Museum visit with activities"
+          }
+        ],
+        "coverage_pct": 13,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "museum visit for 4 year old",
+        "returned": [
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1209,
+            "title": "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+          },
+          {
+            "id": 1140,
+            "title": "Collage/Mixed Media for Families"
+          },
+          {
+            "id": 1020,
+            "title": "Macy's Herald Square Annual Flower Show"
+          },
+          {
+            "id": 1004,
+            "title": "Move to the Rhythm at Children's Museum of Manhattan"
+          }
+        ],
+        "strong_shown": 1,
+        "strong_missed": [
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center",
+            "score": 4,
+            "why": "Relevant museum visit for kids"
+          },
+          {
+            "id": 1407,
+            "title": "Find the Mayflowers!",
+            "score": 4,
+            "why": "Museum visit with activities"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters",
+            "score": 5,
+            "why": "Museum visit with animals"
+          },
+          {
+            "id": 1017,
+            "title": "Meet the Animals at the Queens County Farm Museum",
+            "score": 4,
+            "why": "Museum visit with animals"
+          },
+          {
+            "id": 1414,
+            "title": "Family First Saturdays | Storytime at the Morgan: Spring Colors",
+            "score": 5,
+            "why": "Museum visit with storytime"
+          },
+          {
+            "id": 900,
+            "title": "The New York Sari Sunday Family Fun Day",
+            "score": 4,
+            "why": "Museum visit with activities"
+          },
+          {
+            "id": 898,
+            "title": "Sunday Story Time: A Visit from My Paati’s Saris author Jyoti Rajan Gopal",
+            "score": 4,
+            "why": "Museum visit with activities"
+          }
+        ],
+        "coverage_pct": 13,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G23",
+      "intent": "Food / cooking class for kid",
+      "filters": {
+        "categories": [
+          "food"
+        ]
+      },
+      "db_strong": [
+        {
+          "id": 1067,
+          "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+          "score": 5,
+          "why": "Perfect match, kids cooking class"
+        },
+        {
+          "id": 1069,
+          "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+          "score": 5,
+          "why": "Perfect match, kids cooking class"
+        },
+        {
+          "id": 1068,
+          "title": "Sundae Ice-Cream Decorating for Kids - Brooklyn",
+          "score": 5,
+          "why": "Perfect match, kids cooking class"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1044,
+            "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan"
+          },
+          {
+            "id": 1077,
+            "title": "Coins & Conversation Pop Up Shop, Financial Literacy & Entrepreneurship"
+          },
+          {
+            "id": 1442,
+            "title": "STRENGTH IN THE CITY NYC Festival"
+          },
+          {
+            "id": 1403,
+            "title": "International Snack Night"
+          },
+          {
+            "id": 1482,
+            "title": "Sparkling Pointe’s Mother’s Day Bubbly & Brunch on Sunday"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1067,
+            "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          },
+          {
+            "id": 1069,
+            "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          },
+          {
+            "id": 1068,
+            "title": "Sundae Ice-Cream Decorating for Kids - Brooklyn",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "cooking class for kids",
+        "returned": [
+          {
+            "id": 1044,
+            "title": "Kids Class! Ice Cream Sundae Decorating in Manhattan"
+          },
+          {
+            "id": 1077,
+            "title": "Coins & Conversation Pop Up Shop, Financial Literacy & Entrepreneurship"
+          },
+          {
+            "id": 1442,
+            "title": "STRENGTH IN THE CITY NYC Festival"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1067,
+            "title": "Sundae Ice-Cream Decorating for Kids - Manhattan - Cooking Class in NYC",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          },
+          {
+            "id": 1069,
+            "title": "Sundae Ice-Cream Decorating for Kids - Queens",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          },
+          {
+            "id": 1068,
+            "title": "Sundae Ice-Cream Decorating for Kids - Brooklyn",
+            "score": 5,
+            "why": "Perfect match, kids cooking class"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G24",
+      "intent": "Holiday / seasonal event",
+      "filters": {},
+      "db_strong": [
+        {
+          "id": 1483,
+          "title": "Mother’s Day Brunch Buffet + Bloom Bar",
+          "score": 5,
+          "why": "Mother's Day is a holiday"
+        },
+        {
+          "id": 975,
+          "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+          "score": 4,
+          "why": "Seasonal carnival event"
+        },
+        {
+          "id": 887,
+          "title": "Arbor Day in Prospect Park",
+          "score": 4,
+          "why": "Arbor Day is a holiday"
+        },
+        {
+          "id": 889,
+          "title": "Celebrate Holi",
+          "score": 5,
+          "why": "Holi is a holiday"
+        }
+      ],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1158,
+            "title": "NYC Magic Ensemble @ Young Ethel's (04/23)"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1483,
+            "title": "Mother’s Day Brunch Buffet + Bloom Bar",
+            "score": 5,
+            "why": "Mother's Day is a holiday"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+            "score": 4,
+            "why": "Seasonal carnival event"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 4,
+            "why": "Arbor Day is a holiday"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Holi is a holiday"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      },
+      "chat_path": {
+        "query": "any holiday or seasonal kids event coming up",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [
+          {
+            "id": 1483,
+            "title": "Mother’s Day Brunch Buffet + Bloom Bar",
+            "score": 5,
+            "why": "Mother's Day is a holiday"
+          },
+          {
+            "id": 975,
+            "title": "Apple Blossom Children's Carnival at the Queens County Farm Museum",
+            "score": 4,
+            "why": "Seasonal carnival event"
+          },
+          {
+            "id": 887,
+            "title": "Arbor Day in Prospect Park",
+            "score": 4,
+            "why": "Arbor Day is a holiday"
+          },
+          {
+            "id": 889,
+            "title": "Celebrate Holi",
+            "score": 5,
+            "why": "Holi is a holiday"
+          }
+        ],
+        "coverage_pct": 0,
+        "verdict": "FAIL"
+      }
+    },
+    {
+      "id": "G25",
+      "intent": "Something bilingual (Spanish) for kids",
+      "filters": {},
+      "db_strong": [],
+      "filter_path": {
+        "returned_top20": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          },
+          {
+            "id": 1179,
+            "title": "Raising Emotionally Healthy Kids with Dr. Becky Kennedy"
+          },
+          {
+            "id": 1369,
+            "title": "Eat Your Art Out! – Fundraiser with Panera"
+          },
+          {
+            "id": 1370,
+            "title": "Teen Workshop | P.O.V. Who Tells the Story?"
+          },
+          {
+            "id": 781,
+            "title": "Open Hours at Environmental Education Center"
+          },
+          {
+            "id": 1528,
+            "title": "Animal Encounters"
+          },
+          {
+            "id": 885,
+            "title": "Macy’s Flower Show"
+          },
+          {
+            "id": 886,
+            "title": "Move to the Rhythm"
+          },
+          {
+            "id": 1158,
+            "title": "NYC Magic Ensemble @ Young Ethel's (04/23)"
+          },
+          {
+            "id": 1172,
+            "title": "Broadway Trivia"
+          },
+          {
+            "id": 1374,
+            "title": "Creatures of the Night: Family Night Hike"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "WARN"
+      },
+      "chat_path": {
+        "query": "bilingual Spanish activity for kids",
+        "returned": [
+          {
+            "id": 90001,
+            "title": "Family Story Time at Queens Public Library"
+          },
+          {
+            "id": 90002,
+            "title": "Spring Garden Exploration for Families"
+          },
+          {
+            "id": 90003,
+            "title": "Free Family Sundays at Queens Museum"
+          },
+          {
+            "id": 90004,
+            "title": "Family Garden Walks at NYBG"
+          },
+          {
+            "id": 90005,
+            "title": "Family Day at the Bronx Zoo"
+          },
+          {
+            "id": 90006,
+            "title": "Kids Story Time at Bronx Library Center"
+          },
+          {
+            "id": 90007,
+            "title": "Queens Zoo: Family Exploration Day"
+          },
+          {
+            "id": 513,
+            "title": "Paint Your heART Out! Painting Class for Kids"
+          },
+          {
+            "id": 1591,
+            "title": "Face Value: Celebrity Press Photography"
+          },
+          {
+            "id": 661,
+            "title": "In Motion Workshops: For children ages 8-12"
+          }
+        ],
+        "strong_shown": 0,
+        "strong_missed": [],
+        "coverage_pct": 100,
+        "verdict": "WARN"
+      }
+    }
+  ],
+  "summary": {
+    "total_probes": 25,
+    "filter_path": {
+      "pass": 4,
+      "warn": 8,
+      "fail": 13
+    },
+    "chat_path": {
+      "pass": 3,
+      "warn": 6,
+      "fail": 16,
+      "total": 25
+    },
+    "strong_candidates_total": 249,
+    "strong_surfaced_filter": 105,
+    "strong_surfaced_chat": 70,
+    "coverage_filter_pct": 42,
+    "coverage_chat_pct": 28
+  }
+}

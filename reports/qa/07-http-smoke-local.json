@@ -1,0 +1,117 @@
+{
+  "base": "http://localhost:3000",
+  "cases": [
+    {
+      "id": "h01",
+      "name": "GET /api/events (baseline)",
+      "ok": true,
+      "detail": "195 total events",
+      "latencyMs": 86,
+      "status": 200
+    },
+    {
+      "id": "h02",
+      "name": "Age=4 — no events outside bounds",
+      "ok": true,
+      "detail": "86 events, all age-fit",
+      "latencyMs": 13,
+      "status": 200
+    },
+    {
+      "id": "h03",
+      "name": "Age=7 + girl (regression: was HTTP 500)",
+      "ok": true,
+      "detail": "80 events returned",
+      "latencyMs": 6,
+      "status": 200
+    },
+    {
+      "id": "h04",
+      "name": "Brooklyn — no Manhattan leaks",
+      "ok": true,
+      "detail": "42 events, all in Kings County",
+      "latencyMs": 3,
+      "status": 200
+    },
+    {
+      "id": "h05",
+      "name": "Manhattan filter",
+      "ok": true,
+      "detail": "63 Manhattan events",
+      "latencyMs": 5,
+      "status": 200
+    },
+    {
+      "id": "h06",
+      "name": "Free-only filter",
+      "ok": true,
+      "detail": "116 free events",
+      "latencyMs": 8,
+      "status": 200
+    },
+    {
+      "id": "h07",
+      "name": "Science category returns something",
+      "ok": true,
+      "detail": "4 science events",
+      "latencyMs": 3,
+      "status": 200
+    },
+    {
+      "id": "h08",
+      "name": "Combo: 4yo + Brooklyn + free",
+      "ok": true,
+      "detail": "18 events, all clean",
+      "latencyMs": 3,
+      "status": 200
+    },
+    {
+      "id": "h09",
+      "name": "GET /api/digests",
+      "ok": true,
+      "detail": "5 digests",
+      "latencyMs": 132,
+      "status": 200
+    },
+    {
+      "id": "h10",
+      "name": "Digest by slug: weekend-kids-nyc",
+      "ok": true,
+      "detail": "10 events",
+      "latencyMs": 452,
+      "status": 200
+    },
+    {
+      "id": "h11",
+      "name": "Digest by slug: indoor-rainy-day",
+      "ok": true,
+      "detail": "10 events",
+      "latencyMs": 51,
+      "status": 200
+    },
+    {
+      "id": "h12",
+      "name": "GET /api/categories",
+      "ok": true,
+      "detail": "19 categories",
+      "latencyMs": 25,
+      "status": 200
+    },
+    {
+      "id": "h13",
+      "name": "Chat API — simple query",
+      "ok": true,
+      "detail": "10 events, filters: {\"dateFrom\":\"2026-04-25\",\"dateTo\":\"2026-04-26\"}",
+      "latencyMs": 2266,
+      "status": 200
+    },
+    {
+      "id": "h14",
+      "name": "Chat API — age + gender (was 500)",
+      "ok": true,
+      "detail": "10 events",
+      "latencyMs": 2181,
+      "status": 200
+    }
+  ]
+}

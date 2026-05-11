@@ -1,0 +1,497 @@
+{
+  "scenarios": [
+    {
+      "id": "S01",
+      "story": "Mom of 4yo browses free plans",
+      "filter_path": {
+        "returned_total": 64,
+        "gold_count": 65,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Free Family Sundays at Queens Museum",
+          "Kids Story Time at Bronx Library Center",
+          "Face Value: Celebrity Press Photography",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Eat Your Art Out! – Fundraiser with Panera",
+          "Open Hours at Environmental Education Center",
+          "Animal Encounters",
+          "Macy’s Flower Show",
+          "Move to the Rhythm"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S02",
+      "story": "Toddler (2) indoor morning",
+      "filter_path": {
+        "returned_total": 60,
+        "gold_count": 1,
+        "top10_hits": 0,
+        "any_hit_top10": false,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Kids Story Time at Bronx Library Center",
+          "Queens Zoo: Family Exploration Day",
+          "Face Value: Celebrity Press Photography",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Eat Your Art Out! – Fundraiser with Panera",
+          "Macy’s Flower Show",
+          "Move to the Rhythm"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "WARN"
+    },
+    {
+      "id": "S03",
+      "story": "Weekend plans for 5yo",
+      "filter_path": {
+        "returned_total": 148,
+        "gold_count": 99,
+        "top10_hits": 0,
+        "any_hit_top10": false,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Spring Garden Exploration for Families",
+          "Free Family Sundays at Queens Museum",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Kids Story Time at Bronx Library Center",
+          "Queens Zoo: Family Exploration Day",
+          "Face Value: Celebrity Press Photography",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Eat Your Art Out! – Fundraiser with Panera"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "WARN"
+    },
+    {
+      "id": "S04",
+      "story": "Rainy day with 7yo",
+      "filter_path": {
+        "returned_total": 160,
+        "gold_count": 2,
+        "top10_hits": 1,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Spring Garden Exploration for Families",
+          "Free Family Sundays at Queens Museum",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Queens Zoo: Family Exploration Day",
+          "Paint Your heART Out! Painting Class for Kids",
+          "Face Value: Celebrity Press Photography",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Eat Your Art Out! – Fundraiser with Panera",
+          "Open Hours at Environmental Education Center"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S05",
+      "story": "Brooklyn-only family",
+      "filter_path": {
+        "returned_total": 42,
+        "gold_count": 43,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Open Hours at Environmental Education Center",
+          "Animal Encounters",
+          "NYC Magic Ensemble @ Young Ethel's (04/23)",
+          "WU LYF, Lauren Auder",
+          "Arbor Day in Prospect Park",
+          "Celebrate Holi",
+          "Pinocchio at Puppetworks",
+          "Arbor Day at the Audubon Center in Prospect Park",
+          "Celebrate Holi with the Brooklyn Children's Museum",
+          "Bike Skills 101: Learn to Ride-Kids 11AM"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S06",
+      "story": "Manhattan mom under $25",
+      "filter_path": {
+        "returned_total": 50,
+        "gold_count": 71,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Paint Your heART Out! Painting Class for Kids",
+          "Face Value: Celebrity Press Photography",
+          "In Motion Workshops: For children ages 8-12",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Teen Workshop | P.O.V. Who Tells the Story?",
+          "Macy’s Flower Show",
+          "Move to the Rhythm",
+          "Broadway Trivia",
+          "ReelAbilities Comedy Night",
+          "ReelAbilities Comedy Night at Lincoln Center"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S07",
+      "story": "Science for 8yo",
+      "filter_path": {
+        "returned_total": 7,
+        "gold_count": 15,
+        "top10_hits": 7,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Spring Garden Exploration for Families",
+          "Family Garden Walks at NYBG",
+          "Book Launch: Found Sound",
+          "STEAM Dream in Rockefeller Park",
+          "Saturday Science: From A to ZI",
+          "Sunday Science: Reptile Rumble Juniors",
+          "50 Years of Apple Computers: The Kevin Lenane Coll"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S08",
+      "story": "Arts class for 6yo",
+      "filter_path": {
+        "returned_total": 28,
+        "gold_count": 96,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Free Family Sundays at Queens Museum",
+          "Paint Your heART Out! Painting Class for Kids",
+          "Face Value: Celebrity Press Photography",
+          "Eat Your Art Out! – Fundraiser with Panera",
+          "Story Time by Design",
+          "Kids Interactive Poetry",
+          "Super Family Saturday: Artful Earth",
+          "Car-Free Earth Day",
+          "Arbor Day at the Audubon Center in Prospect Park",
+          "When the Sun Goes Down Storytime W/ Greg Pizzoli"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S09",
+      "story": "Outdoor Saturday",
+      "filter_path": {
+        "returned_total": 52,
+        "gold_count": 65,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Spring Garden Exploration for Families",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Queens Zoo: Family Exploration Day",
+          "Creatures of the Night: Family Night Hike",
+          "Arbor Day in Prospect Park",
+          "Doggie Day Hike",
+          "Earth Day Festival",
+          "Meet the Animals at the Queens County Farm Museum",
+          "Woodlawn Family Fun Day"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S10",
+      "story": "Music for 5yo",
+      "filter_path": {
+        "returned_total": 7,
+        "gold_count": 28,
+        "top10_hits": 7,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Broadway Celebrates Earth Day 2026",
+          "The Fairy Tale Art Cart LIVE: Featuring Andy Seagr",
+          "Clan of Xymox, Cold Cave",
+          "Met Chorus Artists presents Spring Sing: Celebrati",
+          "JAZZ AT ONE: Silvano Monasterios Venezuelan Nonet",
+          "Soulful Sounds in Rockland",
+          "Divas Thru the Decades @ Bayway Arts Center"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S11",
+      "story": "Theater for 10yo",
+      "filter_path": {
+        "returned_total": 17,
+        "gold_count": 112,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "In Motion Workshops: For children ages 8-12",
+          "Broadway Trivia",
+          "Storie Storie: An African Storytelling Experience ",
+          "Jim Vines and Carl Mercurio announce Broadway Magi",
+          "Recreating Radio: Hawk of the Moon at the Paley Ce",
+          "Broadway Celebrates Earth Day 2026",
+          "5th Annual Broadway Celebrates Earth Day Concert",
+          "Broadway Magic Hour at the Broadway Comedy Club",
+          "Magic Show for All Ages - Broadway Magic Hour in T",
+          "Step Afrika"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S12",
+      "story": "Storytime for 3yo",
+      "filter_path": {
+        "returned_total": 11,
+        "gold_count": 19,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Kids Story Time at Bronx Library Center",
+          "In-Store: Indie Bookstore Day Storytime w/ Drag Ar",
+          "Ready, Set, Kindergarten!",
+          "When the Sun Goes Down Storytime W/ Greg Pizzoli",
+          "Wellness Counseling Services Kids Spring Fundraise",
+          "Sunday Story Time: A Visit from My Paati’s Saris a",
+          "The New York Sari Sunday Family Fun Day",
+          "Storytime Can You Grow a Stripped Banana?",
+          "A Hundred Years of Childhood"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S13",
+      "story": "Free & 4yo & Brooklyn",
+      "filter_path": {
+        "returned_total": 18,
+        "gold_count": 18,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Open Hours at Environmental Education Center",
+          "Animal Encounters",
+          "Celebrate Holi with the Brooklyn Children's Museum",
+          "In-Store: Indie Bookstore Day Storytime w/ Drag Ar",
+          "Ready, Set, Kindergarten!",
+          "Wellness Counseling Services Kids Spring Fundraise",
+          "Earthing in My City at Success Community Garden",
+          "Earth Day at the KoKo Lot",
+          "Spring Family Discovery Weekends",
+          "Earth Day Celebration"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S14",
+      "story": "2 kids ages 4 and 10",
+      "filter_path": {
+        "returned_total": 176,
+        "gold_count": 177,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Spring Garden Exploration for Families",
+          "Free Family Sundays at Queens Museum",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Kids Story Time at Bronx Library Center",
+          "Queens Zoo: Family Exploration Day",
+          "Paint Your heART Out! Painting Class for Kids",
+          "Face Value: Celebrity Press Photography",
+          "In Motion Workshops: For children ages 8-12"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S15",
+      "story": "Teen (14) Brooklyn",
+      "filter_path": {
+        "returned_total": 10,
+        "gold_count": 10,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Community Work Day on the Wyckoff Urban Farm",
+          "Coins & Conversation Pop Up Shop, Financial Litera",
+          "Family Biz: A Dance Party for Kids & Their Grown-U",
+          "Clan of Xymox, Cold Cave",
+          "The Longest Table Kensington: A Community Meal on ",
+          "A Hundred Years of Childhood",
+          "Family Gathering: Puppet Workshop and Show with Sp",
+          "Oneohtrix Point Never, Tyondai Braxton",
+          "Bridge The Gap 5K Run/Walk",
+          "Veterans Everyday 5K Run/Walk"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S16",
+      "story": "Food/cooking for 6yo",
+      "filter_path": {
+        "returned_total": 5,
+        "gold_count": 53,
+        "top10_hits": 5,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Eat Your Art Out! – Fundraiser with Panera",
+          "Kids Class! Ice Cream Sundae Decorating in Manhatt",
+          "Coins & Conversation Pop Up Shop, Financial Litera",
+          "STRENGTH IN THE CITY NYC Festival",
+          "Sparkling Pointe’s Mother’s Day Bubbly & Brunch on"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S17",
+      "story": "Sports for 8yo",
+      "filter_path": {
+        "returned_total": 11,
+        "gold_count": 27,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "2026 New York Lymphoma Walk",
+          "Bronx Bound: SIS 5K Run/Walk",
+          "Cliff Runner 5K",
+          "Bridge The Gap 5K Run/Walk",
+          "New York Harbor Oyster Classic 5K",
+          "Run Your Y 5K",
+          "Glen Cove YMCA 5K Run/Walk",
+          "Veterans Everyday 5K Run/Walk",
+          "Run for the Petals 5K Run/Walk",
+          "Central Islip Fire Department 5K Run/Walk"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S18",
+      "story": "Bronx for kids",
+      "filter_path": {
+        "returned_total": 14,
+        "gold_count": 14,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Kids Story Time at Bronx Library Center",
+          "Rising NYRR Spring Jamboree Presented by TCS",
+          "Woodlawn Family Fun Day",
+          "Woodlawn Family Fun Day",
+          "Step Afrika",
+          "Wings over Wave Hill",
+          "Owl Pellet Dissection",
+          "Sensory Sensitive Morning: Children’s Zoo"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S19",
+      "story": "Queens for kids",
+      "filter_path": {
+        "returned_total": 11,
+        "gold_count": 12,
+        "top10_hits": 10,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Spring Garden Exploration for Families",
+          "Free Family Sundays at Queens Museum",
+          "Queens Zoo: Family Exploration Day",
+          "Animal Care Trainee",
+          "Meet the Animals at the Queens County Farm Museum",
+          "Fresh Decks Spades Tournament - Season 2: Spring E",
+          "Water Safety Splash & Learn - Saf-T-Swim Little Ne",
+          "Apple Blossom Children's Carnival at the Queens Co",
+          "INFINITE (KRAFF, SKENG AND RAJAH WYLD LIVE)"
+        ]
+      },
+      "chat_path": null,
+      "verdict": "PASS"
+    },
+    {
+      "id": "S20",
+      "story": "Chat: \"indoor for 5yo\"",
+      "filter_path": {
+        "returned_total": 148,
+        "gold_count": 2,
+        "top10_hits": 1,
+        "any_hit_top10": true,
+        "any_hit_any": true,
+        "top10_titles": [
+          "Family Story Time at Queens Public Library",
+          "Spring Garden Exploration for Families",
+          "Free Family Sundays at Queens Museum",
+          "Family Garden Walks at NYBG",
+          "Family Day at the Bronx Zoo",
+          "Kids Story Time at Bronx Library Center",
+          "Queens Zoo: Family Exploration Day",
+          "Face Value: Celebrity Press Photography",
+          "Raising Emotionally Healthy Kids with Dr. Becky Ke",
+          "Eat Your Art Out! – Fundraiser with Panera"
+        ]
+      },
+      "chat_path": {
+        "returned_total": 10,
+        "any_hit": true,
+        "reply": "Couldn't find exact indoor activities, but here are the closest matches: 'Family Story Time at Queens Public Library' is a free event designed for age"
+      },
+      "verdict": "PASS"
+    }
+  ]
+}

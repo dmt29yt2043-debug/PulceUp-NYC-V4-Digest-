@@ -1,0 +1,342 @@
+{
+  "generated_at": "2026-04-22T20:38:21.353Z",
+  "total_live": 204,
+  "per_borough": [
+    {
+      "borough": "Manhattan",
+      "count": 84,
+      "share_pct": 41.2,
+      "expected_share_pct": 19,
+      "delta_pct": 22.2,
+      "avg_events_per_day_next14": 5.1,
+      "empty_days_next14": [
+        "2026-04-28",
+        "2026-04-30",
+        "2026-05-01",
+        "2026-05-04",
+        "2026-05-05"
+      ],
+      "category_gaps": [
+        "food",
+        "books"
+      ]
+    },
+    {
+      "borough": "Brooklyn",
+      "count": 42,
+      "share_pct": 20.6,
+      "expected_share_pct": 31,
+      "delta_pct": -10.4,
+      "avg_events_per_day_next14": 2.7,
+      "empty_days_next14": [
+        "2026-04-22",
+        "2026-04-27",
+        "2026-05-01",
+        "2026-05-02",
+        "2026-05-04",
+        "2026-05-05"
+      ],
+      "category_gaps": [
+        "arts",
+        "attractions",
+        "food",
+        "science"
+      ]
+    },
+    {
+      "borough": "Queens",
+      "count": 11,
+      "share_pct": 5.4,
+      "expected_share_pct": 27,
+      "delta_pct": -21.6,
+      "avg_events_per_day_next14": 0.5,
+      "empty_days_next14": [
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30",
+        "2026-05-01",
+        "2026-05-02",
+        "2026-05-03",
+        "2026-05-04"
+      ],
+      "category_gaps": [
+        "sports",
+        "food",
+        "theater",
+        "books",
+        "science"
+      ]
+    },
+    {
+      "borough": "Bronx",
+      "count": 14,
+      "share_pct": 6.9,
+      "expected_share_pct": 17,
+      "delta_pct": -10.1,
+      "avg_events_per_day_next14": 0.7,
+      "empty_days_next14": [
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30",
+        "2026-05-01",
+        "2026-05-03",
+        "2026-05-04",
+        "2026-05-05"
+      ],
+      "category_gaps": [
+        "music",
+        "food",
+        "theater",
+        "science"
+      ]
+    },
+    {
+      "borough": "Staten Island",
+      "count": 11,
+      "share_pct": 5.4,
+      "expected_share_pct": 6,
+      "delta_pct": -0.6,
+      "avg_events_per_day_next14": 0.7,
+      "empty_days_next14": [
+        "2026-04-22",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30",
+        "2026-05-01",
+        "2026-05-02",
+        "2026-05-03",
+        "2026-05-04"
+      ],
+      "category_gaps": [
+        "sports",
+        "attractions",
+        "music",
+        "food",
+        "theater",
+        "books",
+        "science"
+      ]
+    }
+  ],
+  "orphans": {
+    "count": 42,
+    "share_pct": 20.6,
+    "samples": [
+      {
+        "id": 658,
+        "title": "Video Games: The Great Connector",
+        "city": "Stony Brook",
+        "venue": "Long Island Museum"
+      },
+      {
+        "id": 659,
+        "title": "50 Years of Apple Computers: The Kevin Lenane Collection",
+        "city": "Stony Brook",
+        "venue": "Long Island Museum"
+      },
+      {
+        "id": 838,
+        "title": "Recycled Ocean Crafts",
+        "city": "Cold Spring Harbor",
+        "venue": "The Whaling Museum & Education Center"
+      },
+      {
+        "id": 859,
+        "title": "Walt Whitman Birthplace Museum – Girl Scout Programs!",
+        "city": "Huntington Station",
+        "venue": "Walt Whitman Birthplace Museum"
+      },
+      {
+        "id": 872,
+        "title": "Museum Adventure Activity: Sea Survival Challenge",
+        "city": "Cold Spring Harbor",
+        "venue": "The Whaling Museum & Education Center"
+      },
+      {
+        "id": 884,
+        "title": "Toddies Act + Play (Toddies Crew)",
+        "city": "East Hampton",
+        "venue": "OFVS Studio at Project MOST"
+      },
+      {
+        "id": 890,
+        "title": "Orienteering Meet at West Hills County Park – North",
+        "city": "Melville",
+        "venue": "West Hills County Park – North"
+      },
+      {
+        "id": 896,
+        "title": "Hampton Ballet Theatre School Presents Sleeping Beauty",
+        "city": "East Hampton",
+        "venue": "Guild Hall’s Hilarie and Mitchell Morgan Theater"
+      },
+      {
+        "id": 1245,
+        "title": "Water Safety Splash & Learn - Saf-T-Swim New Hyde Park, NY",
+        "city": "New Hyde Park",
+        "venue": "Saf-T-Swim of New Hyde Park"
+      },
+      {
+        "id": 1259,
+        "title": "Illustrated Ink Club",
+        "city": "Bridgehampton",
+        "venue": "Bridgehampton Library"
+      },
+      {
+        "id": 1268,
+        "title": "BRITE Nights (Formerly POP Nights)",
+        "city": "East Hampton",
+        "venue": "Project MOST Community Learning Center"
+      },
+      {
+        "id": 1356,
+        "title": "Caregiver & Me Ballet",
+        "city": "East Hampton",
+        "venue": "OFVS Studio at Project MOST"
+      },
+      {
+        "id": 1373,
+        "title": "Mor Singing @ Bel Posto",
+        "city": "Wantagh",
+        "venue": "Bel Posto"
+      },
+      {
+        "id": 1374,
+        "title": "Creatures of the Night: Family Night Hike",
+        "city": "Rockville Centre",
+        "venue": "Tanglewood Preserve"
+      },
+      {
+        "id": 1377,
+        "title": "Guided Nature Walk – Celebrating Earth Day 2026",
+        "city": "Sands Point",
+        "venue": "Sands Point Preserve"
+      }
+    ]
+  },
+  "date_matrix": {
+    "dates": [
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05"
+    ],
+    "rows": [
+      {
+        "borough": "Manhattan",
+        "counts": [
+          4,
+          4,
+          9,
+          28,
+          14,
+          3,
+          0,
+          2,
+          0,
+          0,
+          4,
+          3,
+          0,
+          0
+        ]
+      },
+      {
+        "borough": "Brooklyn",
+        "counts": [
+          0,
+          3,
+          1,
+          21,
+          6,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          4,
+          0,
+          0
+        ]
+      },
+      {
+        "borough": "Queens",
+        "counts": [
+          0,
+          0,
+          0,
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "borough": "Bronx",
+        "counts": [
+          0,
+          0,
+          0,
+          3,
+          6,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "borough": "Staten Island",
+        "counts": [
+          0,
+          1,
+          0,
+          5,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    ]
+  }
+}

@@ -204,20 +204,28 @@ export interface AnalyticsSummary {
 export function getSummary(from?: string, to?: string): AnalyticsSummary {
   const db = getAnalyticsDb();
   const { where, params } = whereRange(from, to);
+  // NOTE: the dashboard labels below use historical "semantic" names
+  // (session_started, chat_started, card_clicked, etc.), but the ACTUAL
+  // events our client fires are session_start, chat_message_sent,
+  // card_expanded, buy_tickets_clicked, chat_response_received.
+  // This query maps real event_name → dashboard label so the dashboard
+  // actually reflects what's happening instead of displaying zeros.
   const row = db.prepare(`
     SELECT
       COUNT(*) AS total_events,
       COUNT(DISTINCT anonymous_id) AS unique_anonymous,
       COUNT(DISTINCT session_id)   AS unique_sessions,
-      SUM(CASE WHEN event_name='page_view'             THEN 1 ELSE 0 END) AS page_views,
-      SUM(CASE WHEN event_name='session_started'       THEN 1 ELSE 0 END) AS session_started,
-      SUM(CASE WHEN event_name='chat_started'          THEN 1 ELSE 0 END) AS chat_started,
-      SUM(CASE WHEN event_name='message_sent'          THEN 1 ELSE 0 END) AS message_sent,
-      SUM(CASE WHEN event_name='onboarding_completed'  THEN 1 ELSE 0 END) AS onboarding_completed,
-      SUM(CASE WHEN event_name='recommendations_shown' THEN 1 ELSE 0 END) AS recommendations_shown,
-      SUM(CASE WHEN event_name='card_clicked'          THEN 1 ELSE 0 END) AS card_clicked,
-      SUM(CASE WHEN event_name='buy_clicked'           THEN 1 ELSE 0 END) AS buy_clicked,
-      SUM(CASE WHEN event_name='return_visit'          THEN 1 ELSE 0 END) AS return_visit
+      SUM(CASE WHEN event_name='page_view'                                       THEN 1 ELSE 0 END) AS page_views,
+      SUM(CASE WHEN event_name IN ('session_start','session_started')            THEN 1 ELSE 0 END) AS session_started,
+      -- "chat_started" = session-unique first chat_message_sent
+      (SELECT COUNT(DISTINCT session_id) FROM analytics_events
+        WHERE event_name='chat_message_sent' AND ${where})                                           AS chat_started,
+      SUM(CASE WHEN event_name IN ('chat_message_sent','message_sent')           THEN 1 ELSE 0 END) AS message_sent,
+      SUM(CASE WHEN event_name='onboarding_completed'                            THEN 1 ELSE 0 END) AS onboarding_completed,
+      SUM(CASE WHEN event_name IN ('chat_response_received','recommendations_shown') THEN 1 ELSE 0 END) AS recommendations_shown,
+      SUM(CASE WHEN event_name IN ('card_expanded','card_clicked')               THEN 1 ELSE 0 END) AS card_clicked,
+      SUM(CASE WHEN event_name IN ('buy_tickets_clicked','buy_clicked')          THEN 1 ELSE 0 END) AS buy_clicked,
+      SUM(CASE WHEN event_name='return_visit'                                    THEN 1 ELSE 0 END) AS return_visit
     FROM analytics_events WHERE ${where}
   `).get(params) as AnalyticsSummary;
   return row;
@@ -226,13 +234,23 @@ export function getSummary(from?: string, to?: string): AnalyticsSummary {
 export function getFunnel(from?: string, to?: string): { step: string; sessions: number }[] {
   const db = getAnalyticsDb();
   const { where, params } = whereRange(from, to);
-  const steps = ['session_started', 'chat_started', 'recommendations_shown', 'card_clicked', 'buy_clicked'];
-  return steps.map((step) => {
+  // Each funnel step is expressed as an event_name filter. The human-readable
+  // label is kept for UI; the filter matches both current and historical names.
+  const funnelSteps: { step: string; names: string[] }[] = [
+    { step: 'session_started',       names: ['session_start', 'session_started'] },
+    { step: 'chat_started',          names: ['chat_message_sent'] },
+    { step: 'recommendations_shown', names: ['chat_response_received', 'recommendations_shown'] },
+    { step: 'card_clicked',          names: ['card_expanded', 'card_clicked'] },
+    { step: 'buy_clicked',           names: ['buy_tickets_clicked', 'buy_clicked'] },
+  ];
+  return funnelSteps.map(({ step, names }) => {
+    const placeholders = names.map((_, i) => `@n${i}`).join(',');
+    const nameParams = Object.fromEntries(names.map((n, i) => [`n${i}`, n]));
     const r = db.prepare(`
       SELECT COUNT(DISTINCT session_id) AS sessions
       FROM analytics_events
-      WHERE event_name = @step AND ${where}
-    `).get({ ...params, step }) as { sessions: number };
+      WHERE event_name IN (${placeholders}) AND ${where}
+    `).get({ ...params, ...nameParams }) as { sessions: number };
     return { step, sessions: r.sessions };
   });
 }
@@ -275,8 +293,8 @@ export function getUtmPerformance(from?: string, to?: string): { utm_source: str
     SELECT
       COALESCE(utm_source, '(direct)') AS utm_source,
       COUNT(DISTINCT session_id) AS sessions,
-      SUM(CASE WHEN event_name='buy_clicked' THEN 1 ELSE 0 END) AS buy_clicked,
-      SUM(CASE WHEN event_name='recommendations_shown' THEN 1 ELSE 0 END) AS rec_shown
+      SUM(CASE WHEN event_name IN ('buy_tickets_clicked','buy_clicked') THEN 1 ELSE 0 END) AS buy_clicked,
+      SUM(CASE WHEN event_name IN ('chat_response_received','recommendations_shown') THEN 1 ELSE 0 END) AS rec_shown
     FROM analytics_events
     WHERE ${where}
     GROUP BY utm_source
@@ -291,8 +309,8 @@ export function getTopClickedEvents(from?: string, to?: string, limit = 20): { e
   return db.prepare(`
     SELECT
       json_extract(event_props, '$.event_id') AS event_id,
-      SUM(CASE WHEN event_name='card_clicked' THEN 1 ELSE 0 END) AS clicks,
-      SUM(CASE WHEN event_name='buy_clicked'  THEN 1 ELSE 0 END) AS buys
+      SUM(CASE WHEN event_name IN ('card_expanded','card_clicked')         THEN 1 ELSE 0 END) AS clicks,
+      SUM(CASE WHEN event_name IN ('buy_tickets_clicked','buy_clicked')    THEN 1 ELSE 0 END) AS buys
     FROM analytics_events
     WHERE ${where} AND json_extract(event_props, '$.event_id') IS NOT NULL
     GROUP BY event_id
@@ -307,7 +325,7 @@ export function getAvgRecommendationsLatency(from?: string, to?: string): number
   const r = db.prepare(`
     SELECT AVG(CAST(json_extract(event_props, '$.latency_ms') AS REAL)) AS avg_ms
     FROM analytics_events
-    WHERE event_name = 'recommendations_shown' AND ${where}
+    WHERE event_name IN ('chat_response_received','recommendations_shown') AND ${where}
       AND json_extract(event_props, '$.latency_ms') IS NOT NULL
   `).get(params) as { avg_ms: number | null };
   return Math.round(r?.avg_ms || 0);

@@ -1,6 +1,7 @@
 'use client';
 
 import type { Event } from '@/lib/types';
+import { formatAgeLabel } from '@/lib/age-label';
 
 interface MarkerPreviewCardProps {
   event: Event;
@@ -46,7 +47,7 @@ export default function MarkerPreviewCard({ event, onViewDetails }: MarkerPrevie
             </span>
           )}
           {event.age_label && (
-            <span className="marker-preview-age">{event.age_label}</span>
+            <span className="marker-preview-age">{formatAgeLabel(event.age_label)}</span>
           )}
         </div>
         <button className="marker-preview-btn" onClick={onViewDetails}>
@@ -79,7 +80,7 @@ export function renderMarkerPreviewHTML(event: Event): string {
         ${event.venue_name ? `<p style="font-size:11px;color:#9ca3af;margin:0 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${event.venue_name}</p>` : ''}
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
           ${displayPrice ? `<span style="font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px;background:${event.is_free ? '#22c55e' : '#e91e63'};color:white;">${displayPrice}</span>` : ''}
-          ${event.age_label ? `<span style="font-size:10px;color:#9ca3af;">${event.age_label}</span>` : ''}
+          ${event.age_label ? `<span style="font-size:10px;color:#9ca3af;">${formatAgeLabel(event.age_label)}</span>` : ''}
         </div>
         <button
           class="marker-preview-details-btn"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PostHogProvider from "./PostHogProvider";
+import ResearchBubble from "@/components/ResearchBubble";
 
 // metadataBase is required so relative og:image URLs resolve to absolute URLs
 // that social-media scrapers can fetch.
@@ -24,7 +25,11 @@ export const metadata: Metadata = {
     description: "Better Moments with your Kids. Less Planning",
   },
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -53,6 +58,10 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
         </PostHogProvider>
+        {/* Research recruitment bubble — global, on all pages (except /quiz).
+            Rendered at the body level (outside the main app tree) so no
+            ancestor's transform/overflow can clip its position: fixed. */}
+        <ResearchBubble />
       </body>
     </html>
   );

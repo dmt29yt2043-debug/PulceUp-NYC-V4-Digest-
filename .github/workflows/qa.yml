@@ -1,0 +1,109 @@
+# QA regression tests for the PulseUp kids-events app.
+#
+# Two workflows:
+#   1. `pr-quick`  — runs on every PR, ~20s, no LLM calls. Catches filter,
+#                     HTTP-smoke, and DB-integrity regressions.
+#   2. `nightly-full` — runs once a day, ~5 min, ~$0.10 in LLM cost. Runs
+#                     the full chat/digest/ranking audit suite and opens
+#                     an issue if thresholds are breached.
+#
+# Thresholds are enforced by scripts/qa/ci.ts (exit 0 = pass, 1 = regression,
+# 2 = infrastructure error). Relax them there if normal LLM variance causes
+# flakes.
+#
+# Required secrets:
+#   · OPENAI_API_KEY — for the `nightly-full` job (LLM judge + chat prompts).
+#     Not needed for `pr-quick` because it runs the no-LLM checks only.
+
+name: QA
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # 04:00 UTC daily (= ~midnight NY time, before NYC parents wake up).
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Which suite to run'
+        required: true
+        default: 'quick'
+        type: choice
+        options: [quick, full, smoke]
+
+jobs:
+  pr-quick:
+    # Runs on every PR + push to main. Fast, deterministic, no OpenAI cost.
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - name: Run quick QA suite
+        run: npm run qa:ci:quick
+        env:
+          # `quick` hits prod for http-smoke only; override to skip if that's undesirable.
+          QA_BASE_URL: https://pulseup.me
+      - name: Upload QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-reports-quick
+          path: reports/qa/
+          retention-days: 30
+
+  nightly-full:
+    # Full audit suite — runs nightly + on manual dispatch. Uses OpenAI.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - name: Resolve suite name
+        id: suite
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ inputs.suite }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=full" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run full QA suite
+        run: npm run qa:ci:${{ steps.suite.outputs.name }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          QA_BASE_URL: https://pulseup.me
+      - name: Upload QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-reports-${{ steps.suite.outputs.name }}
+          path: reports/qa/
+          retention-days: 90
+      - name: Open issue on regression
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = 'The nightly QA suite failed. See the workflow run for details.\n\n';
+            body += `Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            try {
+              const verdict = fs.readFileSync('reports/qa/verdict.md', 'utf8');
+              body += '\n\n---\n\n' + verdict.slice(0, 4000);
+            } catch {}
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[QA] Nightly regression — ${new Date().toISOString().slice(0, 10)}`,
+              body,
+              labels: ['qa', 'regression'],
+            });

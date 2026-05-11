@@ -18,9 +18,27 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
       return;
     }
 
+    // E2E bypass — mirror of the quiz's PostHogProvider check. Without this
+    // the cross-domain bridge silently drops `quiz_arrival` for every test
+    // run because PostHog refuses to initialise under a headless UA. We
+    // detect E2E via the marker the quiz forwards in its redirect URL
+    // (utm_source=fb_e2e or utm_campaign=e2e-…). Real production users are
+    // unaffected — these markers are never set on real ad clicks.
+    const isE2E =
+      typeof window !== 'undefined' &&
+      /[?&](utm_source=fb_e2e|utm_campaign=e2e-)/.test(window.location.search);
+
     posthog.init(key, {
       api_host: host,
       ui_host: 'https://us.posthog.com',
+
+      // Bot UA filter bypass for E2E synthetic traffic only.
+      opt_out_useragent_filter: isE2E,
+
+      // Share distinct_id across pulseup.me ↔ quiz.pulseup.me so the
+      // identity-stitch in app/page.tsx (posthog.identify(quizPhid)) can
+      // actually merge the two anonymous profiles without race conditions.
+      cross_subdomain_cookie: true,
 
       // Don't fire a page_view automatically — we'll do it ourselves in trackEvent
       capture_pageview: false,
@@ -49,6 +67,13 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
 
       loaded: () => {
         setReady(true);
+        // Mirror the client-side dev-mode flag so PostHog itself won't record
+        // sessions from internal devices (localStorage.pulseup_dev === '1').
+        try {
+          if (localStorage.getItem('pulseup_dev') === '1') {
+            posthog.opt_out_capturing();
+          }
+        } catch { /* ignore */ }
         if (process.env.NODE_ENV === 'development') {
           console.log('[PostHog] initialized, distinct_id:', posthog.get_distinct_id());
         }

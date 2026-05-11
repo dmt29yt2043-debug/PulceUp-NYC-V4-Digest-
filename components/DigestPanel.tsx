@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { formatAgeLabel } from '@/lib/age-label';
 
 interface DigestEvent {
   id: number;
@@ -239,7 +240,7 @@ function ScheduleView({ data, onEventClick }: { data: DigestDetail; onEventClick
                       <p className="dps-ev-note">"{ev.curator_note}"</p>
                     )}
                     <div className="dps-ev-chips">
-                      {ev.age_label && <span className="dps-chip">{ev.age_label}</span>}
+                      {ev.age_label && <span className="dps-chip">{formatAgeLabel(ev.age_label)}</span>}
                       {dur(ev.duration_min) && <span className="dps-chip">⏱ {dur(ev.duration_min)}</span>}
                       {p && <span className={`dps-chip ${ev.is_free ? 'dps-chip-free' : 'dps-chip-price'}`}>{p}</span>}
                       {ev.rating_avg > 0 && <span className="dps-chip dps-chip-star">★ {ev.rating_avg.toFixed(1)}</span>}
@@ -336,7 +337,7 @@ function EventsView({ events, onEventClick }: { events: DigestEvent[]; onEventCl
               {/* Gradient overlay */}
               <div className="dpv-tile-grad" />
               {/* Age badge */}
-              {ev.age_label && <span className="dpv-tile-age">{ev.age_label}</span>}
+              {ev.age_label && <span className="dpv-tile-age">{formatAgeLabel(ev.age_label)}</span>}
               {/* Bottom info */}
               <div className="dpv-tile-bottom">
                 <div className="dpv-tile-title">{ev.short_title || ev.title}</div>

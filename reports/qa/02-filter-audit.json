@@ -1,0 +1,429 @@
+{
+  "scenarios": [
+    {
+      "id": "age-2",
+      "name": "Age 2",
+      "returned": 240,
+      "correct": 239,
+      "wrong_samples": [
+        "#1659 [5-18] THE NOSTALGIC 90’S 5K & 5 MILE RUN/WALK"
+      ],
+      "gold_count": 247,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 97,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-4",
+      "name": "Age 4",
+      "returned": 251,
+      "correct": 250,
+      "wrong_samples": [
+        "#1659 [5-18] THE NOSTALGIC 90’S 5K & 5 MILE RUN/WALK"
+      ],
+      "gold_count": 258,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 97,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-7",
+      "name": "Age 7",
+      "returned": 271,
+      "correct": 271,
+      "wrong_samples": [],
+      "gold_count": 278,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 97,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-10",
+      "name": "Age 10",
+      "returned": 275,
+      "correct": 275,
+      "wrong_samples": [],
+      "gold_count": 287,
+      "missed": 12,
+      "missed_samples": [
+        "#1736 [0-10] Running for Success 5K Run/Walk",
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 96,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-14",
+      "name": "Age 14",
+      "returned": 259,
+      "correct": 259,
+      "wrong_samples": [],
+      "gold_count": 270,
+      "missed": 11,
+      "missed_samples": [
+        "#1697 [0-14] Summer Slushee 5K",
+        "#1716 [0-14] Strawberry Fest 5K & 5M",
+        "#1723 [0-14] Run to the Verrazzano 4 Miler"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 96,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-gender-7g",
+      "name": "7yo girl",
+      "returned": 271,
+      "correct": 271,
+      "wrong_samples": [],
+      "gold_count": 278,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 97,
+      "verdict": "PASS"
+    },
+    {
+      "id": "age-gender-10b",
+      "name": "10yo boy",
+      "returned": 275,
+      "correct": 275,
+      "wrong_samples": [],
+      "gold_count": 287,
+      "missed": 12,
+      "missed_samples": [
+        "#1736 [0-10] Running for Success 5K Run/Walk",
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 96,
+      "verdict": "PASS"
+    },
+    {
+      "id": "multi-4-10",
+      "name": "Kids [4, 10]",
+      "returned": 292,
+      "correct": 292,
+      "wrong_samples": [],
+      "gold_count": 299,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 98,
+      "verdict": "PASS"
+    },
+    {
+      "id": "multi-2-7-12",
+      "name": "Kids [2, 7, 12]",
+      "returned": 299,
+      "correct": 299,
+      "wrong_samples": [],
+      "gold_count": 306,
+      "missed": 7,
+      "missed_samples": [
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2000 [0-?] Soca Baby NYC",
+        "#2007 [0-?] B5 \"One Hell Of A Night\" At The Harbor."
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 98,
+      "verdict": "PASS"
+    },
+    {
+      "id": "cat-arts",
+      "name": "Arts",
+      "returned": 68,
+      "correct": 68,
+      "wrong_samples": [],
+      "gold_count": 158,
+      "missed": 90,
+      "missed_samples": [
+        "#812 [6-18] Jim Vines and Carl Mercurio Broadway Magic Hour",
+        "#971 [5-12] Broadway Magic Hour at the Broadway Comedy Club",
+        "#1017 [3-12] Meet the Animals at the Queens County Farm Museum"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 43,
+      "verdict": "WARN"
+    },
+    {
+      "id": "cat-science",
+      "name": "Science",
+      "returned": 6,
+      "correct": 6,
+      "wrong_samples": [],
+      "gold_count": 25,
+      "missed": 19,
+      "missed_samples": [
+        "#1327 [0-12] Spring Family Discovery Weekends",
+        "#1647 [0-?] Moth Night 2026",
+        "#1665 [?-?] Summer Nights: Sculpting Paper Flowers with Lindsey Milazzo"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 24,
+      "verdict": "WARN"
+    },
+    {
+      "id": "cat-music",
+      "name": "Music",
+      "returned": 31,
+      "correct": 31,
+      "wrong_samples": [],
+      "gold_count": 97,
+      "missed": 66,
+      "missed_samples": [
+        "#1323 [3-10] Spring Fling: Little Sprouts",
+        "#1649 [0-?] Waterfront Festival",
+        "#1670 [?-?] 4th of July NYC Fireworks Party Cruise aboard the Hornblower"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 32,
+      "verdict": "WARN"
+    },
+    {
+      "id": "cat-outdoors",
+      "name": "Outdoors",
+      "returned": 141,
+      "correct": 141,
+      "wrong_samples": [],
+      "gold_count": 159,
+      "missed": 18,
+      "missed_samples": [
+        "#1659 [?-?] THE NOSTALGIC 90’S 5K & 5 MILE RUN/WALK",
+        "#1716 [0-14] Strawberry Fest 5K & 5M",
+        "#1751 [0-?] LIC Springs! 2026"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 89,
+      "verdict": "PASS"
+    },
+    {
+      "id": "cat-theater",
+      "name": "Theater",
+      "returned": 32,
+      "correct": 32,
+      "wrong_samples": [],
+      "gold_count": 230,
+      "missed": 198,
+      "missed_samples": [
+        "#1017 [3-12] Meet the Animals at the Queens County Farm Museum",
+        "#1253 [0-5] Tot Time Tuesdays",
+        "#1254 [0-5] Tot Time"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 14,
+      "verdict": "WARN"
+    },
+    {
+      "id": "cat-books",
+      "name": "Books",
+      "returned": 10,
+      "correct": 10,
+      "wrong_samples": [],
+      "gold_count": 64,
+      "missed": 54,
+      "missed_samples": [
+        "#812 [6-18] Jim Vines and Carl Mercurio Broadway Magic Hour",
+        "#1273 [12-17] Button and Jewelry Making Workshop",
+        "#1323 [3-10] Spring Fling: Little Sprouts"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 16,
+      "verdict": "WARN"
+    },
+    {
+      "id": "loc-manhattan",
+      "name": "Manhattan",
+      "returned": 168,
+      "correct": 168,
+      "wrong_samples": [],
+      "gold_count": 207,
+      "missed": 39,
+      "missed_samples": [
+        "#1647 [0-?] Moth Night 2026",
+        "#1665 [?-?] Summer Nights: Sculpting Paper Flowers with Lindsey Milazzo",
+        "#1691 [0-?] Juneteenth Family Day – Festival Kickoff"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 81,
+      "verdict": "PASS"
+    },
+    {
+      "id": "loc-brooklyn",
+      "name": "Brooklyn",
+      "returned": 56,
+      "correct": 56,
+      "wrong_samples": [],
+      "gold_count": 63,
+      "missed": 7,
+      "missed_samples": [
+        "#2001 [18-18] Lincoln Jesser",
+        "#2017 [18-18] IN PARALLEL, BK Loves UKG: Lovelydaze x SHMOOKYY",
+        "#2073 [18-18] Bashment"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 89,
+      "verdict": "PASS"
+    },
+    {
+      "id": "loc-queens",
+      "name": "Queens",
+      "returned": 36,
+      "correct": 36,
+      "wrong_samples": [],
+      "gold_count": 36,
+      "missed": 0,
+      "missed_samples": [],
+      "correctness_pct": 100,
+      "coverage_pct": 100,
+      "verdict": "PASS"
+    },
+    {
+      "id": "loc-bronx",
+      "name": "Bronx",
+      "returned": 20,
+      "correct": 20,
+      "wrong_samples": [],
+      "gold_count": 20,
+      "missed": 0,
+      "missed_samples": [],
+      "correctness_pct": 100,
+      "coverage_pct": 100,
+      "verdict": "PASS"
+    },
+    {
+      "id": "price-free",
+      "name": "Free only",
+      "returned": 197,
+      "correct": 197,
+      "wrong_samples": [],
+      "gold_count": 0,
+      "missed": 0,
+      "missed_samples": [],
+      "correctness_pct": 100,
+      "coverage_pct": 100,
+      "verdict": "PASS"
+    },
+    {
+      "id": "price-u25",
+      "name": "Under $25",
+      "returned": 264,
+      "correct": 264,
+      "wrong_samples": [],
+      "gold_count": 291,
+      "missed": 27,
+      "missed_samples": [
+        "#812 [6-18] Jim Vines and Carl Mercurio Broadway Magic Hour",
+        "#1665 [?-?] Summer Nights: Sculpting Paper Flowers with Lindsey Milazzo",
+        "#1692 [0-?] Juneteenth March 4M Run/Walk/Roll"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 91,
+      "verdict": "PASS"
+    },
+    {
+      "id": "price-u50",
+      "name": "Under $50",
+      "returned": 301,
+      "correct": 301,
+      "wrong_samples": [],
+      "gold_count": 317,
+      "missed": 16,
+      "missed_samples": [
+        "#1988 [18-?] The Schmooze",
+        "#1998 [0-?] Dancehall Yute NYC",
+        "#2001 [18-18] Lincoln Jesser"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 95,
+      "verdict": "PASS"
+    },
+    {
+      "id": "combo-4-bk-free",
+      "name": "4yo + Brooklyn + free",
+      "returned": 31,
+      "correct": 31,
+      "wrong_samples": [],
+      "gold_count": 0,
+      "missed": 0,
+      "missed_samples": [],
+      "correctness_pct": 100,
+      "coverage_pct": 100,
+      "verdict": "PASS"
+    },
+    {
+      "id": "combo-7-sci-mh",
+      "name": "7yo + Science + Manhattan",
+      "returned": 2,
+      "correct": 2,
+      "wrong_samples": [],
+      "gold_count": 8,
+      "missed": 6,
+      "missed_samples": [
+        "#1647 [0-?] Moth Night 2026",
+        "#1665 [?-?] Summer Nights: Sculpting Paper Flowers with Lindsey Milazzo",
+        "#2105 [0-?] Sute-Do 〜Japanese Art of Empowerment"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 25,
+      "verdict": "WARN"
+    },
+    {
+      "id": "combo-teen-bk",
+      "name": "Teen (14) + Brooklyn",
+      "returned": 41,
+      "correct": 41,
+      "wrong_samples": [],
+      "gold_count": 43,
+      "missed": 2,
+      "missed_samples": [
+        "#1697 [0-14] Summer Slushee 5K",
+        "#1723 [0-14] Run to the Verrazzano 4 Miler"
+      ],
+      "correctness_pct": 100,
+      "coverage_pct": 95,
+      "verdict": "PASS"
+    },
+    {
+      "id": "combo-5-arts-free",
+      "name": "5yo + Arts + free",
+      "returned": 36,
+      "correct": 36,
+      "wrong_samples": [],
+      "gold_count": 0,
+      "missed": 0,
+      "missed_samples": [],
+      "correctness_pct": 100,
+      "coverage_pct": 100,
+      "verdict": "PASS"
+    }
+  ]
+}

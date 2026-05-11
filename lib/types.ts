@@ -70,7 +70,7 @@ export interface EventData {
 
 export interface FilterChild {
   age: number;
-  gender: 'boy' | 'girl' | 'other';
+  gender: 'boy' | 'girl';
 }
 
 export interface FilterState {
@@ -81,7 +81,7 @@ export interface FilterState {
   isFree?: boolean;
   ageMax?: number;
   childAges?: number[];
-  childGenders?: ('boy' | 'girl' | 'other')[];
+  childGenders?: ('boy' | 'girl')[];
   filterChildren?: FilterChild[];
   dateFrom?: string;
   dateTo?: string;

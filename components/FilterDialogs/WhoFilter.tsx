@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface Child {
   age: number;
-  gender: 'boy' | 'girl' | 'other';
+  gender: 'boy' | 'girl';
 }
 
 interface WhoFilterProps {
@@ -18,7 +18,6 @@ interface WhoFilterProps {
 const GENDER_LABELS: Record<Child['gender'], string> = {
   boy: '👦 Boy',
   girl: '👧 Girl',
-  other: '🧒 Other',
 };
 
 export default function WhoFilter({ ageMax: initialAge, children: initialChildren, onApply, onRemember, onClose }: WhoFilterProps) {
@@ -26,11 +25,11 @@ export default function WhoFilter({ ageMax: initialAge, children: initialChildre
     initialChildren && initialChildren.length > 0
       ? initialChildren
       : initialAge !== undefined
-        ? [{ age: initialAge, gender: 'other' }]
+        ? [{ age: initialAge, gender: 'boy' }]
         : []
   );
 
-  const addChild = () => setChildren((prev) => [...prev, { age: 5, gender: 'other' }]);
+  const addChild = () => setChildren((prev) => [...prev, { age: 5, gender: 'boy' }]);
 
   const removeChild = (i: number) => setChildren((prev) => prev.filter((_, idx) => idx !== i));
 
@@ -93,7 +92,7 @@ export default function WhoFilter({ ageMax: initialAge, children: initialChildre
 
               {/* Gender */}
               <div className="flex gap-2">
-                {(['boy', 'girl', 'other'] as Child['gender'][]).map((g) => (
+                {(['boy', 'girl'] as Child['gender'][]).map((g) => (
                   <button
                     key={g}
                     onClick={() => setGender(i, g)}
@@ -134,12 +133,6 @@ export default function WhoFilter({ ageMax: initialAge, children: initialChildre
           </button>
           <button
             onClick={() => { handleApply(); if (children.length > 0) onRemember(children); }}
-            className="flex-1 py-2 px-4 rounded-lg border border-[rgba(255,255,255,0.15)] text-sm font-medium text-gray-300 hover:bg-[rgba(255,255,255,0.05)]"
-          >
-            Remember
-          </button>
-          <button
-            onClick={handleApply}
             className="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-white"
             style={{ backgroundColor: '#e91e63' }}
           >

@@ -1,0 +1,45 @@
+{
+  "runAt": "2026-05-11T13:01:23.881Z",
+  "checks": [
+    {
+      "name": "total events ≥ 100",
+      "passed": true,
+      "detail": "333 rows in events table"
+    },
+    {
+      "name": "lat/lon coverage ≥ 80%",
+      "passed": true,
+      "detail": "100% (333/333)"
+    },
+    {
+      "name": "age_best_from coverage ≥ 90%",
+      "passed": true,
+      "detail": "97%"
+    },
+    {
+      "name": "next_start_at parses in SQLite",
+      "passed": true,
+      "detail": "e.g. 2026-05-11T12:00:00Z → +3h = 2026-05-11 15:00:00"
+    },
+    {
+      "name": "next_start_at parses in JS new Date()",
+      "passed": true,
+      "detail": "parses to 2026-05-11T12:00"
+    },
+    {
+      "name": "status values all recognised",
+      "passed": true,
+      "detail": "all rows use known statuses"
+    },
+    {
+      "name": "live filter returns ≥ 50 events",
+      "passed": true,
+      "detail": "333 rows pass the live-event filter"
+    },
+    {
+      "name": "all events have a title",
+      "passed": true,
+      "detail": "no empty titles"
+    }
+  ]
+}

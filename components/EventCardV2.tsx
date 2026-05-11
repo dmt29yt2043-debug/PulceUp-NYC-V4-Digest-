@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Event } from '@/lib/types';
 import { useFavorites } from '@/lib/FavoritesContext';
+import { formatAgeLabel } from '@/lib/age-label';
 
 interface EventCardV2Props {
   event: Event;
@@ -13,6 +14,8 @@ interface EventCardV2Props {
   onClick: () => void;
   isFlagged?: boolean;
   onToggleFlag?: (event: Event, flagged: boolean) => void;
+  /** 1-based rank in the visible list — used for impression tracking (CTR@k, NDCG) */
+  position?: number;
 }
 
 /**
@@ -77,6 +80,7 @@ export default function EventCardV2({
   onClick,
   isFlagged = false,
   onToggleFlag,
+  position,
 }: EventCardV2Props) {
   const [imgError, setImgError] = useState(false);
   const { isFavorite, toggle } = useFavorites();
@@ -94,6 +98,7 @@ export default function EventCardV2({
   return (
     <div
       data-event-id={event.id}
+      data-position={position}
       className={`event-card-v2 ${isHovered ? 'hovered' : ''} ${isSelected ? 'selected' : ''}`}
       style={isHovered ? {
         borderColor: accentColor,
@@ -126,7 +131,7 @@ export default function EventCardV2({
 
       {/* ── Top badges ── */}
       {event.age_label && (
-        <span className="event-card-v2-age">{event.age_label}</span>
+        <span className="event-card-v2-age">{formatAgeLabel(event.age_label)}</span>
       )}
 
       {/* ── Heart ── */}
